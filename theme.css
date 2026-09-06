@@ -1,0 +1,275 @@
+/* ========================================
+   A-Level Guide 全站统一主题
+   学术深空配色 · 金色点缀
+   ======================================== */
+
+:root {
+    /* 背景层级 */
+    --bg-primary: #0A0C10;
+    --bg-secondary: #12151B;
+    --bg-tertiary: #1A1E27;
+
+    /* 边框 */
+    --border-default: rgba(255, 255, 255, 0.08);
+    --border-medium: rgba(255, 255, 255, 0.15);
+    --border-gold: rgba(201, 168, 76, 0.35);
+
+    /* 文字 */
+    --text-primary: #F2F4F8;
+    --text-secondary: #9BA3B2;
+    --text-tertiary: #D1D5DB;
+    --text-muted: #6B7280;
+
+    /* 金色系 */
+    --gold: #C9A84C;
+    --gold-light: #E0C878;
+    --gold-dark: #A8862E;
+
+    /* 圆角 */
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 100px;
+
+    /* 阴影 */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.4);
+    --shadow-gold: 0 2px 12px rgba(201, 168, 76, 0.2);
+    --shadow-gold-hover: 0 6px 24px rgba(201, 168, 76, 0.35);
+
+    /* 过渡 */
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* 字体 */
+    --font-display: 'Georgia', 'Cambria', 'Times New Roman', serif;
+    --font-body: 'Inter', 'system-ui', '-apple-system', 'Segoe UI', sans-serif;
+}
+
+/* 全局基础 */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 全局卡片 */
+.card-dark,
+.bg-gray-900.border-gray-700,
+.community-card {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-default) !important;
+    border-radius: var(--radius-lg) !important;
+    transition: all var(--transition-normal) !important;
+}
+
+/* 卡片 hover 金色边框 */
+.card-dark:hover,
+.bg-gray-900.border-gray-700:hover,
+.community-card:hover {
+    border-color: var(--border-gold) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 30px rgba(201, 168, 76, 0.05) !important;
+}
+
+/* 主按钮 */
+.btn-gold,
+button.bg-gold,
+a.bg-gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark)) !important;
+    color: #0A0C10 !important;
+    font-weight: 600 !important;
+    border: none !important;
+    border-radius: var(--radius-md) !important;
+    cursor: pointer;
+    transition: all var(--transition-normal) !important;
+    box-shadow: var(--shadow-gold) !important;
+    letter-spacing: 0.02em;
+}
+
+.btn-gold:hover,
+button.bg-gold:hover,
+a.bg-gold:hover {
+    box-shadow: var(--shadow-gold-hover) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* 次按钮 */
+.btn-ghost {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-tertiary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-weight: 500;
+}
+
+.btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+}
+
+/* 输入框 */
+.input-field,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    background: rgba(10, 12, 16, 0.8) !important;
+    border: 1.5px solid var(--border-medium) !important;
+    border-radius: var(--radius-md) !important;
+    color: var(--text-primary) !important;
+    transition: all var(--transition-fast) !important;
+}
+
+.input-field:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+    border-color: var(--gold) !important;
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1) !important;
+    outline: none;
+}
+
+/* 导航栏 */
+header.sticky,
+header {
+    background: rgba(10, 12, 16, 0.85) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+/* 导航链接 */
+.nav-link {
+    color: rgba(255, 255, 255, 0.75);
+    transition: color var(--transition-fast);
+}
+
+.nav-link:hover {
+    color: var(--gold);
+}
+
+.nav-link.active {
+    color: var(--gold);
+    font-weight: 600;
+}
+
+/* 徽章/标签 */
+.badge-tag,
+.section-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    background: rgba(201, 168, 76, 0.1);
+    color: var(--gold-light);
+    border: 1px solid rgba(201, 168, 76, 0.25);
+}
+
+/* 筛选按钮 */
+.filter-btn {
+    padding: 0.5rem 1.4rem;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1.5px solid var(--border-medium);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    white-space: nowrap;
+}
+
+.filter-btn:hover {
+    border-color: rgba(201, 168, 76, 0.5);
+    color: var(--gold);
+}
+
+.filter-btn.active {
+    background: var(--gold);
+    color: #0A0C10;
+    border-color: var(--gold);
+    font-weight: 600;
+}
+
+/* 收藏按钮（星形） */
+.favorite-subject-btn,
+.favorite-uni-btn {
+    background: rgba(10, 12, 16, 0.7);
+    border: 1px solid var(--border-medium);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+}
+
+.favorite-subject-btn:hover,
+.favorite-uni-btn:hover {
+    background: rgba(201, 168, 76, 0.15);
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.favorite-subject-btn.active,
+.favorite-uni-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #0A0C10;
+}
+
+/* 滚动条 */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* 模态框覆盖 */
+.modal-panel {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-medium) !important;
+    border-radius: var(--radius-lg) !important;
+}
+
+/* 下拉菜单覆盖 */
+#profile-dropdown {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-medium) !important;
+    border-radius: var(--radius-md) !important;
+}
+
+/* 移动端菜单覆盖 */
+#mobile-menu {
+    background: rgba(10, 12, 16, 0.95) !important;
+    backdrop-filter: blur(12px) !important;
+}
+
+/* 底部导航（移动端） */
+.bottom-nav-item,
+nav.md\:hidden.fixed {
+    background: rgba(10, 12, 16, 0.95) !important;
+    backdrop-filter: blur(12px) !important;
+}

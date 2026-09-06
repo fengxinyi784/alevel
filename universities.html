@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>热门院校 - A-Level Guide</title>
+    <meta name="description" content="精选英国16所热门大学，覆盖G5、罗素集团及红砖大学，助你规划申请梯度。" />
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            50: '#f0f4f8',
+                            100: '#d9e2ec',
+                            200: '#bcccdc',
+                            300: '#9fb3c8',
+                            400: '#627d98',
+                            500: '#334e68',
+                            600: '#243b53',
+                            700: '#1a2d40',
+                            800: '#10202e',
+                            900: '#0b1620'
+                        },
+                        oxford: '#000000',
+                        gold: '#c9a84c',
+                    },
+                    fontFamily: {
+                        serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
+                        sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue',
+                            'Arial', 'sans-serif'
+                        ],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        :root {
+            --oxford: #000000;
+            --gold: #c9a84c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        .serif-display {
+            font-family: 'Georgia', 'Cambria', 'Times New Roman', serif;
+        }
+
+        .nav-link {
+            position: relative;
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            color: #ffffff;
+            transition: color 0.2s ease;
+            padding: 0.5rem 0.25rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-link:hover {
+            color: #c9a84c;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--gold);
+            transition: width 0.25s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: #c9a84c;
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.4rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            background: transparent;
+            color: #999;
+            border: 1.5px solid #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover {
+            border-color: #c9a84c;
+            color: #c9a84c;
+        }
+
+        .filter-btn.active {
+            background: #c9a84c;
+            color: #000000;
+            border-color: #c9a84c;
+        }
+
+        .uni-card {
+            background: transparent;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            position: relative;
+            perspective: 1000px;
+            height: 420px;
+            display: block;
+            transition: opacity 0.4s ease;
+        }
+
+        .uni-card.hidden-card {
+            display: none;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .uni-card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            inset: 0;
+            border-radius: 14px;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            overflow: hidden;
+            background: #0d0d0d;
+            border: 1.5px solid #2a2a2a;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-front {
+            background: #0d0d0d !important;
+            border: 1.5px solid #2a2a2a !important;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            border: 1.5px solid #d6cdb8;
+            background-color: #f5f0e1;
+            background-image: url('images/paper-texture.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .uni-card:hover .card-front {
+            border-color: #c9a84c;
+            box-shadow: 0 8px 30px rgba(201, 168, 76, 0.15);
+        }
+
+        .uni-card:hover .card-back {
+            border-color: #c9a84c;
+            box-shadow: 0 8px 30px rgba(201, 168, 76, 0.15);
+        }
+
+        .uni-card.flipped .card-front {
+            border-color: transparent;
+            box-shadow: none;
+        }
+
+        .card-front .hover-image-overlay {
+            position: absolute;
+            inset: 0;
+            border-radius: 14px;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+            z-index: 10;
+        }
+
+        .uni-card:hover .hover-image-overlay {
+            opacity: 1;
+        }
+
+        .uni-card:hover .card-front .front-content,
+        .uni-card:hover .card-front .image-placeholder {
+            opacity: 0.15;
+            transition: opacity 0.35s ease;
+        }
+
+        .card-front .image-placeholder {
+            height: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Georgia', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.1em;
+        }
+
+        .card-front .front-content {
+            padding: 0.9rem 1rem 1rem;
+        }
+
+        .card-front .front-content .abbr-badge {
+            display: inline-block;
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #c9a84c;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.3rem;
+        }
+
+        .card-front .front-content h2 {
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.2rem;
+        }
+
+        .card-front .front-content .en-name {
+            font-size: 0.62rem;
+            color: #888;
+            letter-spacing: 0.03em;
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        .card-front .front-content .rank {
+            font-size: 0.875rem;
+            color: #c9a84c;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-front .front-content .detail-row {
+            font-size: 0.875rem;
+            color: #ccc;
+            line-height: 1.5;
+            margin-bottom: 0.3rem;
+        }
+
+        .card-front .front-content .detail-row .label {
+            color: #c9a84c;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: block;
+            margin-bottom: 0.1rem;
+        }
+
+        .card-front .front-content .tags-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid #1e1e1e;
+        }
+
+        .card-front .front-content .mini-tag {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            background: rgba(201, 168, 76, 0.1);
+            color: #c9a84c;
+            border: 1px solid rgba(201, 168, 76, 0.25);
+            white-space: nowrap;
+        }
+
+        .card-front .front-content .mini-tag.plain {
+            background: rgba(255, 255, 255, 0.06);
+            color: #bbb;
+            border-color: #333;
+        }
+
+        .card-back .back-header {
+            text-align: center;
+            border-bottom: 1px solid #d6cdb8;
+            padding-bottom: 0.6rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .card-back .back-header h3 {
+            font-family: 'Georgia', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .card-back .back-header .back-rank {
+            font-size: 0.62rem;
+            color: #666;
+            display: block;
+            margin-top: 0.15rem;
+        }
+
+        .card-back .back-body {
+            flex: 1;
+            overflow-y: auto;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            color: #333;
+            padding-right: 0.2rem;
+        }
+
+        .card-back .back-body {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .card-back .back-body::-webkit-scrollbar {
+            display: none;
+        }
+
+        .card-back .back-body::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .card-back .back-body::-webkit-scrollbar-track {
+            background: #e0d8c5;
+        }
+
+        .card-back .back-body::-webkit-scrollbar-thumb {
+            background: #a89870;
+            border-radius: 2px;
+        }
+
+        .chat-message {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 0.7rem;
+            margin-top: 2rem;
+            width: 100%;
+        }
+
+        .chat-left {
+            justify-content: flex-start;
+        }
+
+        .chat-right {
+            justify-content: flex-end;
+        }
+
+        .chat-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #e0d8c5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            user-select: none;
+            order: 1;
+        }
+
+        .chat-left .chat-avatar {
+            order: 1;
+        }
+
+        .chat-right .chat-avatar {
+            order: 2;
+        }
+
+        .chat-bubble {
+            background: #ffffff;
+            padding: 0.6rem 0.9rem;
+            border-radius: 14px;
+            font-size: 0.875rem;
+            color: #333;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            position: relative;
+            max-width: 72%;
+            line-height: 1.5;
+            word-wrap: break-word;
+            order: 2;
+        }
+
+        .chat-left .chat-bubble {
+            order: 2;
+        }
+
+        .chat-right .chat-bubble {
+            order: 1;
+        }
+
+        .chat-left .chat-bubble::after {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 14px;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-right: 8px solid #ffffff;
+        }
+
+        .chat-right .chat-bubble::after {
+            content: '';
+            position: absolute;
+            right: -7px;
+            top: 14px;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 8px solid #ffffff;
+        }
+
+        @media (max-width: 768px) {
+            .uni-card {
+                height: 440px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .uni-card {
+                height: 420px;
+            }
+
+            .filter-btn {
+                padding: 0.4rem 1rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        .card-front {
+            position: relative;
+        }
+
+        .data-bubble {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 20;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            background: transparent !important;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .uni-card:hover .data-bubble {
+            opacity: 1;
+        }
+
+        .data-bubble .bubble-title {
+            display: none !important;
+        }
+
+        .data-bubble .stat-grid {
+            display: block !important;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: transparent !important;
+            margin: 0;
+            padding: 0;
+        }
+
+        .data-bubble .stat-item {
+            position: absolute;
+            margin: 0 !important;
+            background: rgba(0, 0, 0, 0.78) !important;
+            backdrop-filter: blur(6px);
+            border-radius: 30px;
+            padding: 5px 14px;
+            color: #fff;
+            text-align: center;
+            font-size: 0.65rem;
+            pointer-events: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+            min-width: 52px;
+            transition: transform 0.25s ease, background 0.25s ease;
+        }
+
+        .data-bubble .stat-item:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: rgba(0, 0, 0, 0.95) !important;
+        }
+
+        .data-bubble .stat-value {
+            display: block;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #c9a84c;
+            line-height: 1.2;
+        }
+
+        .data-bubble .stat-label {
+            display: block;
+            font-size: 0.5rem;
+            color: #ccc;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .favorite-uni-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 30;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #aaa;
+            transition: all 0.3s ease;
+        }
+
+        .favorite-uni-btn:hover {
+            background: rgba(201, 168, 76, 0.2);
+            border-color: #c9a84c;
+            color: #c9a84c;
+        }
+
+        .favorite-uni-btn.active {
+            background: #c9a84c;
+            border-color: #c9a84c;
+            color: #000;
+        }
+    </style>
+    <link rel="stylesheet" href="ai-assistant.css">
+</head>
+
+<body>
+
+    <header class="sticky top-0 z-50 bg-black border-b border-white/30 shadow-nav">
+        <div class="w-full px-6 sm:px-10 lg:px-16">
+            <div class="flex items-center justify-between h-16 md:h-18">
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center"
+                        style="background-color: #c9a84c;">
+                        <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            stroke-width="1.8">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                        </svg>
+                    </div>
+                    <div class="leading-tight">
+                        <span class="serif-display font-bold text-lg md:text-xl text-white">A-Level Guide</span>
+                        <span
+                            class="block text-[10px] md:text-[11px] font-medium tracking-widest uppercase text-white">升学规划
+                            · 选课指导</span>
+                    </div>
+                </div>
+                <nav class="hidden md:flex items-center gap-10 lg:gap-14" aria-label="主导航">
+                    <a href="index.html" class="nav-link">首页</a>
+                    <a href="subjects.html" class="nav-link">热门科目</a>
+                    <a href="universities.html" class="nav-link active">热门院校</a>
+                    <a href="strategy.html" class="nav-link">选课策略</a>
+                    <a href="timeline.html" class="nav-link">升学时间轴</a>
+                    <div class="relative group">
+                        <a href="#" class="nav-link" id="profile-nav-btn">个人主页</a>
+                        <div id="profile-dropdown"
+                            class="absolute hidden group-hover:block bg-black border border-white/20 rounded-lg shadow-xl min-w-[160px] py-2 z-50 right-0">
+                        </div>
+                    </div>
+                </nav>
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition"
+                    aria-label="打开菜单">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-black border-t border-white/30 px-6 py-3 pb-4 shadow-lg">
+            <nav class="flex flex-col gap-1" aria-label="移动端导航">
+                <a href="index.html"
+                    class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">首页</a>
+                <a href="subjects.html"
+                    class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">热门科目</a>
+                <a href="universities.html"
+                    class="block px-3 py-2.5 rounded-lg text-sm font-medium text-[#c9a84c] bg-white/10">热门院校</a>
+                <a href="strategy.html"
+                    class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">选课策略</a>
+                <a href="timeline.html"
+                    class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">升学时间轴</a>
+                <a href="about.html"
+                    class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">关于我们</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="w-full px-6 sm:px-10 lg:px-16 py-8 md:py-12">
+        <!-- 筛选器 + 收藏视图切换（同一排） -->
+        <div class="flex flex-wrap justify-center gap-3 mb-6" id="filterBar">
+            <button class="filter-btn active" data-filter="all">全部</button>
+            <button class="filter-btn" data-filter="g5">G5 冲刺</button>
+            <button class="filter-btn" data-filter="russell">罗素集团</button>
+            <button class="filter-btn" data-filter="brick">红砖大学</button>
+            <button class="filter-btn" data-filter="london">伦敦地区</button>
+            <button class="filter-btn" data-filter="scotland">苏格兰地区</button>
+            <button id="view-fav-uni-btn" class="filter-btn">我收藏的</button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-6" id="uniGrid">
+            <!-- ==================== 牛津大学 ==================== -->
+            <div class="uni-card" data-tags="g5" data-uni-key="Oxford">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <button class="favorite-uni-btn" data-uni-key="Oxford" title="收藏院校">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                            </svg>
+                        </button>
+                        <div class="image-placeholder" style="background: linear-gradient(145deg, #001a33, #002b55);">Ox
+                        </div>
+                        <div class="front-content">
+                            <h2>牛津大学</h2>
+                            <span class="rank">QS世界第4 · 英国第2</span>
+                            <div class="detail-row"><span class="label">优势专业</span>物理与天文、生命科学、数学、人文艺术</div>
+                            <div class="detail-row"><span class="label">录取要求</span>A-Level：A*A*A - AAA</div>
+                            <div class="tags-row">
+                                <span class="mini-tag">学院制</span>
+                                <span class="mini-tag">导师制</span>
+                                <span class="mini-tag plain">最古老</span>
+                            </div>
+                        </div>
+                        <div class="hover-image-overlay" style="background-image: url('images/Ox.png');"></div>
+                        <div class="data-bubble">
+                            <div class="stat-grid">
+                                <div class="stat-item"><span class="stat-value">16%</span><span
+                                        class="stat-label">录取率</span></div>
+                                <div class="stat-item"><span class="stat-value">91.6%</span><span
+                                        class="stat-label">就业率</span></div>
+                                <div class="stat-item"><span class="stat-value">4.19</span><span
+                                        class="stat-label">满意度</span></div>
+                                <div class="stat-item"><span class="stat-value">21%</span><span
+                                        class="stat-label">国际生</span></div>
+                                <div class="stat-item"><span class="stat-value">1:11</span><span
+                                        class="stat-label">师生比</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-header">
+                            <h3>牛津大学</h3>
+                            <span class="back-rank">University of Oxford</span>
+                        </div>
+                        <div class="back-body">
+                            <div class="back-section"><span class="label">学校简介</span>
+                                <p>英语世界最古老的大学，学院制+导师制教学，72位诺奖得主。</p>
+                            </div>
+                            <div class="back-section"><span class="label">学费参考</span>
+                                <p>£35,260 - £59,260/年</p>
+                            </div>
+                            <div class="comment">我最爱牛津的一点，是它浓浓的'社区感'。人和人的联结不止于表面。但学期太短，假期里还得考试。</div>
+                            <div class="comment">在牛津，老师不强制参加lecture，比较自由。但每周学习时间至少40小时，节奏非常快。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 剑桥大学 ==================== -->
+            <div class="uni-card" data-tags="g5" data-uni-key="Cambridge">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <button class="favorite-uni-btn" data-uni-key="Cambridge" title="收藏院校">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                            </svg>
+                        </button>
+                        <div class="image-placeholder" style="background: linear-gradient(145deg, #1a0a2e, #2d1045);">
+                            Cam
+                        </div>
+                        <div class="front-content">
+                            <h2>剑桥大学</h2>
+                            <span class="rank">QS世界第6 · 英国第2</span>
+                            <div class="detail-row"><span class="label">优势专业</span>计算机、经济学、工程、数学、医学</div>
+                            <div class="detail-row"><span class="label">录取要求</span>A-Level：A*A*A - A*AA</div>
+                            <div class="tags-row">
+                                <span class="mini-tag">学院制</span>
+                                <span class="mini-tag plain">800年历史</span>
+                                <span class="mini-tag plain">120+诺奖</span>
+                            </div>
+                        </div>
+                        <div class="hover-image-overlay" style="background-image: url('images/Cam.png');"></div>
+                        <div class="data-bubble">
+                            <div class="stat-grid">
+                                <div class="stat-item"><span class="stat-value">20.8%</span><span
+                                        class="stat-label">录取率</span></div>
+                                <div class="stat-item"><span class="stat-value">92.2%</span><span
+                                        class="stat-label">就业率</span></div>
+                                <div class="stat-item"><span class="stat-value">4.24</span><span
+                                        class="stat-label">满意度</span></div>
+                                <div class="stat-item"><span class="stat-value">19.3%</span><span
+                                        class="stat-label">国际生</span></div>
+                                <div class="stat-item"><span class="stat-value">1:11.8</span><span
+                                        class="stat-label">师生比</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-header">
+                            <h3>剑桥大学</h3>
+                            <span class="back-rank">University of Cambridge</span>
+                        </div>
+                        <div class="back-body">
+                            <div class="back-section"><span class="label">学校简介</span>
+                                <p>成立于1209年，31个自治学院，120+诺奖得主，本科录取率约21%。</p>
+                            </div>
+                            <div class="back-section"><span class="label">学费参考</span>
+                                <p>£27,024 - £70,554/年</p>
+                            </div>
+                            <div class="comment">学术上无疑很艰难，但这被极其支持性的社区氛围很好地平衡和弥补了。</div>
+                            <div class="comment">剑桥让我拥有两全其美的体验——安全大学城的精彩生活，同时离繁华的伦敦不到一小时。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 帝国理工 ==================== -->
+            <div class="uni-card" data-tags="g5 london" data-uni-key="Imperial">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <button class="favorite-uni-btn" data-uni-key="Imperial" title="收藏院校">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                            </svg>
+                        </button>
+                        <div class="image-placeholder" style="background: linear-gradient(145deg, #001428, #003366);">
+                            ICL</div>
+                        <div class="front-content">
+                            <h2>帝国理工学院</h2>
+                            <span class="rank">QS世界第2 · 英国第1</span>
+                            <div class="detail-row"><span class="label">优势专业</span>计算机、AI、航空航天、化学工程、数学</div>
+                            <div class="detail-row"><span class="label">录取要求</span>A-Level：A*A*A - AAA</div>
+                            <div class="tags-row">
+                                <span class="mini-tag">理工殿堂</span>
+                                <span class="mini-tag">就业力顶尖</span>
+                            </div>
+                        </div>
+                        <div class="hover-image-overlay" style="background-image: url('images/ICL.png');"></div>
+                        <div class="data-bubble">
+                            <div class="stat-grid">
+                                <div class="stat-item"><span class="stat-value">16%</span><span
+                                        class="stat-label">录取率</span></div>
+                                <div class="stat-item"><span class="stat-value">95.7%</span><span
+                                        class="stat-label">就业率</span></div>
+                                <div class="stat-item"><span class="stat-value">3.96</span><span
+                                        class="stat-label">满意度</span></div>
+                                <div class="stat-item"><span class="stat-value">21.46%</span><span
+                                        class="stat-label">国际生</span></div>
+                                <div class="stat-item"><span class="stat-value">1:11.9</span><span
+                                        class="stat-label">师生比</span></div>
+                                <div class="stat-item"><span class="stat-value">£38k</span><span
+                                        class="stat-label">起薪</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-header">
+                            <h3>帝国理工学院</h3>
+                            <span class="back-rank">Imperial College London · QS世界第2</span>
+                        </div>
+                        <div class="back-body">
+                            <div class="back-section"><span class="label">学校简介</span>
+                                <p>专注STEM的G5名校，欧洲最大工程学院之一，毕业生起薪全英最高。</p>
+                            </div>
+                            <div class="back-section"><span class="label">学费参考</span>
+                                <p>£40,700 - £55,800/年</p>
+                            </div>
+                            <div class="comment">教学质量真的很好。学院非常多元化，能遇到来自世界各地的学生。但生活成本太高，工作量有时极其繁重。</div>
+                            <div class="comment">帝国理工是一所位于伦敦中心的很棒学校。有一些世界级教授在做前沿研究。缺点是一年的课程里塞了太多工作。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== LSE ==================== -->
+            <div class="uni-card" data-tags="g5 london" data-uni-key="LSE">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <button class="favorite-uni-btn" data-uni-key="LSE" title="收藏院校">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                            </svg>
+                        </button>
+                        <div class="image-placeholder" style="background: linear-gradient(145deg, #1a0a2e, #330044);">
+                            LSE</div>
+                        <div class="front-content">
+                            <h2>伦敦政治经济学院</h2>
+                            <span class="rank">QS世界第56</span>
+                            <div class="detail-row"><span class="label">优势专业</span>经济学、政治学、法学、发展研究</div>
+                            <div class="detail-row"><span class="label">录取要求</span>A-Level：A*AA - AAB</div>
+                            <div class="tags-row">
+                                <span class="mini-tag">社科王者</span>
+                                <span class="mini-tag">政经精英</span>
+                            </div>
+                        </div>
+                        <div class="hover-image-overlay" style="background-image: url('images/LSE.png');"></div>
+                        <div class="data-bubble">
+                            <div class="stat-grid">
+                                <div class="stat-item"><span class="stat-value">72%</span><span
+                                        class="stat-label">就业率</span></div>
+                                <div class="stat-item"><span class="stat-value">88%</span><span
+                                        class="stat-label">深造率</span></div>
+                                <div class="stat-item"><span class="stat-value">70%</span><span
+                                        class="stat-label">满意度</span></div>
+                                <div class="stat-item"><span class="stat-value">65%</span><span
+                                        class="stat-label">国际生</span></div>
+                                <div class="stat-item"><span class="stat-value">£30-52k</span><span
+                                        class="stat-label">薪资中位数</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-header">
+                            <h3>伦敦政治经济学院</h3>
+                            <span class="back-rank">LSE · QS世界第56</span>
+                        </div>
+                        <div class="back-body">
+                            <div class="back-section"><span class="label">学校简介</span>
+                                <p>专注社会科学的精英学府，G5成员，对接国际组织与金融圈层。</p>
+                            </div>
+                            <div class="back-section"><span class="label">学费参考</span>
+                                <p>£27,500 - £34,000/年</p>
+                            </div>
+                            <div class="comment">在LSE学习是一次改变人生的经历。学术工作量相当高，但我从未后悔选择LSE。</div>
+                            <div class="comment">LSE的体验就像坐过山车——刺激、挑战，偶尔令人恐惧，但最终每一刻都值得。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== UCL ==================== -->
+            <div class="uni-card" data-tags="g5 london" data-uni-key="UCL">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <button class="favorite-uni-btn" data-uni-key="UCL" title="收藏院校">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                            </svg>
+                        </button>
+                        <div class="image-placeholder" style="background: linear-gradient(145deg, #0d1f2d, #1a3a5c);">
+                            UCL</div>
+                        <div class="front-content">
+                            <h2>伦敦大学学院</h2>
+                            <span class="rank">QS世界第9 · 英国第4</span>
+                            <div class="detail-row"><span class="label">优势专业</span>建筑学、教育学（全球第1）、医学、计算机</div>
+                            <div class="detail-row"><span class="label">录取要求</span>A-Level：A*A*A - ABB</div>
+                            <div class="tags-row">
+                                <span class="mini-tag">学科全能</span>
+                                <span class="mini-tag plain">教育建筑第一</span>
+                            </div>
+                        </div>
+                        <div class="hover-image-overlay" style="background-image: url('images/UCL.png');"></div>
+                        <div class="data-bubble">
+                            <div class="stat-grid">
+                                <div class="stat-item"><span class="stat-value">10%</span><span
+                                        class="stat-label">录取率</span></div>
+                                <div class="stat-item"><span class="stat-value">85.2%</span><span
+                                        class="stat-label">就业率</span></div>
+                                <div class="stat-item"><span class="stat-value">3.92</span><span
+                                        class="stat-label">满意度</span></div>
+                                <div class="stat-item"><span class="stat-value">18.03%</span><span
+                                        class="stat-label">国际生</span></div>
+                                <div class="stat-item"><span class="stat-value">1:10.9</span><span
+                                        class="stat-label">师生比</span></div>
+                                <div class="stat-item"><span class="stat-value">97.2%</span><span
+                                        class="stat-label">毕业率</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-header">
+                            <h3>伦敦大学学院</h3>
+                            <span class="back-rank">UCL · QS世界第9</span>
+                        </div>
+                        <div class="back-body">
+                            <div class="back-section"><span class="label">学校简介</span>
+                                <p>1826年建校，英国最早打破限制的大学，43个学科全球前50。</p>
+                            </div>
+                            <div class="back-section"><span class="label">学费参考</span>
+                                <p>£29,800 - £53,400/年</p>
+                            </div>
+                            <div class="comment">太棒了——精彩的社交生活、住宿和整体生活方式。课程很棒，通勤方便，没有任何问题。</div>
+                            <div class="comment">充满活力和多元化的校园生活。友好而热情，学术实力非常强。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 爱丁堡大学 ==================== -->
+            <div class="uni-card" data-tags="russell scotland" data-uni-key="Edinburgh">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <button class="favorite-uni-btn" data-uni-key="Edinburgh" title="收藏院校">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                            </svg>
+                        </button>
+                        <div class="image-placeholder" style="background: linear-gradient(145deg, #1a0a2e, #3d1f66);">
+                            Edin
+                        </div>
+                        <div class="front-content">
+                            <h2>爱丁堡大学</h2>
+                            <span class="rank">QS世界第34</span>
+                            <div class="detail-row"><span class="label">优势专业</span>医学、人工智能、兽医学、经济学</div>
+                            <div class="detail-row"><span class="label">录取要求</span>A-Level：A*AA - ABB</div>
+                            <div class="tags-row">
+                                <span class="mini-tag">AI强校</span>
+                                <span class="mini-tag plain">苏格兰第一</span>
+                            </div>
+                        </div>
+                        <div class="hover-image-overlay" style="background-image: url('images/Edin.png');"></div>
+                        <div class="data-bubble">
+                            <div class="stat-grid">
+                                <div class="stat-item"><span class="stat-value">11%</span><span
+                                        class="stat-label">录取率</span></div>
+                                <div class="stat-item"><span class="stat-value">82.3%</span><span
+                                        class="stat-label">就业率</span></div>
+                                <div class="stat-item"><span class="stat-value">3.72</span><span
+                                        class="stat-label">满意度</span></div>
+                                <div class="stat-item"><span class="stat-value">15.32%</span><span
+                                        class="stat-label">国际生</span></div>
+                                <div class="stat-item"><span class="stat-value">1:12.3</span><span
+                                        class="stat-label">师生比</span></div>
+                                <div class="stat-item"><span class="stat-value">53%</span><span
+                                        class="stat-label">Offer率</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-header">
+                            <h3>爱丁堡大学</h3>
+                            <span class="back-rank">University of Edinburgh</span>
+                        </div>
+                        <div class="back-body">
+                            <div class="back-section"><span class="label">学校简介</span>
+                                <p>1583年建校，苏格兰最高学府，罗素集团成员，28位诺奖得主。</p>
+                            </div>
+                            <div class="back-section"><span class="label">学费参考</span>
+                                <p>£28,000 - £51,961/年</p>
+                            </div>
+                            <div class="comment">来爱丁堡读书是我做过最正确的决定！收获的不仅仅是专业知识，还有爱丁堡这个城市的热情与浪漫。</div>
+                            <div class="comment">这个学校出了名的高挂科率，尤其计算机、商科、法律。全靠自学，提前预习为主旋律。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 曼彻斯特大学 ==================== -->
+            <div class="uni-card" data-tags="russell brick" data-uni-key="Manchester">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <button class="favorite-uni-btn" data-uni-key="Manchester" title="收藏院校">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                            </svg>
+                        </button>
+                        <div class="image-placeholder" style="background: linear-gradient(145deg, #200000, #550000);">
+                            Man
+                        </div>
+                        <div class="front-content">
+                            <h2>曼彻斯特大学</h2>
+                            <span class="rank">QS世界第35</span>
+                            <div class="detail-row"><span class="label">优势专业</span>计算机科学、机械工程、物理、医学、商科</div>
+                            <div class="detail-row"><span class="label">录取要求</span>A-Level：A*AA - BBC</div>
+                            <div class="tags-row">
+                                <span class="mini-tag plain">中国学生热门</span>
+                                <span class="mini-tag plain">学科齐全</span>
+                            </div>
+                        </div>
+                        <div class="hover-image-overlay" style="background-image: url('images/Man.png');"></div>
+                        <div class="data-bubble">
+                            <div class="stat-grid">
+                                <div class="stat-item"><span class="stat-value">14%</span><span
+                                        class="stat-label">国际生录取</span></div>
+                                <div class="stat-item"><span class="stat-value">90%+</span><span
+                                        class="stat-label">就业率</span></div>
+                                <div class="stat-item"><span class="stat-value">39%</span><span
+                                        class="stat-label">整体录取</span></div>
+                                <div class="stat-item"><span class="stat-value">49.9%</span><span
+                                        class="stat-label">中国生占比</span></div>
+                                <div class="stat-item"><span class="stat-value">£31.5k</span><span
+                                        class="stat-label">毕业年薪</span></div>
+                                <div class="stat-item"><span class="stat-value">£40k</span><span
+                                        class="stat-label">工科年薪</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-header">
+                            <h3>曼彻斯特大学</h3>
+                            <span class="back-rank">University of Manchester</span>
+                        </div>
+                        <div class="back-body">
+                            <div class="back-section"><span class="label">学校简介</span>
+                                <p>罗素集团成员，中国学生最青睐的英国大学之一，录取率约15%。</p>
+                            </div>
+                            <div class="back-section"><span class="label">学费参考</span>
+                                <p>£26,500 - £58,000/年</p>
+                            </div>
+                            <div class="comment">来之前以为曼大就是个排名不错的学校，来了才发现这里的材料科研实力是真的硬核。</div>
+                            <div class="comment">校园非常宽敞，拥有现代化的设施，提供了愉快的学习环境。曼彻斯特是一个对学生友善的城市。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== KCL ==================== -->
+            <div class="uni-card" data-tags="russell london" data-uni-key="KCL">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <button class="favorite-uni-btn" data-uni-key="KCL" title="收藏院校">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                            </svg>
+                        </button>
+                        <div class="image-placeholder" style="background: linear-gradient(145deg, #0d1f2d, #1a3a5c);">
+                            KCL
+                        </div>
+                        <div class="front-content">
+                            <h2>伦敦国王学院</h2>
+                            <span class="rank">QS世界第31 · 英国第5</span>
+                            <div class="detail-row"><span class="label">优势专业</span>护理学、牙科学（英国第1）、医学、法学</div>
+                            <div class="detail-row"><span class="label">录取要求</span>A-Level：A*AA - BBB</div>
+                            <div class="tags-row">
+                                <span class="mini-tag">医学法学强校</span>
+                                <span class="mini-tag plain">伦敦市中心</span>
+                            </div>
+                        </div>
+                        <div class="hover-image-overlay" style="background-image: url('images/KCL.png');"></div>
+                        <div class="data-bubble">
+                            <div class="stat-grid">
+                                <div class="stat-item"><span class="stat-value">10%</span><span
+                                        class="stat-label">录取率</span></div>
+                                <div class="stat-item"><span class="stat-value">75.2%</span><span
+                                        class="stat-label">就业率</span></div>
+                                <div class="stat-item"><span class="stat-value">3.77</span><span
+                                        class="stat-label">满意度</span></div>
+                                <div class="stat-item"><span class="stat-value">11.47%</span><span
+                                        class="stat-label">国际生</span></div>
+                                <div class="stat-item"><span class="stat-value">1:14</span><span
+                                        class="stat-label">师生比</span></div>
+                                <div class="stat-item"><span class="stat-value">95%</span><span
+                                        class="stat-label">毕业率</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-header">
+                            <h3>伦敦国王学院</h3>
+                            <span class="back-rank">King's College London · QS世界第31</span>
+                        </div>
+                        <div class="back-body">
+                            <div class="back-section"><span class="label">学校简介</span>
+                                <p>1829年建校，伦敦市中心，G5外中国学生最热门冲刺目标。</p>
+                            </div>
+                            <div class="back-section"><span class="label">学费参考</span>
+                                <p>£27,100 - £53,000/年</p>
+                            </div>
+                            <div class="comment">KCL提供组织良好的学术体验，教学实力强，在伦敦市中心的各个校区都能使用一流的设施。</div>
+                            <div class="comment">学术上KCL提供扎实的教学和广泛的资源，但某些方面，比如缺乏辅导课答案，让自学比预期更难。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 华威大学 ==================== -->
+            <div class="uni-card" data-tags="russell" data-uni-key="Warwick">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <button class="favorite-uni-btn" data-uni-key="Warwick" title="收藏院校">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                            </svg>
+                        </button>
+                        <div class="image-placeholder" style="background: linear-gradient(145deg, #0d1f2d, #1a3a5c);">
+                            War
+                        </div>
+                        <div class="front-content">
+                            <h2>华威大学</h2>
+                            <span class="rank">QS世界第74</span>
+                            <div class="detail-row"><span class="label">优势专业</span>商科（会计金融、经济）、数学、工程</div>
+                            <div class="detail-row"><span class="label">录取要求</span>A-Level：A*AA - ABB</div>
+                            <div class="tags-row">
+                                <span class="mini-tag">商科强校</span>
+                                <span class="mini-tag">WBS三重认证</span>
+                            </div>
+                        </div>
+                        <div class="hover-image-overlay" style="background-image: url('images/War.png');"></div>
+                        <div class="data-bubble">
+                            <div class="stat-grid">
+                                <div class="stat-item"><span class="stat-value">63%</span><span
+                                        class="stat-label">硕士录取</span></div>
+                                <div class="stat-item"><span class="stat-value">95.7%</span><span
+                                        class="stat-label">就业率</span></div>
+                                <div class="stat-item"><span class="stat-value">第4</span><span
+                                        class="stat-label">雇主声誉</span></div>
+                                <div class="stat-item"><span class="stat-value">47%</span><span
+                                        class="stat-label">国际生</span></div>
+                                <div class="stat-item"><span class="stat-value">1:13</span><span
+                                        class="stat-label">师生比</span></div>
+                                <div class="stat-item"><span class="stat-value">92%</span><span
+                                        class="stat-label">科研领先</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-header">
+                            <h3>华威大学</h3>
+                            <span class="back-rank">University of Warwick</span>
+                        </div>
+                        <div class="back-body">
+                            <div class="back-section"><span class="label">学校简介</span>
+                                <p>1965年创立，发展最快的顶尖学府，WBS三重认证商学院，雇主声誉全英第4。</p>
+                            </div>
+                            <div class="back-section"><span class="label">学费参考</span>
+                                <p>£26,500 - £58,000/年</p>
+                            </div>
+                            <div class="comment">华威的学习氛围很浓厚，尤其是商学院，身边同学都非常有目标感。虽然课业压力不小，但学校提供的职业支持真的很给力。</div>
+                            <div class="comment">校园环境很现代，设施很新。虽然考文垂不算大城市，但生活成本相对友好，适合安心读书。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 布里斯托大学 ==================== -->
+            <div class="uni-card" data-tags="russell brick" data-uni-key="Bristol">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <button class="favorite-uni-btn" data-uni-key="Bristol" title="收藏院校">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                            </svg>
+                        </button>
+                        <div class="image-placeholder" style="background: linear-gradient(145deg, #200000, #550000);">
+                            Bri
+                        </div>
+                        <div class="front-content">
+                            <h2>布里斯托大学</h2>
+                            <span class="rank">QS世界第51</span>
+                            <div class="detail-row"><span class="label">优势专业</span>工程（土木、航空航天、机械）、医学、计算机</div>
+                            <div class="detail-row"><span class="label">录取要求</span>A-Level：A*AA - ABB</div>
+                            <div class="tags-row">
+                                <span class="mini-tag">工科强校</span>
+                                <span class="mini-tag plain">红砖大学</span>
+                            </div>
+                        </div>
+                        <div class="hover-image-overlay" style="background-image: url('images/Bri.png');"></div>
+                        <div class="data-bubble">
+                            <div class="stat-grid">
+                                <div class="stat-item"><span class="stat-value">10.2-12.5%</span><span
+                                        class="stat-label">录取率</span></div>
+                                <div class="stat-item"><span class="stat-value">95%</span><span
+                                        class="stat-label">就业率</span></div>
+                                <div class="stat-item"><span class="stat-value">8:1</span><span
+                                        class="stat-label">竞争比</span></div>
+                                <div class="stat-item"><span class="stat-value">£82k</span><span
+                                        class="stat-label">5-10年年薪</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-header">
+                            <h3>布里斯托大学</h3>
+                            <span class="back-rank">University of Bristol</span>
+                        </div>
+                        <div class="back-body">
+                            <div class="back-section"><span class="label">学校简介</span>
+                                <p>罗素集团成员，工程学部实力突出，国际生占比超30%。</p>
+                            </div>
+                            <div class="back-section"><span class="label">学费参考</span>
+                                <p>£29,800 - £53,400/年</p>
+                            </div>
+                            <div class="comment">布里斯托的工程课程很扎实，实验和项目很多。学校对学生的支持很到位，老师也很负责。</div>
+                            <div class="comment">这座城市非常有活力，每年热气球节很浪漫。学习之外的生活很丰富，但学术要求也很高。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 杜伦大学 ==================== -->
+            <div class="uni-card" data-tags="russell" data-uni-key="Durham">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <button class="favorite-uni-btn" data-uni-key="Durham" title="收藏院校">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                            </svg>
+                        </button>
+                        <div class="image-placeholder" style="background: linear-gradient(145deg, #1a0a2e, #330044);">
+                            Dur
+                        </div>
+                        <div class="front-content">
+                            <h2>杜伦大学</h2>
+                            <span class="rank">QS世界第94</span>
+                            <div class="detail-row"><span class="label">优势专业</span>考古学、神学、商科、人文社科、法律</div>
+                            <div class="detail-row"><span class="label">录取要求</span>A-Level：A*AA - ABB</div>
+                            <div class="tags-row">
+                                <span class="mini-tag">学院制</span>
+                                <span class="mini-tag plain">英国第三古老</span>
+                            </div>
+                        </div>
+                        <div class="hover-image-overlay" style="background-image: url('images/Dur.png');"></div>
+                        <div class="data-bubble">
+                            <div class="stat-grid">
+                                <div class="stat-item"><span class="stat-value">15%</span><span
+                                        class="stat-label">录取率</span></div>
+                                <div class="stat-item"><span class="stat-value">85.6%</span><span
+                                        class="stat-label">就业率</span></div>
+                                <div class="stat-item"><span class="stat-value">3.88</span><span
+                                        class="stat-label">满意度</span></div>
+                                <div class="stat-item"><span class="stat-value">17.57%</span><span
+                                        class="stat-label">国际生</span></div>
+                                <div class="stat-item"><span class="stat-value">1:13.5</span><span
+                                        class="stat-label">师生比</span></div>
+                                <div class="stat-item"><span class="stat-value">97.5%</span><span
+                                        class="stat-label">毕业率</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-header">
+                            <h3>杜伦大学</h3>
+                            <span class="back-rank">Durham University · QS世界第94</span>
+                        </div>
+                        <div class="back-body">
+                            <div class="back-section"><span class="label">学校简介</span>
+                                <p>英国第三古老大学，罗素创始成员，独特的学院制。</p>
+                            </div>
+                            <div class="back-section"><span class="label">学费参考</span>
+                                <p>£22,000 - £35,000/年</p>
+                            </div>
+                            <div class="comment">杜伦的学院制让我很有归属感，同学之间关系紧密。虽然城市不大，但很适合静心学习。</div>
+                            <div class="comment">学校很有历史感，走在校园里就像在哈利波特的场景里。课程难度适中，但论文要求不低。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 伯明翰大学 ==================== -->
+            <div class="uni-card" data-tags="russell brick" data-uni-key="Birmingham">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <button class="favorite-uni-btn" data-uni-key="Birmingham" title="收藏院校">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                            </svg>
+                        </button>
+                        <div class="image-placeholder" style="background: linear-gradient(145deg, #200000, #550000);">
+                            Bir
+                        </div>
+                        <div class="front-content">
+                            <h2>伯明翰大学</h2>
+                            <span class="rank">QS世界第76</span>
+                            <div class="detail-row"><span class="label">优势专业</span>商科（三重认证）、工程、医学、教育、法律</div>
+                            <div class="detail-row"><span class="label">录取要求</span>A-Level：AAA - BBB</div>
+                            <div class="tags-row">
+                                <span class="mini-tag">红砖第一</span>
+                                <span class="mini-tag">三重认证</span>
+                            </div>
+                        </div>
+                        <div class="hover-image-overlay" style="background-image: url('images/Bir.png');"></div>
+                        <div class="data-bubble">
+                            <div class="stat-grid">
+                                <div class="stat-item"><span class="stat-value">12%</span><span
+                                        class="stat-label">录取率</span></div>
+                                <div class="stat-item"><span class="stat-value">82.4%</span><span
+                                        class="stat-label">就业率</span></div>
+                                <div class="stat-item"><span class="stat-value">3.8</span><span
+                                        class="stat-label">满意度</span></div>
+                                <div class="stat-item"><span class="stat-value">16.56%</span><span
+                                        class="stat-label">国际生</span></div>
+                                <div class="stat-item"><span class="stat-value">1:14.6</span><span
+                                        class="stat-label">师生比</span></div>
+                                <div class="stat-item"><span class="stat-value">96.1%</span><span
+                                        class="stat-label">毕业率</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-header">
+                            <h3>伯明翰大学</h3>
+                            <span class="back-rank">University of Birmingham</span>
+                        </div>
+                        <div class="back-body">
+                            <div class="back-section"><span class="label">学校简介</span>
+                                <p>英国第一所红砖大学，罗素创始成员，商学院三重认证。</p>
+                            </div>
+                            <div class="back-section"><span class="label">学费参考</span>
+                                <p>£25,000 - £35,000/年</p>
+                            </div>
+                            <div class="comment">伯明翰的校园很大，设施很完善。商学院的资源很丰富，经常有企业宣讲会。</div>
+                            <div class="comment">作为红砖大学，学术氛围很浓厚。学校对国际学生很友好，文化很多元。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 诺丁汉大学 ==================== -->
+            <div class="uni-card" data-tags="russell" data-uni-key="Nottingham">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <button class="favorite-uni-btn" data-uni-key="Nottingham" title="收藏院校">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                            </svg>
+                        </button>
+                        <div class="image-placeholder" style="background: linear-gradient(145deg, #0d1f2d, #1a3a5c);">
+                            Not
+                        </div>
+                        <div class="front-content">
+                            <h2>诺丁汉大学</h2>
+                            <span class="rank">QS世界第97</span>
+                            <div class="detail-row"><span class="label">优势专业</span>药学（全英第1）、化学工程、法律、商科</div>
+                            <div class="detail-row"><span class="label">录取要求</span>A-Level：A*AA - BBB</div>
+                            <div class="tags-row">
+                                <span class="mini-tag">药学第一</span>
+                                <span class="mini-tag plain">三校区</span>
+                            </div>
+                        </div>
+                        <div class="hover-image-overlay" style="background-image: url('images/Not.png');"></div>
+                        <div class="data-bubble">
+                            <div class="stat-grid">
+                                <div class="stat-item"><span class="stat-value">93%</span><span
+                                        class="stat-label">就业率</span></div>
+                                <div class="stat-item"><span class="stat-value">AACSB</span><span
+                                        class="stat-label">商学院</span></div>
+                                <div class="stat-item"><span class="stat-value">EQUIS</span><span
+                                        class="stat-label">认证</span></div>
+                                <div class="stat-item"><span class="stat-value">AMBA</span><span
+                                        class="stat-label">三重认证</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-header">
+                            <h3>诺丁汉大学</h3>
+                            <span class="back-rank">University of Nottingham</span>
+                        </div>
+                        <div class="back-body">
+                            <div class="back-section"><span class="label">学校简介</span>
+                                <p>罗素创始成员，三校区布局，商学院全英唯一三校区三重认证。</p>
+                            </div>
+                            <div class="back-section"><span class="label">学费参考</span>
+                                <p>£20,000 - £36,000/年</p>
+                            </div>
+                            <div class="comment">诺丁汉的校园很漂亮，尤其是夏天的湖边。药学和商科资源都很强，老师很愿意帮助学生。</div>
+                            <div class="comment">三校区的设置很特别，有机会去宁波或马来西亚交流。就业支持很到位。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 谢菲尔德大学 ==================== -->
+            <div class="uni-card" data-tags="russell brick" data-uni-key="Sheffield">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <button class="favorite-uni-btn" data-uni-key="Sheffield" title="收藏院校">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                            </svg>
+                        </button>
+                        <div class="image-placeholder" style="background: linear-gradient(145deg, #200000, #550000);">
+                            She
+                        </div>
+                        <div class="front-content">
+                            <h2>谢菲尔德大学</h2>
+                            <span class="rank">QS世界第92</span>
+                            <div class="detail-row"><span class="label">优势专业</span>工程学、材料科学、建筑学、新闻学</div>
+                            <div class="detail-row"><span class="label">录取要求</span>A-Level：AAA - ABB</div>
+                            <div class="tags-row">
+                                <span class="mini-tag">工程强校</span>
+                                <span class="mini-tag plain">红砖大学</span>
+                            </div>
+                        </div>
+                        <div class="hover-image-overlay" style="background-image: url('images/She.png');"></div>
+                        <div class="data-bubble">
+                            <div class="stat-grid">
+                                <div class="stat-item"><span class="stat-value">92%</span><span
+                                        class="stat-label">就业率</span></div>
+                                <div class="stat-item"><span class="stat-value">38%</span><span
+                                        class="stat-label">国际生</span></div>
+                                <div class="stat-item"><span class="stat-value">£27k</span><span
+                                        class="stat-label">起薪</span></div>
+                                <div class="stat-item"><span class="stat-value">罗素第1</span><span
+                                        class="stat-label">NSS满意度</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-header">
+                            <h3>谢菲尔德大学</h3>
+                            <span class="back-rank">University of Sheffield</span>
+                        </div>
+                        <div class="back-body">
+                            <div class="back-section"><span class="label">学校简介</span>
+                                <p>红砖大学，罗素集团成员，欧洲顶尖工程研究中心。</p>
+                            </div>
+                            <div class="back-section"><span class="label">学费参考</span>
+                                <p>£24,000 - £28,000/年</p>
+                            </div>
+                            <div class="comment">谢菲尔德的学生满意度不是吹的，学生会真的很给力。城市生活成本低，对钱包很友好。</div>
+                            <div class="comment">工程专业的实验条件很棒，尤其是钻石大楼。不过冬天有点冷，需要适应。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 圣安德鲁斯大学 ==================== -->
+            <div class="uni-card" data-tags="scotland" data-uni-key="StAndrews">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <button class="favorite-uni-btn" data-uni-key="StAndrews" title="收藏院校">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                            </svg>
+                        </button>
+                        <div class="image-placeholder" style="background: linear-gradient(145deg, #1a0a2e, #3d1f66);">
+                            StA
+                        </div>
+                        <div class="front-content">
+                            <h2>圣安德鲁斯大学</h2>
+                            <span class="rank">QS世界第113 · 英国本土前4</span>
+                            <div class="detail-row"><span class="label">优势专业</span>国际关系、哲学、古典学、英国文学、历史</div>
+                            <div class="detail-row"><span class="label">录取要求</span>A-Level：A*AA - ABB</div>
+                            <div class="tags-row">
+                                <span class="mini-tag">第三古老</span>
+                                <span class="mini-tag">小班精英</span>
+                                <span class="mini-tag plain">王室之选</span>
+                            </div>
+                        </div>
+                        <div class="hover-image-overlay" style="background-image: url('images/StA.png');"></div>
+                        <div class="data-bubble">
+                            <div class="stat-grid">
+                                <div class="stat-item"><span class="stat-value">14%</span><span
+                                        class="stat-label">录取率</span></div>
+                                <div class="stat-item"><span class="stat-value">82.8%</span><span
+                                        class="stat-label">就业率</span></div>
+                                <div class="stat-item"><span class="stat-value">4.18</span><span
+                                        class="stat-label">满意度</span></div>
+                                <div class="stat-item"><span class="stat-value">27.24%</span><span
+                                        class="stat-label">国际生</span></div>
+                                <div class="stat-item"><span class="stat-value">1:11.9</span><span
+                                        class="stat-label">师生比</span></div>
+                                <div class="stat-item"><span class="stat-value">92%</span><span
+                                        class="stat-label">NSS满意度</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-header">
+                            <h3>圣安德鲁斯大学</h3>
+                            <span class="back-rank">University of St Andrews</span>
+                        </div>
+                        <div class="back-body">
+                            <div class="back-section"><span class="label">学校简介</span>
+                                <p>1413年建校，英语世界第三古老，小班精英教育，王室之选。</p>
+                            </div>
+                            <div class="back-section"><span class="label">学费参考</span>
+                                <p>£31,000 - £39,000/年</p>
+                            </div>
+                            <div class="back-section"><span class="label">学生评论</span>
+                                <div class="comment">圣安是小班教学，教授都能叫出你的名字。虽然小镇生活单调，但很适合静心做学问。</div>
+                                <div class="comment">学校很有王室气质，传统活动很多。国际关系专业确实强，学术讨论很深入。</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 格拉斯哥大学 ==================== -->
+            <div class="uni-card" data-tags="russell scotland" data-uni-key="Glasgow">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <button class="favorite-uni-btn" data-uni-key="Glasgow" title="收藏院校">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                            </svg>
+                        </button>
+                        <div class="image-placeholder" style="background: linear-gradient(145deg, #1a0a2e, #3d1f66);">
+                            Gla
+                        </div>
+                        <div class="front-content">
+                            <h2>格拉斯哥大学</h2>
+                            <span class="rank">QS世界第79</span>
+                            <div class="detail-row"><span class="label">优势专业</span>医学、商科、工程、计算机科学、数据科学</div>
+                            <div class="detail-row"><span class="label">录取要求</span>A-Level：AAA - ABB</div>
+                            <div class="tags-row">
+                                <span class="mini-tag plain">第四古老</span>
+                                <span class="mini-tag plain">苏格兰名校</span>
+                            </div>
+                        </div>
+                        <div class="hover-image-overlay" style="background-image: url('images/Gla.png');"></div>
+                        <div class="data-bubble">
+                            <div class="stat-grid">
+                                <div class="stat-item"><span class="stat-value">15%</span><span
+                                        class="stat-label">录取率</span></div>
+                                <div class="stat-item"><span class="stat-value">78.3%</span><span
+                                        class="stat-label">就业率</span></div>
+                                <div class="stat-item"><span class="stat-value">3.85</span><span
+                                        class="stat-label">满意度</span></div>
+                                <div class="stat-item"><span class="stat-value">9.39%</span><span
+                                        class="stat-label">国际生</span></div>
+                                <div class="stat-item"><span class="stat-value">69%</span><span
+                                        class="stat-label">整体录取</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="back-header">
+                            <h3>格拉斯哥大学</h3>
+                            <span class="back-rank">University of Glasgow</span>
+                        </div>
+                        <div class="back-body">
+                            <div class="back-section"><span class="label">学校简介</span>
+                                <p>英语世界第四古老大学，罗素集团成员，7位诺奖得主。</p>
+                            </div>
+                            <div class="back-section"><span class="label">学费参考</span>
+                                <p>£24,000 - £29,000/年</p>
+                            </div>
+                            <div class="back-section"><span class="label">学生评论</span>
+                                <div class="comment">格拉斯哥的学术底蕴很深厚，老师水平很高。城市文化丰富，音乐和艺术活动很多。</div>
+                                <div class="comment">学校建筑很有特色，像霍格沃茨。医学和工程专业很强，但学习压力也不小。</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-white" style="background-color: #000000;">
+        <div class="w-full px-6 sm:px-10 lg:px-16 py-10 md:py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg flex items-center justify-center"
+                            style="background-color: #c9a84c;">
+                            <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                stroke-width="1.8">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="serif-display font-bold text-lg">A-Level Guide</span>
+                            <span class="block text-[10px] font-medium tracking-widest uppercase text-white">升学规划 ·
+                                选课指导</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-white leading-relaxed">为A-Level学生和家长提供专业、可靠的科目指南与升学规划服务。助力每一位学子实现英国名校梦想。</p>
+                </div>
+                <div class="md:justify-self-end">
+                    <h4 class="text-sm font-semibold tracking-widest uppercase text-[#c9a84c] mb-4">联系我们</h4>
+                    <ul class="space-y-3.5 text-sm text-white">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-[#c9a84c] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" stroke-width="1.6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                            </svg>
+                            <span>上海市静安区南京西路<br />1266号恒隆广场</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-[#c9a84c] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" stroke-width="1.6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+                            </svg>
+                            <span>+86 (021) 6123-4567<br />+44 (0) 20 7946 0958</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-[#c9a84c] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" stroke-width="1.6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                            </svg>
+                            <span>info@alevelguide.co.uk<br />admissions@alevelguide.cn</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div
+                class="mt-10 pt-6 border-t border-white/30 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-white">© 2026 A-Level Guide. All rights reserved. 专注A-Level升学规划与选课指导。</p>
+                <div class="flex gap-6 text-xs text-white">
+                    <a href="#" class="hover:text-[#c9a84c] transition">隐私政策</a>
+                    <a href="#" class="hover:text-[#c9a84c] transition">使用条款</a>
+                    <a href="#" class="hover:text-[#c9a84c] transition">Cookie 设置</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ========== 全局变量：跟踪当前筛选模式 ==========
+        let currentFilterMode = 'all'; // 'all' | 'category' | 'favorites'
+
+        // 移动端菜单切换
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // ========== 筛选逻辑（含收藏视图切换） ==========
+        (function () {
+            const filterButtons = document.querySelectorAll('#filterBar .filter-btn');
+            const uniCards = document.querySelectorAll('.uni-card');
+            const uniGrid = document.getElementById('uniGrid');
+            const favGrid = document.getElementById('favorite-unis-grid'); // 保留但不使用
+
+            // 普通分类筛选
+            function applyFilter(filterType) {
+                uniCards.forEach(card => {
+                    const tags = card.getAttribute('data-tags') || '';
+                    if (filterType === 'all' || tags.includes(filterType)) {
+                        card.classList.remove('hidden-card');
+                    } else {
+                        card.classList.add('hidden-card');
+                    }
+                });
+            }
+
+            // 收藏筛选（由全局函数 window.applyFavoritesFilter 实现，稍后定义）
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    // 始终显示院校网格，隐藏备用网格（备用网格不再使用）
+                    uniGrid.classList.remove('hidden');
+                    if (favGrid) favGrid.classList.add('hidden');
+
+                    // 更新按钮激活状态
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // 判断当前模式
+                    if (this.id === 'view-fav-uni-btn') {
+                        currentFilterMode = 'favorites';
+                        // 调用全局收藏过滤函数（在收藏功能 IIFE 中定义）
+                        if (typeof window.applyFavoritesFilter === 'function') {
+                            window.applyFavoritesFilter();
+                        }
+                    } else {
+                        currentFilterMode = 'category';
+                        applyFilter(this.getAttribute('data-filter'));
+                    }
+                });
+            });
+        })();
+
+        // ========== 卡片翻转逻辑 ==========
+        document.querySelectorAll('.uni-card').forEach(card => {
+            card.addEventListener('click', function () {
+                if (this.classList.contains('hidden-card')) return;
+                this.classList.toggle('flipped');
+            });
+        });
+
+        // ========== 页面返回时重置 ==========
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        });
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+
+        // ========== 环形分布 + 碰撞检测（防止气泡重叠） ==========
+        (function arrangeBubblesInRing() {
+            document.querySelectorAll('.uni-card').forEach(card => {
+                const items = card.querySelectorAll('.data-bubble .stat-item');
+                if (!items.length) return;
+                const count = items.length;
+                const baseAngleStep = 360 / count;
+                const centerX = 50;
+                const centerY = 50;
+                const baseRadius = 20;
+                const radiusSpread = 25;
+                const placed = [];
+                const MIN_GAP_X = 16;
+                const MIN_GAP_Y = 10;
+
+                function isOverlapping(left, top) {
+                    for (let p of placed) {
+                        const dx = Math.abs(left - p.left);
+                        const dy = Math.abs(top - p.top);
+                        if (dx < MIN_GAP_X && dy < MIN_GAP_Y) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+                items.forEach((item, index) => {
+                    let angle = index * baseAngleStep + (Math.random() - 0.5) * 40;
+                    let radius = baseRadius + Math.random() * radiusSpread;
+                    let left, top;
+                    let attempts = 0;
+                    const maxAttempts = 40;
+
+                    while (attempts < maxAttempts) {
+                        const currentAngle = angle + (Math.random() - 0.5) * 20;
+                        const currentRadius = radius + (Math.random() - 0.5) * 6;
+                        const rad = currentAngle * Math.PI / 180;
+                        left = centerX + currentRadius * Math.cos(rad);
+                        top = centerY + currentRadius * Math.sin(rad);
+                        left = Math.min(94, Math.max(6, left));
+                        top = Math.min(94, Math.max(6, top));
+                        if (!isOverlapping(left, top)) break;
+                        radius += 4;
+                        angle += 15 + Math.random() * 20;
+                        attempts++;
+                    }
+
+                    if (attempts >= maxAttempts) {
+                        const fallbackAngle = index * baseAngleStep + 30;
+                        const fallbackRadius = baseRadius + radiusSpread + 10;
+                        const rad = fallbackAngle * Math.PI / 180;
+                        left = centerX + fallbackRadius * Math.cos(rad);
+                        top = centerY + fallbackRadius * Math.sin(rad);
+                        left = Math.min(92, Math.max(8, left));
+                        top = Math.min(92, Math.max(8, top));
+                    }
+
+                    item.style.left = left + '%';
+                    item.style.top = top + '%';
+                    item.style.transform = 'translate(-50%, -50%)';
+                    item.style.zIndex = Math.floor(Math.random() * 10) + 1;
+                    placed.push({
+                        left,
+                        top
+                    });
+                });
+            });
+        })();
+
+        // ========== 将 .comment 转换为微信式对话气泡 ==========
+        (function convertCommentsToChat() {
+            document.querySelectorAll('.comment').forEach((comment, index) => {
+                const parent = comment.parentNode;
+                const nextSibling = comment.nextSibling;
+                const messageDiv = document.createElement('div');
+                messageDiv.className = index % 2 === 0 ? 'chat-message chat-left' : 'chat-message chat-right';
+                const avatar = document.createElement('div');
+                avatar.className = 'chat-avatar';
+                avatar.textContent = index % 2 === 0 ? '🙋‍♀️' : '🙋‍♂️';
+                comment.classList.add('chat-bubble');
+                comment.classList.remove('comment');
+                messageDiv.appendChild(comment);
+                messageDiv.appendChild(avatar);
+                if (nextSibling) {
+                    parent.insertBefore(messageDiv, nextSibling);
+                } else {
+                    parent.appendChild(messageDiv);
+                }
+            });
+            document.querySelectorAll('.back-section').forEach(section => {
+                if (section.children.length === 0 && section.textContent.trim() === '') {
+                    section.remove();
+                }
+            });
+        })();
+    </script>
+    <script src="ai-assistant.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        (function () {
+            const SUPABASE_URL = 'https://ugtdibfbpanltfvkpxro.supabase.co';
+            const SUPABASE_ANON_KEY = 'sb_publishable_8eDda8zkFy9RvDbFQDQf6A_4zn9vsJe';
+
+            if (!window.supabase) {
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+                script.onload = init;
+                document.head.appendChild(script);
+            } else {
+                init();
+            }
+
+            function init() {
+                const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                const dropdown = document.getElementById('profile-dropdown');
+                if (!dropdown) return;
+
+                async function updateDropdown() {
+                    const {
+                        data: {
+                            user
+                        }
+                    } = await supabase.auth.getUser();
+                    if (user) {
+                        dropdown.innerHTML = `
+                            <a href="profile.html" class="block px-4 py-2 text-sm text-white hover:bg-white/10 hover:text-gold transition">个人主页</a>
+                            <button id="logout-menu-btn" class="w-full text-left px-4 py-2 text-sm text-white hover:bg-white/10 hover:text-gold transition">登出</button>
+                        `;
+                        document.getElementById('logout-menu-btn')?.addEventListener('click', async () => {
+                            await supabase.auth.signOut();
+                            window.location.reload();
+                        });
+                    } else {
+                        dropdown.innerHTML = `
+                            <a href="login.html" class="block px-4 py-2 text-sm text-white hover:bg-white/10 hover:text-gold transition">登录</a>
+                        `;
+                    }
+                }
+                updateDropdown();
+                window.addEventListener('auth-state-change', updateDropdown);
+            }
+        })();
+
+        // ========== 收藏功能 ==========
+        (async function initFavoriteUniversities() {
+            const SUPABASE_URL = 'https://ugtdibfbpanltfvkpxro.supabase.co';
+            const SUPABASE_ANON_KEY = 'sb_publishable_8eDda8zkFy9RvDbFQDQf6A_4zn9vsJe';
+            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            const {
+                data: {
+                    user
+                }
+            } = await supabase.auth.getUser();
+            const favoriteKeys = new Set();
+
+            if (user) {
+                const {
+                    data,
+                    error
+                } = await supabase
+                    .from('university_favorites')
+                    .select('university_key')
+                    .eq('user_id', user.id);
+                if (!error && data) {
+                    data.forEach(item => favoriteKeys.add(item.university_key));
+                }
+            }
+
+            function updateFavoriteButtons() {
+                document.querySelectorAll('.favorite-uni-btn').forEach(btn => {
+                    const key = btn.getAttribute('data-uni-key');
+                    if (favoriteKeys.has(key)) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+            }
+
+            async function toggleFavorite(key, btn) {
+                if (!user) {
+                    alert('请先登录');
+                    window.location.href = 'login.html';
+                    return;
+                }
+                if (favoriteKeys.has(key)) {
+                    const {
+                        error
+                    } = await supabase
+                        .from('university_favorites')
+                        .delete()
+                        .eq('user_id', user.id)
+                        .eq('university_key', key);
+                    if (!error) {
+                        favoriteKeys.delete(key);
+                        btn.classList.remove('active');
+                        // 如果当前是收藏视图，立即刷新显示
+                        if (currentFilterMode === 'favorites' && typeof window.applyFavoritesFilter === 'function') {
+                            window.applyFavoritesFilter();
+                        }
+                    }
+                } else {
+                    const {
+                        error
+                    } = await supabase
+                        .from('university_favorites')
+                        .insert([{
+                            user_id: user.id,
+                            university_key: key
+                        }]);
+                    if (!error) {
+                        favoriteKeys.add(key);
+                        btn.classList.add('active');
+                        if (currentFilterMode === 'favorites' && typeof window.applyFavoritesFilter === 'function') {
+                            window.applyFavoritesFilter();
+                        }
+                    }
+                }
+            }
+
+            // 暴露收藏过滤函数到全局，供筛选逻辑调用
+            window.applyFavoritesFilter = function () {
+                document.querySelectorAll('.uni-card').forEach(card => {
+                    const key = card.getAttribute('data-uni-key');
+                    if (favoriteKeys.has(key)) {
+                        card.classList.remove('hidden-card');
+                    } else {
+                        card.classList.add('hidden-card');
+                    }
+                });
+            };
+            // 如果用户已经点击了“我收藏的”，数据加载完成后立即执行筛选
+            if (currentFilterMode === 'favorites') {
+                window.applyFavoritesFilter();
+            }
+
+            document.querySelectorAll('.favorite-uni-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleFavorite(btn.getAttribute('data-uni-key'), btn);
+                });
+            });
+
+            // 初始化按钮状态
+            updateFavoriteButtons();
+        })();
+    </script>
+</body>
+
+</html>

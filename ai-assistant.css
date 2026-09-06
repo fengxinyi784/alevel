@@ -1,0 +1,279 @@
+/* ========== AI 卡通小助手 ========== */
+.ai-assistant {
+    position: fixed;
+    left: auto;
+    top: auto;
+    z-index: 9999;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    /* 移除 bottom 和 right，位置将由 JavaScript 动态设置 */
+}
+
+.ai-assistant-btn {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+/* 悬浮按钮 */
+.ai-assistant-btn {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);  
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: ai-float 3s ease-in-out infinite;
+}
+
+.ai-assistant-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 0 8px rgba(201, 168, 76, 0.2);
+}
+
+/* 卡通小头像（用 emoji 或文字） */
+.ai-assistant-btn span {
+    font-size: 2.8rem;
+    line-height: 1;
+    user-select: none;
+}
+
+/* 浮动动画 */
+@keyframes ai-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+/* 对话窗口 */
+.ai-chat-window {
+    position: absolute;
+    bottom: 90px;
+    right: 0;
+    width: 320px;
+    max-width: calc(100vw - 40px);
+    background: #000000;
+    border: 2px solid #c9a84c;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    display: none; /* 默认隐藏，点击后显示 */
+}
+
+.ai-chat-window.open {
+    display: block;
+    animation: ai-chat-in 0.3s ease;
+}
+
+@keyframes ai-chat-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ai-glow-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* 对话头部 */
+.ai-chat-header {
+    background: #c9a84c;
+    color: #000000;
+    padding: 16px 20px;
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ai-chat-header button {
+    background: none;
+    border: none;
+    color: #000000;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+/* 对话内容区 */
+.ai-chat-body {
+    padding: 20px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.ai-chat-body .ai-message {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 15px;
+    border: 1px solid #333;
+}
+
+.ai-chat-body .ai-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.ai-actions a {
+    display: block;
+    background: #c9a84c;
+    color: #000000;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.ai-actions a:hover {
+    background: #d4b85c;
+}
+
+/* ========== 聊天界面增强 ========== */
+.ai-chat-messages {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+.ai-message-bubble {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+    max-width: 85%;
+    word-wrap: break-word;
+    line-height: 1.5;
+    font-size: 0.9rem;
+}
+
+.ai-message-bubble.user {
+    background: #c9a84c;
+    color: #000000;
+    margin-left: auto;
+    border: none;
+}
+
+.ai-message-bubble.bot {
+    background: #1a1a1a;
+    color: #ffffff;
+}
+
+.ai-chat-input-area {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.ai-chat-input-area input {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 20px;
+    border: 1px solid #555;
+    background: #111;
+    color: #fff;
+    outline: none;
+    font-size: 0.9rem;
+}
+
+.ai-chat-input-area input:focus {
+    border-color: #c9a84c;
+}
+
+.ai-chat-input-area button {
+    background: #c9a84c;
+    color: #000;
+    border: none;
+    border-radius: 20px;
+    padding: 0 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.ai-chat-input-area button:hover {
+    background: #d4b85c;
+}
+
+/* 移动端适配 */
+@media (max-width: 640px) {
+    .ai-assistant-btn {
+        width: 100px;
+        height: 100px;
+        font-size: 2.8rem;
+    }
+    .ai-assistant-btn::before {
+        top: -12px;
+        left: -12px;
+        right: -12px;
+        bottom: -12px;
+    }
+    .ai-assistant-btn::after {
+        top: -20px;
+        left: -20px;
+        right: -20px;
+        bottom: -20px;
+    }
+}
+
+/* ========== 科技电流环绕效果 ========== */
+.ai-assistant-btn {
+    position: relative;  /* 确保伪元素相对按钮定位 */
+    /* 原有样式保持不变 */
+}
+
+/* 电流外圈 1：旋转的虚线环 */
+.ai-assistant-btn::before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: -16px;
+    right: -16px;
+    bottom: -16px;
+    border-radius: 50%;
+    border: 2px dashed rgba(201, 168, 76, 0.7);
+    animation: ai-current-spin 6s linear infinite;
+    box-shadow: 0 0 10px rgba(201, 168, 76, 0.5);
+    pointer-events: none;  /* 不影响点击 */
+}
+
+/* 电流外圈 2：反向旋转的发光弧线 */
+.ai-assistant-btn::after {
+    content: '';
+    position: absolute;
+    top: -28px;
+    left: -28px;
+    right: -28px;
+    bottom: -28px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #c9a84c;
+    border-right-color: rgba(255, 255, 255, 0.5);
+    animation: ai-current-spin-reverse 4s linear infinite;
+    box-shadow: 
+    0 0 15px 5px rgba(201, 168, 76, 0.9),
+    0 0 30px 15px rgba(201, 168, 76, 0.6),
+    0 0 60px 30px rgba(201, 168, 76, 0.3);
+    animation: ai-current-spin-reverse 4s linear infinite, ai-glow-pulse 2s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes ai-current-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes ai-current-spin-reverse {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}

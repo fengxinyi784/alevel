@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>A-Level 升学指南 | 专业选课与升学规划</title>
+    <title>首页 - A-Level Guide</title>
     <meta name="description" content="为A-Level学生和家长提供专业的科目指南、选课策略与升学时间轴规划，助力英国名校申请。" />
     <script src="https://cdn.tailwindcss.com">
     </script>
@@ -44,10 +44,10 @@
     </script>
     <style>
         :root {
-            --oxford: #002147;
-            --navy-600: #243b53;
+            --oxford: #000000;
+            --navy-600: #000000;
             --gold: #c9a84c;
-            --cream: #faf8f5;
+            --cream: #ffffff;
         }
         * {
             margin: 0;
@@ -56,8 +56,8 @@
         }
         body {
             font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: #ffffff;
-            color: #1a2d40;
+            background-color: #000000;
+            color: #ffffff;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -69,12 +69,12 @@
             font-size: 0.875rem;
             font-weight: 500;
             letter-spacing: 0.02em;
-            color: #334e68;
+            color: #ffffff;
             transition: color 0.2s ease;
             padding: 0.5rem 0.25rem;
         }
         .nav-link:hover {
-            color: var(--oxford);
+            color: #c9a84c;
         }
         .nav-link::after {
             content: '';
@@ -90,47 +90,11 @@
             width: 100%;
         }
         .nav-link.active {
-            color: var(--oxford);
+            color: #c9a84c;
             font-weight: 600;
         }
         .nav-link.active::after {
             width: 100%;
-        }
-        .subject-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background: #ffffff;
-            border: 1px solid #e8e3dc;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        .subject-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-        }
-        .subject-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 56px;
-            height: 56px;
-            border-radius: 12px;
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 1rem;
-        }
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--oxford);
-            line-height: 1.2;
-        }
-        .footer-link {
-            color: #9fb3c8;
-            transition: color 0.2s ease;
-        }
-        .footer-link:hover {
-            color: #ffffff;
         }
         .btn-primary {
             background-color: var(--oxford);
@@ -172,11 +136,6 @@
             background-color: var(--gold);
             border-radius: 2px;
         }
-        .hero-pattern {
-            background-image:
-                radial-gradient(ellipse at 20% 50%, rgba(201, 168, 76, 0.06) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(0, 33, 71, 0.04) 0%, transparent 50%);
-        }
         .section-badge {
             display: inline-block;
             padding: 0.35rem 1rem;
@@ -189,49 +148,109 @@
             background-color: rgba(201, 168, 76, 0.12);
             border: 1px solid rgba(201, 168, 76, 0.3);
         }
-        @media (max-width: 768px) {
-            .stat-number {
-                font-size: 1.85rem;
-            }
+
+        /* ========== 轮播图自定义样式 ========== */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            background-color: #000000;
+            width: 100%;
+            /* 高度改为视口高度的85%，可根据喜好调整 */
+            height: 85vh;
+            min-height: 500px;
+        }
+        .carousel-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        .carousel-slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 2;
+        }
+        .slide-content {
+            color: white;
+            max-width: 90%;
+        }
+        .slide-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: #c9a84c;
+        }
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Georgia', serif;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+        .slide-text {
+            font-size: 1.2rem;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        .slide-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .slide-stat-item {
+            text-align: center;
+        }
+        .slide-stat-number {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #c9a84c;
+        }
+        .slide-stat-label {
+            font-size: 1rem;
+            color: #ffffff;
         }
     </style>
+    <link rel="stylesheet" href="ai-assistant.css">
 </head>
 <body>
 
     <!-- ==================== 顶部导航栏 ==================== -->
-    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-nav">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header class="sticky top-0 z-50 bg-black border-b border-white/30 shadow-nav">
+        <div class="w-full px-6 sm:px-10 lg:px-16">
             <div class="flex items-center justify-between h-16 md:h-18">
                 <!-- Logo -->
                 <div class="flex items-center gap-3 flex-shrink-0">
-                    <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background-color: var(--oxford);">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background-color: #c9a84c;">
+                        <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
                         </svg>
                     </div>
                     <div class="leading-tight">
-                        <span class="serif-display font-bold text-lg md:text-xl" style="color: var(--oxford);">A-Level Guide</span>
-                        <span class="block text-[10px] md:text-[11px] font-medium tracking-widest uppercase text-gray-500">升学规划 · 选课指导</span>
+                        <span class="serif-display font-bold text-lg md:text-xl text-white">A-Level Guide</span>
+                        <span class="block text-[10px] md:text-[11px] font-medium tracking-widest uppercase text-white">升学规划 · 选课指导</span>
                     </div>
                 </div>
 
                 <!-- 桌面导航 -->
-                <nav class="hidden md:flex items-center gap-8" aria-label="主导航">
-                    <a href="#" class="nav-link active">首页</a>
-                    <a href="#subjects" class="nav-link">科目指南</a>
-                    <a href="#strategy" class="nav-link">选课策略</a>
-                    <a href="#timeline" class="nav-link">升学时间轴</a>
-                    <a href="#about" class="nav-link">关于我们</a>
+                <nav class="hidden md:flex items-center gap-10 lg:gap-14" aria-label="主导航">
+                    <a href="index.html" class="nav-link active">首页</a>
+                    <a href="subjects.html" class="nav-link">热门科目</a>
+                    <a href="universities.html" class="nav-link">热门院校</a>
+                    <a href="strategy.html" class="nav-link">选课策略</a>
+                    <a href="timeline.html" class="nav-link">升学时间轴</a>
+                    <a href="profile.html" class="nav-link">个人主页</a>
                 </nav>
 
-                <!-- 右侧 CTA -->
-                <div class="hidden md:block">
-                    <a href="#contact" class="btn-primary text-sm !px-5 !py-2.5">免费咨询</a>
-                </div>
-
                 <!-- 移动端菜单按钮 -->
-                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-50 transition" aria-label="打开菜单">
-                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition" aria-label="打开菜单">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
@@ -239,362 +258,49 @@
         </div>
 
         <!-- 移动端下拉菜单 -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 px-4 py-3 pb-4 shadow-lg">
+       <div id="mobile-menu" class="hidden md:hidden bg-black border-t border-white/30 px-6 py-3 pb-4 shadow-lg">
             <nav class="flex flex-col gap-1" aria-label="移动端导航">
-                <a href="#" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-oxford bg-gray-50">首页</a>
-                <a href="#subjects" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">科目指南</a>
-                <a href="#strategy" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">选课策略</a>
-                <a href="#timeline" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">升学时间轴</a>
-                <a href="#about" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">关于我们</a>
-                <a href="#contact" class="block px-3 py-2.5 rounded-lg text-sm font-semibold text-white mt-1" style="background-color: var(--oxford);">免费咨询</a>
+                <a href="index.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-[#c9a84c] bg-white/10">首页</a>
+                <a href="subjects.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">热门科目</a>
+                <a href="universities.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">热门院校</a>
+                <a href="strategy.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">选课策略</a>
+                <a href="timeline.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">升学时间轴</a>
+                <a href="about.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">关于我们</a>
             </nav>
         </div>
     </header>
 
-    <!-- ==================== Hero 区域 ==================== -->
-    <section class="hero-pattern relative overflow-hidden" style="background: linear-gradient(175deg, #faf8f5 0%, #ffffff 40%, #f7f5f2 100%);">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-28">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                <!-- 左侧文案 -->
-                <div>
-                    <span class="section-badge mb-5">Est. 2016 · 英国升学专业顾问</span>
-                    <h1 class="serif-display text-4xl md:text-5xl lg:text-[3.25rem] font-bold leading-tight tracking-tight" style="color: var(--oxford);">
-                        为 A-Level 学生<br class="hidden sm:block" />规划通往<span class="text-[#c9a84c]">世界名校</span>的路径
-                    </h1>
-                    <p class="mt-5 text-base md:text-lg leading-relaxed text-gray-600 max-w-xl">
-                        我们深知A-Level课程的选择与升学规划对学生未来的深远影响。从科目搭配到申请节奏，从学术能力到背景提升，我们提供一站式、个性化的专业指导，陪伴每一位学生稳步迈向牛津、剑桥、帝国理工等顶尖学府。
-                    </p>
-                    <div class="mt-8 flex flex-wrap gap-4">
-                        <a href="#subjects" class="btn-primary">浏览热门科目</a>
-                        <a href="#contact" class="btn-outline">预约免费评估</a>
-                    </div>
-                    <!-- 信任指标 -->
-                    <div class="mt-10 flex flex-wrap gap-8 md:gap-12">
-                        <div>
-                            <div class="stat-number">96%</div>
-                            <p class="text-sm text-gray-500 mt-1 font-medium">学员获得第一志愿录取</p>
-                        </div>
-                        <div>
-                            <div class="stat-number">150+</div>
-                            <p class="text-sm text-gray-500 mt-1 font-medium">牛剑 G5 录取案例</p>
-                        </div>
-                        <div>
-                            <div class="stat-number">10年</div>
-                            <p class="text-sm text-gray-500 mt-1 font-medium">深耕英国本科申请</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- 右侧视觉卡片 -->
-                <div class="hidden lg:block relative">
-                    <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white" style="aspect-ratio: 4/3; background: linear-gradient(145deg, #002147 0%, #1a3a5c 60%, #243b53 100%);">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <svg class="w-24 h-24 text-white/25" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-                            </svg>
-                        </div>
-                        <!-- 叠加信息 -->
-                        <div class="absolute bottom-6 left-6 right-6 text-white">
-                            <p class="text-xs font-semibold tracking-widest uppercase text-[#c9a84c] mb-2">A-Level Subject Pathways</p>
-                            <p class="text-lg font-semibold serif-display">Mathematics · Physics · Economics</p>
-                            <p class="text-sm text-white/70 mt-1">三大核心科目，覆盖绝大多数英国名校热门专业</p>
-                        </div>
-                    </div>
-                    <!-- 浮动小卡片 -->
-                    <div class="absolute -top-5 -right-5 bg-white rounded-xl shadow-xl px-5 py-4 border border-gray-100">
-                        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">录取率对比</p>
-                        <p class="text-2xl font-bold mt-1" style="color: var(--oxford);">87% <span class="text-sm font-medium text-gray-400">vs 64%</span></p>
-                        <p class="text-[11px] text-gray-400 mt-0.5">科学选课 vs 盲目选课</p>
-                    </div>
-                    <div class="absolute -bottom-4 -left-3 bg-white rounded-xl shadow-xl px-5 py-4 border border-gray-100">
-                        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">牛剑录取率</p>
-                        <p class="text-2xl font-bold mt-1" style="color: var(--oxford);">32%</p>
-                        <p class="text-[11px] text-gray-400 mt-0.5">远超平均 17.5%</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==================== 热门科目区域 ==================== -->
-    <section id="subjects" class="py-16 md:py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- 区域标题 -->
-            <div class="text-center mb-12 md:mb-16">
-                <span class="section-badge mb-4">Core Subjects</span>
-                <h2 class="serif-display text-3xl md:text-4xl font-bold tracking-tight" style="color: var(--oxford);">热门科目指南</h2>
-                <div class="divider-gold mx-auto mt-4"></div>
-                <p class="mt-4 text-gray-600 max-w-2xl mx-auto text-base md:text-lg">
-                    数学、物理、经济是A-Level课程中最具含金量与专业覆盖度的三大科目。掌握它们的选课逻辑与学习方法，是冲刺顶尖大学的关键一步。
-                </p>
-            </div>
-
-            <!-- 科目卡片 -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                <!-- 数学卡片 -->
-                <div class="subject-card p-7 md:p-8">
-                    <div class="subject-icon" style="background-color: #002147;">
-                        <span>∑</span>
-                    </div>
-                    <h3 class="serif-display text-xl md:text-2xl font-bold mt-2" style="color: var(--oxford);">Mathematics</h3>
-                    <p class="text-sm font-medium text-[#c9a84c] mt-1 mb-3">A-Level 数学</p>
-                    <p class="text-gray-600 text-sm leading-relaxed">
-                        作为STEM领域的基石科目，A-Level数学涵盖纯数学、力学与统计学。几乎所有英国大学的理工科、经济金融类专业都将数学视为核心必备科目。
-                    </p>
-                    <ul class="mt-4 space-y-2 text-sm text-gray-500">
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-[#c9a84c] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.707-9.293a1 1 0 0 0-1.414-1.414L9 10.586 7.707 9.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4Z" clip-rule="evenodd"/></svg>
-                            推荐专业：工程、计算机、经济、物理
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-[#c9a84c] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.707-9.293a1 1 0 0 0-1.414-1.414L9 10.586 7.707 9.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4Z" clip-rule="evenodd"/></svg>
-                            通常要求：A* 或 A
-                        </li>
-                    </ul>
-                    <a href="#contact" class="inline-block mt-5 text-sm font-semibold text-[#002147] hover:text-[#1a3a5c] transition underline-offset-4 hover:underline">
-                        查看详细科目指南 →
-                    </a>
-                </div>
-
-                <!-- 物理卡片 -->
-                <div class="subject-card p-7 md:p-8">
-                    <div class="subject-icon" style="background-color: #1a3a5c;">
-                        <span>⚛</span>
-                    </div>
-                    <h3 class="serif-display text-xl md:text-2xl font-bold mt-2" style="color: var(--oxford);">Physics</h3>
-                    <p class="text-sm font-medium text-[#c9a84c] mt-1 mb-3">A-Level 物理</p>
-                    <p class="text-gray-600 text-sm leading-relaxed">
-                        A-Level物理培养学生严谨的科学思维与实验能力，是申请工程、物理、天文、材料科学等专业的核心科目，也是牛剑理工科面试的重要考察领域。
-                    </p>
-                    <ul class="mt-4 space-y-2 text-sm text-gray-500">
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-[#c9a84c] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.707-9.293a1 1 0 0 0-1.414-1.414L9 10.586 7.707 9.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4Z" clip-rule="evenodd"/></svg>
-                            推荐专业：工程、物理、自然科学、建筑
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-[#c9a84c] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.707-9.293a1 1 0 0 0-1.414-1.414L9 10.586 7.707 9.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4Z" clip-rule="evenodd"/></svg>
-                            通常要求：A 或 A*
-                        </li>
-                    </ul>
-                    <a href="#contact" class="inline-block mt-5 text-sm font-semibold text-[#002147] hover:text-[#1a3a5c] transition underline-offset-4 hover:underline">
-                        查看详细科目指南 →
-                    </a>
-                </div>
-
-                <!-- 经济卡片 -->
-                <div class="subject-card p-7 md:p-8">
-                    <div class="subject-icon" style="background-color: #243b53;">
-                        <span>£</span>
-                    </div>
-                    <h3 class="serif-display text-xl md:text-2xl font-bold mt-2" style="color: var(--oxford);">Economics</h3>
-                    <p class="text-sm font-medium text-[#c9a84c] mt-1 mb-3">A-Level 经济</p>
-                    <p class="text-gray-600 text-sm leading-relaxed">
-                        A-Level经济涵盖微观与宏观经济学，训练学生的分析、评估与写作能力。是申请经济、金融、管理、PPE等社科类专业的核心科目。
-                    </p>
-                    <ul class="mt-4 space-y-2 text-sm text-gray-500">
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-[#c9a84c] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.707-9.293a1 1 0 0 0-1.414-1.414L9 10.586 7.707 9.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4Z" clip-rule="evenodd"/></svg>
-                            推荐专业：经济、金融、管理、PPE、法律
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-[#c9a84c] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.707-9.293a1 1 0 0 0-1.414-1.414L9 10.586 7.707 9.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4Z" clip-rule="evenodd"/></svg>
-                            通常要求：A 或 A*
-                        </li>
-                    </ul>
-                    <a href="#contact" class="inline-block mt-5 text-sm font-semibold text-[#002147] hover:text-[#1a3a5c] transition underline-offset-4 hover:underline">
-                        查看详细科目指南 →
-                    </a>
-                </div>
-            </div>
-
-            <!-- 更多科目提示 -->
-            <div class="mt-10 text-center">
-                <p class="text-gray-500 text-sm">
-                    还有化学、生物、进阶数学、心理学、计算机科学等 20+ 科目指南
-                    <a href="#contact" class="font-semibold text-[#002147] hover:underline ml-1">联系我们获取完整列表</a>
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==================== 选课策略 & 升学时间轴预览 ==================== -->
-    <section class="py-16 md:py-20" style="background-color: #faf8f5;">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
-                <!-- 选课策略 -->
-                <div id="strategy">
-                    <span class="section-badge mb-4">Strategy</span>
-                    <h2 class="serif-display text-2xl md:text-3xl font-bold tracking-tight mt-3" style="color: var(--oxford);">选课策略核心原则</h2>
-                    <div class="divider-gold mt-4 mb-5"></div>
-                    <p class="text-gray-600 leading-relaxed mb-6">
-                        选课不是简单地挑选"容易拿高分"的科目，而是基于个人兴趣、目标专业和大学要求的系统性规划。我们建议遵循以下三大原则：
-                    </p>
-                    <div class="space-y-4">
-                        <div class="flex gap-4 bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
-                            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-white" style="background-color: var(--oxford);">01</div>
-                            <div>
-                                <h4 class="font-semibold text-lg" style="color: var(--oxford);">专业匹配优先</h4>
-                                <p class="text-sm text-gray-500 mt-1">先确定目标专业方向，再查大学官方入学要求。例如申请工程必须选数学+物理；申请经济建议选数学+经济。</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
-                            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-white" style="background-color: var(--oxford);">02</div>
-                            <div>
-                                <h4 class="font-semibold text-lg" style="color: var(--oxford);">能力与兴趣平衡</h4>
-                                <p class="text-sm text-gray-500 mt-1">选择自己真正擅长且感兴趣的科目。A-Level学习强度大，兴趣是持续投入的内在动力，能力是取得高分的保障。</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
-                            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-white" style="background-color: var(--oxford);">03</div>
-                            <div>
-                                <h4 class="font-semibold text-lg" style="color: var(--oxford);">留有余地不贪多</h4>
-                                <p class="text-sm text-gray-500 mt-1">通常选择3-4门科目即可，3门高分远比4门平庸的成绩更有竞争力。牛剑申请者建议3门核心科目达到A*标准。</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 升学时间轴 -->
-                <div id="timeline">
-                    <span class="section-badge mb-4">Timeline</span>
-                    <h2 class="serif-display text-2xl md:text-3xl font-bold tracking-tight mt-3" style="color: var(--oxford);">升学时间轴概览</h2>
-                    <div class="divider-gold mt-4 mb-5"></div>
-                    <p class="text-gray-600 leading-relaxed mb-6">
-                        从IGCSE到A-Level再到大学申请，每一步都有明确的时间节点。提前规划，方能从容应对。
-                    </p>
-                    <div class="space-y-0 relative">
-                        <!-- 时间轴条目 -->
-                        <div class="relative pl-10 pb-8">
-                            <div class="absolute left-0 top-1 w-4 h-4 rounded-full border-4 border-white shadow" style="background-color: var(--oxford);"></div>
-                            <div class="absolute left-[7px] top-5 bottom-0 w-[2px] bg-gray-200"></div>
-                            <p class="text-xs font-semibold tracking-widest uppercase text-gray-400">Year 10-11</p>
-                            <h4 class="font-semibold text-lg mt-0.5" style="color: var(--oxford);">IGCSE / GCSE 阶段</h4>
-                            <p class="text-sm text-gray-500 mt-1">打好学科基础，探索兴趣方向。重点提升英语与数学能力，为A-Level选课做准备。</p>
-                        </div>
-                        <div class="relative pl-10 pb-8">
-                            <div class="absolute left-0 top-1 w-4 h-4 rounded-full border-4 border-white shadow" style="background-color: var(--oxford);"></div>
-                            <div class="absolute left-[7px] top-5 bottom-0 w-[2px] bg-gray-200"></div>
-                            <p class="text-xs font-semibold tracking-widest uppercase text-gray-400">Year 12</p>
-                            <h4 class="font-semibold text-lg mt-0.5" style="color: var(--oxford);">A-Level 第一年 (AS)</h4>
-                            <p class="text-sm text-gray-500 mt-1">确定3-4门核心科目，稳定学术成绩。同步启动背景提升、竞赛准备与大学调研。</p>
-                        </div>
-                        <div class="relative pl-10 pb-8">
-                            <div class="absolute left-0 top-1 w-4 h-4 rounded-full border-4 border-white shadow" style="background-color: #c9a84c;"></div>
-                            <div class="absolute left-[7px] top-5 bottom-0 w-[2px] bg-gray-200"></div>
-                            <p class="text-xs font-semibold tracking-widest uppercase text-gray-400">Year 13 上</p>
-                            <h4 class="font-semibold text-lg mt-0.5" style="color: var(--oxford);">A-Level 第二年 + UCAS申请</h4>
-                            <p class="text-sm text-gray-500 mt-1">9月-1月完成UCAS申请、个人陈述与推荐信。牛剑及医学类10月15日截止，其余1月15日截止。</p>
-                        </div>
-                        <div class="relative pl-10">
-                            <div class="absolute left-0 top-1 w-4 h-4 rounded-full border-4 border-white shadow" style="background-color: var(--oxford);"></div>
-                            <p class="text-xs font-semibold tracking-widest uppercase text-gray-400">Year 13 下</p>
-                            <h4 class="font-semibold text-lg mt-0.5" style="color: var(--oxford);">A-Level 考试与录取确认</h4>
-                            <p class="text-sm text-gray-500 mt-1">5-6月参加A-Level大考，8月出分。根据成绩确认Firm/Insurance选择，办理签证与入学手续。</p>
-                        </div>
-                    </div>
-                    <a href="#contact" class="inline-block mt-6 text-sm font-semibold text-[#002147] hover:underline">查看完整时间轴规划 →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==================== 关于我们简介 ==================== -->
-    <section id="about" class="py-16 md:py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                <div>
-                    <span class="section-badge mb-4">About Us</span>
-                    <h2 class="serif-display text-3xl md:text-4xl font-bold tracking-tight mt-3" style="color: var(--oxford);">我们是谁</h2>
-                    <div class="divider-gold mt-4 mb-5"></div>
-                    <p class="text-gray-600 leading-relaxed mb-4">
-                        A-Level Guide 是一支由前英国大学招生官、资深A-Level教师和牛剑毕业生组成的专业升学顾问团队。我们深耕英国本科申请领域超过10年，累计帮助超过150名学生成功进入牛津、剑桥、帝国理工、LSE、UCL等G5顶尖学府。
-                    </p>
-                    <p class="text-gray-600 leading-relaxed mb-6">
-                        我们相信，每一个学生都有独特的潜力。我们的使命是通过科学的选课规划、精准的科目指导和全程的升学陪伴，帮助学生做出最适合自己的选择，实现学术理想。
-                    </p>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="inline-flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-full px-4 py-2 text-sm text-gray-600">
-                            <span class="w-2 h-2 rounded-full bg-[#c9a84c]"></span>前招生官团队
-                        </span>
-                        <span class="inline-flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-full px-4 py-2 text-sm text-gray-600">
-                            <span class="w-2 h-2 rounded-full bg-[#c9a84c]"></span>牛剑导师1对1
-                        </span>
-                        <span class="inline-flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-full px-4 py-2 text-sm text-gray-600">
-                            <span class="w-2 h-2 rounded-full bg-[#c9a84c]"></span>个性化升学方案
-                        </span>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-[#faf8f5] rounded-2xl p-6 text-center border border-gray-100">
-                        <p class="text-4xl font-bold" style="color: var(--oxford);">10+</p>
-                        <p class="text-sm text-gray-500 mt-2 font-medium">年行业经验</p>
-                    </div>
-                    <div class="bg-[#faf8f5] rounded-2xl p-6 text-center border border-gray-100">
-                        <p class="text-4xl font-bold" style="color: var(--oxford);">150+</p>
-                        <p class="text-sm text-gray-500 mt-2 font-medium">G5录取案例</p>
-                    </div>
-                    <div class="bg-[#faf8f5] rounded-2xl p-6 text-center border border-gray-100">
-                        <p class="text-4xl font-bold" style="color: var(--oxford);">96%</p>
-                        <p class="text-sm text-gray-500 mt-2 font-medium">第一志愿录取率</p>
-                    </div>
-                    <div class="bg-[#faf8f5] rounded-2xl p-6 text-center border border-gray-100">
-                        <p class="text-4xl font-bold" style="color: var(--oxford);">20+</p>
-                        <p class="text-sm text-gray-500 mt-2 font-medium">覆盖科目数量</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- ==================== 全屏轮播图区域 ==================== -->
+<div class="carousel-container" id="heroCarousel">
+    <!-- 幻灯片 1 -->
+    <div class="carousel-slide active" style="background-image: url('images/slide1.png'); background-size: cover; background-position: center;"></div>
+    <!-- 幻灯片 2 -->
+    <div class="carousel-slide" style="background-image: url('images/slide2.png'); background-size: cover; background-position: center;"></div>
+</div>
 
     <!-- ==================== 底部联系方式 ==================== -->
-    <footer id="contact" class="text-white" style="background-color: #0b1620;">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-16">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-                <!-- 品牌信息 -->
-                <div class="lg:col-span-1">
-                    <div class="flex items-center gap-3 mb-5">
-                        <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background-color: rgba(255,255,255,0.12);">
-                            <svg class="w-6 h-6 text-[#c9a84c]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
+    <footer class="text-white" style="background-color: #000000;">
+        <div class="w-full px-6 sm:px-10 lg:px-16 py-10 md:py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background-color: #c9a84c;">
+                            <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
                             </svg>
                         </div>
                         <div>
                             <span class="serif-display font-bold text-lg">A-Level Guide</span>
-                            <span class="block text-[10px] font-medium tracking-widest uppercase text-gray-400">升学规划 · 选课指导</span>
+                            <span class="block text-[10px] font-medium tracking-widest uppercase text-white">升学规划 · 选课指导</span>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-400 leading-relaxed">
+                    <p class="text-sm text-white leading-relaxed">
                         为A-Level学生和家长提供专业、可靠的科目指南与升学规划服务。助力每一位学子实现英国名校梦想。
                     </p>
                 </div>
-
-                <!-- 快捷链接 -->
-                <div>
-                    <h4 class="text-sm font-semibold tracking-widest uppercase text-[#c9a84c] mb-4">快捷导航</h4>
-                    <ul class="space-y-2.5 text-sm">
-                        <li><a href="#" class="footer-link">首页</a></li>
-                        <li><a href="#subjects" class="footer-link">科目指南</a></li>
-                        <li><a href="#strategy" class="footer-link">选课策略</a></li>
-                        <li><a href="#timeline" class="footer-link">升学时间轴</a></li>
-                        <li><a href="#about" class="footer-link">关于我们</a></li>
-                    </ul>
-                </div>
-
-                <!-- 热门科目 -->
-                <div>
-                    <h4 class="text-sm font-semibold tracking-widest uppercase text-[#c9a84c] mb-4">热门科目</h4>
-                    <ul class="space-y-2.5 text-sm">
-                        <li><a href="#subjects" class="footer-link">A-Level 数学</a></li>
-                        <li><a href="#subjects" class="footer-link">A-Level 物理</a></li>
-                        <li><a href="#subjects" class="footer-link">A-Level 经济</a></li>
-                        <li><a href="#subjects" class="footer-link">A-Level 化学</a></li>
-                        <li><a href="#subjects" class="footer-link">A-Level 进阶数学</a></li>
-                    </ul>
-                </div>
-
-                <!-- 联系方式 -->
-                <div>
+                <div class="md:justify-self-end">
                     <h4 class="text-sm font-semibold tracking-widest uppercase text-[#c9a84c] mb-4">联系我们</h4>
-                    <ul class="space-y-3.5 text-sm text-gray-300">
+                    <ul class="space-y-3.5 text-sm text-white">
                         <li class="flex items-start gap-3">
                             <svg class="w-5 h-5 text-[#c9a84c] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -617,16 +323,14 @@
                     </ul>
                 </div>
             </div>
-
-            <!-- 底部栏 -->
-            <div class="mt-12 pt-8 border-t border-gray-700/50 flex flex-col md:flex-row items-center justify-between gap-4">
-                <p class="text-xs text-gray-500">
+            <div class="mt-10 pt-6 border-t border-white/30 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-white">
                     © 2026 A-Level Guide. All rights reserved. 专注A-Level升学规划与选课指导。
                 </p>
-                <div class="flex gap-6 text-xs text-gray-500">
-                    <a href="#" class="hover:text-gray-300 transition">隐私政策</a>
-                    <a href="#" class="hover:text-gray-300 transition">使用条款</a>
-                    <a href="#" class="hover:text-gray-300 transition">Cookie 设置</a>
+                <div class="flex gap-6 text-xs text-white">
+                    <a href="#" class="hover:text-[#c9a84c] transition">隐私政策</a>
+                    <a href="#" class="hover:text-[#c9a84c] transition">使用条款</a>
+                    <a href="#" class="hover:text-[#c9a84c] transition">Cookie 设置</a>
                 </div>
             </div>
         </div>
@@ -637,12 +341,9 @@
         // 移动端菜单切换
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-
         mobileMenuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
-
-        // 点击移动端菜单链接后自动关闭
         mobileMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
@@ -659,48 +360,24 @@
             }
         });
 
-        // 平滑滚动
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    e.preventDefault();
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
+        // ========== 自动轮播 ==========
+        const slides = document.querySelectorAll('.carousel-slide');
+        let currentSlide = 0;
+        const autoPlayDelay = 5000; // 5秒
 
-        // 高亮当前导航链接（基于滚动位置）
-        const sections = ['subjects', 'strategy', 'timeline', 'about'];
-        const navLinks = document.querySelectorAll('.nav-link');
-
-        function updateActiveNav() {
-            const scrollPos = window.scrollY + 120;
-            let currentSection = '';
-
-            sections.forEach(id => {
-                const section = document.getElementById(id);
-                if (section && section.offsetTop <= scrollPos) {
-                    currentSection = id;
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                const href = link.getAttribute('href');
-                if (href === '#' && currentSection === '') {
-                    link.classList.add('active');
-                } else if (href === `#${currentSection}`) {
-                    link.classList.add('active');
-                }
-            });
+        function goToSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            currentSlide = index;
         }
 
-        window.addEventListener('scroll', updateActiveNav);
-        window.addEventListener('load', updateActiveNav);
-    </script>
+        function nextSlide() {
+            goToSlide((currentSlide + 1) % slides.length);
+        }
 
+        // 启动自动播放
+        setInterval(nextSlide, autoPlayDelay);
+    </script>
+<script src="ai-assistant.js"></script>
 </body>
 </html>

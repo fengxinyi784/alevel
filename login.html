@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>登录 - A-Level Guide</title>
+    <meta name="description" content="登录或注册 A-Level Guide 账号" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#c9a84c',
+                        'gold-light': '#e0c878',
+                        'gold-dark': '#a8862e',
+                    },
+                    fontFamily: {
+                        serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
+                        sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        :root { --gold: #c9a84c; --gold-light: #e0c878; --gold-dark: #a8862e; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .serif-display { font-family: 'Georgia', 'Cambria', 'Times New Roman', serif; }
+        .auth-card {
+            background: #111111;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+        .input-field {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            background: rgba(0,0,0,0.6);
+            border: 1.5px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.9rem;
+            transition: all 0.25s ease;
+            outline: none;
+            font-family: inherit;
+        }
+        .input-field::placeholder { color: #6b7280; }
+        .input-field:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+            background: rgba(0,0,0,0.8);
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #000;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            padding: 0.6rem 1.2rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            letter-spacing: 0.02em;
+            box-shadow: 0 2px 8px rgba(201,168,76,0.25);
+            width: 100%;
+        }
+        .btn-gold:hover { box-shadow: 0 4px 16px rgba(201,168,76,0.4); transform: translateY(-1px); }
+        .auth-mode-btn {
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            background: transparent;
+            border: 1px solid #555;
+            color: #ccc;
+            margin-right: 0.5rem;
+            transition: all 0.2s;
+        }
+        .auth-mode-btn.active {
+            background: #c9a84c;
+            color: #000;
+            border-color: #c9a84c;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-card">
+        <div class="text-center mb-6">
+            <div class="w-14 h-14 rounded-2xl mx-auto flex items-center justify-center mb-4" style="background: linear-gradient(135deg, #c9a84c, #a8862e);">
+                <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                </svg>
+            </div>
+            <h2 class="text-xl font-semibold text-white mb-1">A-Level Guide</h2>
+            <p class="text-sm text-gray-400">登录后参与社区讨论、标记时间轴进度</p>
+        </div>
+        <div class="mb-4 flex justify-center">
+            <button id="show-login-btn" class="auth-mode-btn active" type="button">登录</button>
+            <button id="show-signup-btn" class="auth-mode-btn" type="button">注册</button>
+        </div>
+        <form id="auth-form" class="space-y-4">
+            <div>
+                <label class="block text-xs text-gray-400 mb-1.5 font-medium">邮箱</label>
+                <input type="email" id="auth-email" required class="input-field" placeholder="you@example.com">
+            </div>
+            <div>
+                <label class="block text-xs text-gray-400 mb-1.5 font-medium">密码</label>
+                <input type="password" id="auth-password" required minlength="6" class="input-field" placeholder="至少6位密码">
+            </div>
+            <button type="submit" class="btn-gold">提交</button>
+        </form>
+        <p id="auth-message" class="text-xs mt-3 text-center"></p>
+        <p class="text-xs text-gray-500 mt-4 text-center">
+            <a href="index.html" class="text-gold hover:underline">← 返回首页</a>
+        </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://ugtdibfbpanltfvkpxro.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_8eDda8zkFy9RvDbFQDQf6A_4zn9vsJe';
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let mode = 'login';
+        const form = document.getElementById('auth-form');
+        const emailInput = document.getElementById('auth-email');
+        const passwordInput = document.getElementById('auth-password');
+        const messageEl = document.getElementById('auth-message');
+        const loginBtn = document.getElementById('show-login-btn');
+        const signupBtn = document.getElementById('show-signup-btn');
+
+        loginBtn.addEventListener('click', () => { mode = 'login'; updateModeUI(); });
+        signupBtn.addEventListener('click', () => { mode = 'signup'; updateModeUI(); });
+
+        function updateModeUI() {
+            loginBtn.classList.toggle('active', mode === 'login');
+            signupBtn.classList.toggle('active', mode === 'signup');
+            form.querySelector('button[type="submit"]').textContent = mode === 'login' ? '登录' : '注册';
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            messageEl.textContent = '';
+            const email = emailInput.value;
+            const password = passwordInput.value;
+
+            if (mode === 'signup') {
+                const { data, error } = await supabaseClient.auth.signUp({ email, password });
+                if (error) {
+                    messageEl.textContent = `注册失败：${error.message}`;
+                    messageEl.className = 'text-xs mt-3 text-center text-red-400';
+                } else {
+                    if (data.user && !data.session) {
+                        messageEl.textContent = '注册成功！验证邮件已发送，请前往邮箱确认。';
+                        messageEl.className = 'text-xs mt-3 text-center text-green-400';
+                    } else {
+                        // 注册后直接登录成功
+                        window.location.href = document.referrer || 'index.html';
+                    }
+                }
+            } else {
+                const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                if (error) {
+                    messageEl.textContent = `登录失败：${error.message}`;
+                    messageEl.className = 'text-xs mt-3 text-center text-red-400';
+                } else {
+                    // 登录成功，跳回之前的页面
+                    window.location.href = document.referrer || 'index.html';
+                }
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    (function() {
+        const SUPABASE_URL = 'https://ugtdibfbpanltfvkpxro.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_8eDda8zkFy9RvDbFQDQf6A_4zn9vsJe';
+
+        // 如果页面尚未加载 supabase，则动态加载
+        if (!window.supabase) {
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+            script.onload = init;
+            document.head.appendChild(script);
+        } else {
+            init();
+        }
+
+        function init() {
+            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            const dropdown = document.getElementById('profile-dropdown');
+            if (!dropdown) return;
+
+            async function updateDropdown() {
+                const { data: { user } } = await supabase.auth.getUser();
+                if (user) {
+                    dropdown.innerHTML = `
+                        <a href="profile.html" class="block px-4 py-2 text-sm text-white hover:bg-white/10 hover:text-gold transition">个人主页</a>
+                        <button id="logout-menu-btn" class="w-full text-left px-4 py-2 text-sm text-white hover:bg-white/10 hover:text-gold transition">登出</button>
+                    `;
+                    document.getElementById('logout-menu-btn')?.addEventListener('click', async () => {
+                        await supabase.auth.signOut();
+                        window.location.reload();
+                    });
+                } else {
+                    dropdown.innerHTML = `
+                        <a href="login.html" class="block px-4 py-2 text-sm text-white hover:bg-white/10 hover:text-gold transition">登录</a>
+                    `;
+                }
+            }
+
+            updateDropdown();
+
+            // 监听认证状态变化（如果页面其他部分有登录操作）
+            window.addEventListener('auth-state-change', updateDropdown);
+        }
+    })();
+</script>
+</body>
+</html>
