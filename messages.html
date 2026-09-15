@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>私信 - A-Level Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        duo: {
+                            green: '#58CC02', blue: '#1CB0F6', yellow: '#FFC800',
+                            orange: '#FF9600', red: '#FF4B4B', purple: '#CE82FF',
+                            pink: '#FF86D0', cyan: '#14D4F4',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="ai-assistant.css">
+    <style>
+        :root {
+            --duo-green: #58CC02;
+            --duo-green-dark: #58A700;
+            --duo-green-soft: #F0F9E8;
+            --text-main: #3C3C3C;
+            --text-sub: #777777;
+            --text-faint: #AFAFAF;
+            --border-soft: #E5E5E5;
+            --bg-page: #F7F7F7;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-page);
+            color: var(--text-main);
+            font-weight: 500;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        ::selection { background: rgba(88, 204, 2, 0.25); }
+
+        /* 浅色覆盖 */
+        .text-white { color: var(--text-main) !important; }
+        .text-gray-300 { color: #555 !important; }
+        .text-gray-400 { color: var(--text-sub) !important; }
+        .text-gray-500 { color: #909090 !important; }
+        .text-gray-600 { color: var(--text-faint) !important; }
+        .text-gold { color: var(--duo-green) !important; }
+        .bg-gray-800 { background: #F0F0F0 !important; }
+        .bg-gray-700 { background: #E5E5E5 !important; }
+        .bg-gold { background: var(--duo-green) !important; }
+        .hover\:bg-gray-700:hover { background: #E5E5E5 !important; }
+        .hover\:bg-gray-600:hover { background: #D5D5D5 !important; }
+        .hover\:bg-gold-light:hover { background: #7CDD3E !important; }
+        .hover\:text-gold:hover { color: var(--duo-green) !important; }
+        .border-white\/5 { border-color: #EFEFEF !important; }
+        .border-white\/10 { border-color: #E5E5E5 !important; }
+        .border-gold\/40 { border-color: rgba(88, 204, 2, 0.4) !important; }
+        .bg-gold .text-white, .btn-gold .text-white, button.bg-gold { color: #fff !important; }
+
+        /* 背景 */
+        #glow-background {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+            background: linear-gradient(135deg, #FFFFFF 0%, #FAFFFA 40%, #FFFFFF 70%, #F5FBFF 100%);
+            background-size: 300% 300%;
+            animation: pageGradient 24s ease-in-out infinite;
+        }
+        @keyframes pageGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .glow-orb {
+            position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.4;
+        }
+        .glow-orb--1 { width: 600px; height: 600px; top: -180px; left: -180px;
+            background: radial-gradient(circle, rgba(88, 204, 2, 0.5) 0%, transparent 72%); }
+        .glow-orb--2 { width: 560px; height: 560px; bottom: -200px; right: -160px;
+            background: radial-gradient(circle, rgba(28, 176, 246, 0.5) 0%, transparent 72%); }
+        .glow-orb--3 { width: 480px; height: 480px; top: 40%; right: -100px;
+            background: radial-gradient(circle, rgba(206, 130, 255, 0.45) 0%, transparent 72%); }
+
+        /* 导航 */
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.9) !important;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 2px solid var(--border-soft) !important;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
+        }
+        .nav-glass .text-white { color: var(--text-main) !important; text-shadow: none !important; }
+        .nav-glass .nav-link { color: var(--text-sub) !important; font-weight: 700 !important; }
+        .nav-glass .nav-link:hover, .nav-glass .nav-link.active { color: var(--duo-green) !important; }
+        .nav-glass #mobile-menu-btn { border-color: var(--border-soft) !important; }
+        .nav-glass #mobile-menu-btn svg { color: var(--text-main) !important; }
+        #mobile-menu { background: #fff !important; border-top: 2px solid var(--border-soft); }
+        #mobile-menu a { color: var(--text-main) !important; font-weight: 700 !important; }
+        #mobile-menu a:hover, #mobile-menu a.nav-active {
+            background: var(--duo-green-soft) !important;
+            color: var(--duo-green) !important;
+        }
+
+        /* 主区 */
+        main {
+            position: relative;
+            z-index: 1;
+            flex: 1 1 auto;
+            display: flex;
+            padding: 24px 16px;
+            min-height: 0;
+        }
+        @media (min-width: 768px) {
+            main { padding: 32px 24px; }
+        }
+
+        .messages-layout {
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            background: #fff;
+            border: 2px solid var(--border-soft);
+            border-bottom: 5px solid var(--border-soft);
+            border-radius: 20px;
+            overflow: hidden;
+            height: calc(100vh - 64px - 100px);
+            min-height: 480px;
+        }
+        @media (min-width: 768px) {
+            .messages-layout { height: calc(100vh - 64px - 140px); }
+        }
+
+        /* 会话列表 */
+        .conv-sidebar {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid var(--border-soft);
+            background: #FAFAFA;
+            flex-shrink: 0;
+        }
+        @media (min-width: 768px) {
+            .conv-sidebar { width: 320px; }
+        }
+
+        .conv-sidebar-header {
+            padding: 18px 20px 14px;
+            border-bottom: 2px solid var(--border-soft);
+            background: #fff;
+        }
+        .conv-sidebar-header h1 {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--text-main);
+            letter-spacing: -0.01em;
+        }
+
+        .conv-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+
+        .conv-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: background 0.15s ease;
+            border: 2px solid transparent;
+            margin-bottom: 4px;
+        }
+        .conv-item:hover {
+            background: #F0F9E8;
+        }
+        .conv-item.active {
+            background: var(--duo-green-soft);
+            border-color: rgba(88, 204, 2, 0.3);
+        }
+
+        .avatar-circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--duo-green), var(--duo-green-dark));
+            color: #fff;
+            font-weight: 700;
+            overflow: hidden;
+            flex-shrink: 0;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            font-size: 18px;
+        }
+        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-circle.small { width: 32px; height: 32px; font-size: 14px; }
+
+        .conv-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .conv-info .conv-name {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .conv-info .conv-preview {
+            font-size: 0.78rem;
+            color: var(--text-sub);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 2px;
+        }
+
+        .conv-meta {
+            text-align: right;
+            flex-shrink: 0;
+        }
+        .conv-meta .conv-time {
+            font-size: 10px;
+            color: var(--text-faint);
+            font-weight: 600;
+        }
+        .conv-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 9px;
+            background: #FF4B4B;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 0 5px;
+            margin-top: 4px;
+        }
+
+        /* 聊天区 */
+        .chat-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            background: #fff;
+        }
+
+        .chat-empty {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-faint);
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .chat-empty .emoji {
+            font-size: 56px;
+            margin-bottom: 16px;
+            opacity: 0.7;
+        }
+        .chat-empty p {
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            border-bottom: 2px solid var(--border-soft);
+            background: #fff;
+            flex-shrink: 0;
+        }
+        .chat-header .back-btn {
+            display: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 2px solid var(--border-soft);
+            background: #fff;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+            flex-shrink: 0;
+        }
+        @media (max-width: 767px) {
+            .chat-header .back-btn { display: flex; }
+        }
+        .chat-header .chat-name {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+        .chat-header .chat-sub {
+            font-size: 0.72rem;
+            color: var(--text-faint);
+            font-weight: 600;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 18px;
+            background: #FAFFFA;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .chat-messages::-webkit-scrollbar { width: 6px; }
+        .chat-messages::-webkit-scrollbar-thumb { background: #E5E5E5; border-radius: 3px; }
+
+        .msg-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            max-width: 100%;
+        }
+        .msg-row.mine {
+            justify-content: flex-end;
+        }
+
+        .msg-bubble {
+            max-width: 70%;
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            word-wrap: break-word;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+        .msg-row.theirs .msg-bubble {
+            background: #fff;
+            border: 2px solid var(--border-soft);
+            color: var(--text-main);
+            border-bottom-left-radius: 4px;
+        }
+        .msg-row.mine .msg-bubble {
+            background: var(--duo-green);
+            color: #fff;
+            border: 2px solid var(--duo-green);
+            border-bottom-right-radius: 4px;
+        }
+        .msg-time {
+            font-size: 10px;
+            color: var(--text-faint);
+            margin: 0 4px 4px;
+            flex-shrink: 0;
+            font-weight: 600;
+        }
+
+        .day-divider {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-faint);
+            font-weight: 700;
+            margin: 12px 0 6px;
+            letter-spacing: 0.05em;
+        }
+        .day-divider span {
+            background: #fff;
+            padding: 3px 12px;
+            border-radius: 999px;
+            border: 2px solid var(--border-soft);
+        }
+
+        .chat-input-area {
+            border-top: 2px solid var(--border-soft);
+            padding: 12px 16px 14px;
+            background: #fff;
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+            flex-shrink: 0;
+        }
+        .chat-input-area textarea {
+            flex: 1;
+            min-height: 42px;
+            max-height: 130px;
+            padding: 10px 14px;
+            border: 2px solid var(--border-soft);
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text-main);
+            resize: none;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            line-height: 1.4;
+            background: #fff;
+        }
+        .chat-input-area textarea::placeholder { color: var(--text-faint); }
+        .chat-input-area textarea:focus {
+            border-color: var(--duo-green);
+            box-shadow: 0 0 0 4px rgba(88, 204, 2, 0.12);
+        }
+        .chat-send-btn {
+            background: var(--duo-green);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            padding: 0 20px;
+            height: 42px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            box-shadow: 0 4px 0 var(--duo-green-dark);
+            transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
+            flex-shrink: 0;
+        }
+        .chat-send-btn:hover { filter: brightness(1.06); }
+        .chat-send-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 var(--duo-green-dark);
+        }
+        .chat-send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            filter: none;
+        }
+
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-sub);
+        }
+        .empty-state .emoji {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 12px;
+            opacity: 0.7;
+        }
+        .empty-state p {
+            font-size: 0.88rem;
+            font-weight: 700;
+        }
+
+        /* 骨架屏 */
+        .skeleton {
+            background: linear-gradient(90deg, #F0F0F0 25%, #E5E5E5 50%, #F0F0F0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* 移动端：会话或聊天全屏 */
+        @media (max-width: 767px) {
+            .messages-layout.mobile-viewing-chat .conv-sidebar { display: none; }
+            .messages-layout:not(.mobile-viewing-chat) .chat-panel { display: none; }
+        }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            padding: 24px 16px;
+            text-align: center;
+            border-top: 2px solid var(--border-soft);
+            background: #fff;
+            color: var(--text-faint);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #glow-background { animation: none !important; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="glow-background" aria-hidden="true">
+        <div class="glow-orb glow-orb--1"></div>
+        <div class="glow-orb glow-orb--2"></div>
+        <div class="glow-orb glow-orb--3"></div>
+    </div>
+
+    <!-- 导航 -->
+    <header class="sticky top-0 z-50 nav-glass">
+        <div class="w-full px-6 sm:px-10 lg:px-16">
+            <div class="flex items-center justify-between h-14 md:h-16">
+                <div class="flex items-center gap-2.5 flex-shrink-0">
+                    <div class="w-8 h-8 rounded-full flex items-center justify-center"
+                        style="background: linear-gradient(135deg, #58CC02, #8EE000); box-shadow: 0 3px 0 #58A700;">
+                        <svg class="text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"
+                            style="width: 18px; height: 18px;">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                        </svg>
+                    </div>
+                    <span class="font-bold text-base md:text-lg text-white">A-Level Guide</span>
+                </div>
+                <nav class="hidden md:flex items-center gap-8" aria-label="主导航">
+                    <a href="index.html" class="nav-link">首页</a>
+                    <a href="subjects.html" class="nav-link">热门科目</a>
+                    <a href="universities.html" class="nav-link">热门院校</a>
+                    <a href="strategy.html" class="nav-link">交流社区</a>
+                    <a href="timeline.html" class="nav-link">升学时间轴</a>
+                    <a href="profile.html" class="nav-link">个人主页</a>
+                </nav>
+                <button id="mobile-menu-btn"
+                    class="md:hidden p-2 rounded-lg transition-all duration-200 hover:bg-black/5 active:bg-black/10"
+                    aria-label="打开菜单" style="border: 2px solid #E5E5E5;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"
+                        style="color: #3C3C3C;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden px-6 py-3 pb-4">
+            <nav class="flex flex-col gap-1" aria-label="移动端导航">
+                <a href="index.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">首页</a>
+                <a href="subjects.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">热门科目</a>
+                <a href="universities.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">热门院校</a>
+                <a href="strategy.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">交流社区</a>
+                <a href="timeline.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">升学时间轴</a>
+                <a href="profile.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">个人主页</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="messages-layout" id="messagesLayout">
+            <!-- 会话列表 -->
+            <aside class="conv-sidebar">
+                <div class="conv-sidebar-header">
+                    <h1>💬 私信</h1>
+                </div>
+                <div class="conv-list" id="convList">
+                    <div class="empty-state">
+                        <span class="emoji">💬</span>
+                        <p>加载中...</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 聊天区 -->
+            <section class="chat-panel">
+                <div class="chat-empty" id="chatEmpty">
+                    <span class="emoji">💬</span>
+                    <p>选择一个会话开始聊天</p>
+                </div>
+
+                <div id="chatActive" style="display:none; flex-direction: column; flex: 1; min-height: 0;">
+                    <div class="chat-header">
+                        <button class="back-btn" id="backBtn" aria-label="返回会话列表">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                            </svg>
+                        </button>
+                        <div class="avatar-circle small" id="chatAvatar"></div>
+                        <div style="flex:1; min-width:0;">
+                            <div class="chat-name" id="chatName"></div>
+                            <div class="chat-sub" id="chatSub"></div>
+                        </div>
+                    </div>
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="chat-input-area">
+                        <textarea id="chatInput" rows="1" placeholder="输入消息，按 Enter 发送，Shift + Enter 换行"></textarea>
+                        <button class="chat-send-btn" id="sendBtn">发送</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>© 2026 A-Level Guide · 专注 A-Level 升学规划与选课指导</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script>
+        // ⭐ 复用全局客户端（由 supabase-config.js 创建）
+        const supabaseClient = window.supabaseClient;
+
+        /* ========== 工具函数 ========== */
+        function escapeHtml(str) {
+            if (str == null) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        // ⭐ 统一的错误提示（优先用 duoAlert，降级用原生 alert）
+        function showError(message, title = '出错了') {
+            if (typeof window.duoAlert === 'function') {
+                try { window.duoAlert(message, { type: 'error', title }); return; } catch (_) { }
+            }
+            alert(message);
+        }
+
+        function formatRelativeTime(dateStr) {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            if (isNaN(date.getTime())) return '';
+            const diff = Date.now() - date.getTime();
+            const sec = Math.floor(diff / 1000);
+            const min = Math.floor(sec / 60);
+            const hr = Math.floor(min / 60);
+            const day = Math.floor(hr / 24);
+            if (sec < 60) return '刚刚';
+            if (min < 60) return `${min}分钟前`;
+            if (hr < 24) return `${hr}小时前`;
+            if (day < 7) return `${day}天前`;
+            return date.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+        }
+
+        function formatDayLabel(dateStr) {
+            const date = new Date(dateStr);
+            const today = new Date();
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const sameDay = (a, b) =>
+                a.getFullYear() === b.getFullYear() &&
+                a.getMonth() === b.getMonth() &&
+                a.getDate() === b.getDate();
+            if (sameDay(date, today)) return '今天';
+            if (sameDay(date, yesterday)) return '昨天';
+            return date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        /* ========== 状态 ========== */
+        let currentUser = null;
+        let currentOtherId = null;       // 当前打开的会话对方 id
+        let conversations = [];          // 会话列表
+        let realtimeChannel = null;
+
+        const layoutEl = document.getElementById('messagesLayout');
+        const convListEl = document.getElementById('convList');
+        const chatEmptyEl = document.getElementById('chatEmpty');
+        const chatActiveEl = document.getElementById('chatActive');
+        const chatAvatarEl = document.getElementById('chatAvatar');
+        const chatNameEl = document.getElementById('chatName');
+        const chatSubEl = document.getElementById('chatSub');
+        const chatMessagesEl = document.getElementById('chatMessages');
+        const chatInputEl = document.getElementById('chatInput');
+        const sendBtnEl = document.getElementById('sendBtn');
+        const backBtnEl = document.getElementById('backBtn');
+
+        /* ========== 初始化 ========== */
+        async function init() {
+            if (!supabaseClient) {
+                convListEl.innerHTML = `
+                    <div class="empty-state">
+                        <span class="emoji">⚠️</span>
+                        <p>Supabase 客户端未初始化</p>
+                    </div>`;
+                return;
+            }
+
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            if (!user) {
+                convListEl.innerHTML = `
+                    <div class="empty-state">
+                        <span class="emoji">🔐</span>
+                        <p>请先登录</p>
+                        <a href="login.html" class="text-gold" style="display:inline-block; margin-top:12px; font-weight:800;">前往登录</a>
+                    </div>`;
+                return;
+            }
+            currentUser = user;
+
+            await refreshConversations();
+
+            // URL 参数：?user_id=xxx 直接打开某个会话
+            const params = new URLSearchParams(location.search);
+            const targetUserId = params.get('user_id');
+            if (targetUserId && targetUserId !== currentUser.id) {
+                await openConversation(targetUserId);
+            }
+
+            setupRealtime();
+        }
+
+        /* ========== 加载会话列表 ========== */
+        async function refreshConversations() {
+            const { data: messages, error } = await supabaseClient
+                .from('direct_messages')
+                .select('*')
+                .or(`sender_id.eq.${currentUser.id},receiver_id.eq.${currentUser.id}`)
+                .order('created_at', { ascending: false })
+                .limit(500);
+
+            if (error) {
+                convListEl.innerHTML = `<div class="empty-state"><p>加载失败：${escapeHtml(error.message)}</p></div>`;
+                return;
+            }
+
+            // 按对方分组，取每组最新一条
+            const map = new Map();
+            (messages || []).forEach(m => {
+                const otherId = m.sender_id === currentUser.id ? m.receiver_id : m.sender_id;
+                if (!map.has(otherId)) {
+                    map.set(otherId, {
+                        otherId,
+                        lastMessage: m.content,
+                        lastAt: m.created_at,
+                        unread: 0
+                    });
+                }
+                if (m.receiver_id === currentUser.id && !m.read_at) {
+                    map.get(otherId).unread++;
+                }
+            });
+
+            const ids = [...map.keys()];
+            let profileMap = {};
+            if (ids.length > 0) {
+                const { data: profiles } = await supabaseClient
+                    .from('profiles')
+                    .select('id, username, avatar_emoji, avatar_url')
+                    .in('id', ids);
+                profiles?.forEach(p => { profileMap[p.id] = p; });
+            }
+
+            conversations = [...map.values()].map(c => ({
+                ...c,
+                profile: profileMap[c.otherId] || {}
+            }));
+
+            renderConversations();
+        }
+
+        function renderConversations() {
+            if (conversations.length === 0) {
+                convListEl.innerHTML = `
+                    <div class="empty-state">
+                        <span class="emoji">📭</span>
+                        <p>还没有任何私信</p>
+                        <p style="margin-top:6px; font-size:0.78rem;">在个人主页点击「💬 私信」开始聊天</p>
+                    </div>`;
+                return;
+            }
+
+            convListEl.innerHTML = conversations.map(c => {
+                const name = escapeHtml(c.profile.username || '未知用户');
+                const avatar = c.profile.avatar_url
+                    ? `<img src="${escapeHtml(c.profile.avatar_url)}" alt="${name}" />`
+                    : (c.profile.avatar_emoji || '🙂');
+                const preview = escapeHtml(c.lastMessage.length > 30 ? c.lastMessage.slice(0, 30) + '…' : c.lastMessage);
+                const time = formatRelativeTime(c.lastAt);
+                const badge = c.unread > 0 ? `<div class="conv-badge">${c.unread > 99 ? '99+' : c.unread}</div>` : '';
+                const active = c.otherId === currentOtherId ? 'active' : '';
+                return `
+                    <div class="conv-item ${active}" data-user-id="${c.otherId}">
+                        <div class="avatar-circle">${avatar}</div>
+                        <div class="conv-info">
+                            <div class="conv-name">${name}</div>
+                            <div class="conv-preview">${preview}</div>
+                        </div>
+                        <div class="conv-meta">
+                            <div class="conv-time">${time}</div>
+                            ${badge}
+                        </div>
+                    </div>`;
+            }).join('');
+
+            convListEl.querySelectorAll('.conv-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    const userId = el.getAttribute('data-user-id');
+                    openConversation(userId);
+                });
+            });
+        }
+
+        /* ========== 打开某个会话 ========== */
+        async function openConversation(otherId) {
+            currentOtherId = otherId;
+            layoutEl.classList.add('mobile-viewing-chat');
+
+            // 更新 URL（不刷新页面）
+            const url = new URL(location.href);
+            url.searchParams.set('user_id', otherId);
+            history.replaceState(null, '', url.toString());
+
+            // 加载对方资料
+            const { data: profile } = await supabaseClient
+                .from('profiles')
+                .select('id, username, avatar_emoji, avatar_url')
+                .eq('id', otherId)
+                .maybeSingle();
+
+            const name = profile?.username || '未知用户';
+            chatNameEl.textContent = name;
+            chatSubEl.textContent = 'A-Level Guide 用户';
+            chatAvatarEl.innerHTML = profile?.avatar_url
+                ? `<img src="${escapeHtml(profile.avatar_url)}" alt="${escapeHtml(name)}" />`
+                : (profile?.avatar_emoji || '🙂');
+
+            chatEmptyEl.style.display = 'none';
+            chatActiveEl.style.display = 'flex';
+
+            // 更新会话列表的选中状态
+            convListEl.querySelectorAll('.conv-item').forEach(el => {
+                el.classList.toggle('active', el.getAttribute('data-user-id') === otherId);
+            });
+
+            await loadMessages(otherId);
+            await markAsRead(otherId);
+            await refreshConversations();  // 更新未读角标
+            chatInputEl.focus();
+        }
+
+        /* ========== 加载消息 ========== */
+        async function loadMessages(otherId) {
+            chatMessagesEl.innerHTML = `<div class="skeleton" style="height:40px; width:60%; margin:0 auto;"></div>`;
+
+            const { data: messages, error } = await supabaseClient
+                .from('direct_messages')
+                .select('*')
+                .or(`and(sender_id.eq.${currentUser.id},receiver_id.eq.${otherId}),and(sender_id.eq.${otherId},receiver_id.eq.${currentUser.id})`)
+                .order('created_at', { ascending: true })
+                .limit(200);
+
+            if (error) {
+                chatMessagesEl.innerHTML = `<div class="empty-state"><p>加载失败：${escapeHtml(error.message)}</p></div>`;
+                return;
+            }
+
+            renderMessages(messages || []);
+        }
+
+        function renderMessages(messages) {
+            if (messages.length === 0) {
+                chatMessagesEl.innerHTML = `
+                    <div class="empty-state">
+                        <span class="emoji">👋</span>
+                        <p>还没有消息，打个招呼吧</p>
+                    </div>`;
+                return;
+            }
+
+            let lastDay = '';
+            const html = messages.map(m => {
+                const day = formatDayLabel(m.created_at);
+                let divider = '';
+                if (day !== lastDay) {
+                    divider = `<div class="day-divider"><span>${escapeHtml(day)}</span></div>`;
+                    lastDay = day;
+                }
+                const isMine = m.sender_id === currentUser.id;
+                const time = new Date(m.created_at).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+                return `${divider}
+                    <div class="msg-row ${isMine ? 'mine' : 'theirs'}">
+                        ${!isMine ? `<div class="avatar-circle small" id="msg-avatar-${m.id}"></div>` : ''}
+                        <div class="msg-bubble">${escapeHtml(m.content)}</div>
+                        <span class="msg-time">${time}</span>
+                    </div>`;
+            }).join('');
+
+            chatMessagesEl.innerHTML = html;
+            chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+
+            // 对方头像填充
+            chatMessagesEl.querySelectorAll('[id^="msg-avatar-"]').forEach(el => {
+                const profileData = conversations.find(c => c.otherId === currentOtherId)?.profile;
+                if (profileData) {
+                    el.innerHTML = profileData.avatar_url
+                        ? `<img src="${escapeHtml(profileData.avatar_url)}" alt="" />`
+                        : (profileData.avatar_emoji || '🙂');
+                } else {
+                    el.textContent = '🙂';
+                }
+            });
+        }
+
+        /* ========== 标记已读 ========== */
+        async function markAsRead(otherId) {
+            await supabaseClient
+                .from('direct_messages')
+                .update({ read_at: new Date().toISOString() })
+                .eq('receiver_id', currentUser.id)
+                .eq('sender_id', otherId)
+                .is('read_at', null);
+        }
+
+        /* ========== 发送消息 ========== */
+        async function sendMessage() {
+            const content = chatInputEl.value.trim();
+            if (!content || !currentOtherId) return;
+
+            sendBtnEl.disabled = true;
+
+            const { data, error } = await supabaseClient
+                .from('direct_messages')
+                .insert([{
+                    sender_id: currentUser.id,
+                    receiver_id: currentOtherId,
+                    content
+                }])
+                .select()
+                .single();
+
+            sendBtnEl.disabled = false;
+
+            if (error) {
+                // ⭐ 使用统一的 duoAlert 风格
+                showError('发送失败：' + error.message, '发送失败');
+                return;
+            }
+
+            chatInputEl.value = '';
+            chatInputEl.style.height = 'auto';
+
+            // 乐观追加一条到界面
+            appendMessageToView(data, true);
+            chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+
+            // 刷新会话列表
+            refreshConversations();
+        }
+
+        function appendMessageToView(msg, isMine) {
+            // 移除空状态
+            const empty = chatMessagesEl.querySelector('.empty-state');
+            if (empty) empty.remove();
+
+            const time = new Date(msg.created_at).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+            const row = document.createElement('div');
+            row.className = `msg-row ${isMine ? 'mine' : 'theirs'}`;
+            row.innerHTML = `
+                ${!isMine ? `<div class="avatar-circle small"></div>` : ''}
+                <div class="msg-bubble">${escapeHtml(msg.content)}</div>
+                <span class="msg-time">${time}</span>`;
+            chatMessagesEl.appendChild(row);
+        }
+
+        /* ========== 实时订阅 ========== */
+        function setupRealtime() {
+            realtimeChannel = supabaseClient
+                .channel('dm-channel')
+                .on('postgres_changes',
+                    { event: 'INSERT', schema: 'public', table: 'direct_messages' },
+                    (payload) => {
+                        const msg = payload.new;
+                        // 是否与我相关
+                        const isMine = msg.sender_id === currentUser.id;
+                        const isForMe = msg.receiver_id === currentUser.id;
+                        if (!isMine && !isForMe) return;
+
+                        // 如果正好是当前打开的会话，直接追加到聊天区
+                        const otherId = isMine ? msg.receiver_id : msg.sender_id;
+                        if (currentOtherId === otherId) {
+                            // 防止自己发的消息被重复追加（发送时已经乐观添加）
+                            if (isForMe) {
+                                appendMessageToView(msg, false);
+                                chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+                                markAsRead(otherId);
+                            }
+                        }
+
+                        // 刷新会话列表（更新预览和未读角标）
+                        refreshConversations();
+                    })
+                .subscribe();
+        }
+
+        /* ========== 事件绑定 ========== */
+        sendBtnEl.addEventListener('click', sendMessage);
+
+        chatInputEl.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // 自适应高度
+        chatInputEl.addEventListener('input', () => {
+            chatInputEl.style.height = 'auto';
+            chatInputEl.style.height = Math.min(chatInputEl.scrollHeight, 130) + 'px';
+        });
+
+        backBtnEl.addEventListener('click', () => {
+            layoutEl.classList.remove('mobile-viewing-chat');
+            currentOtherId = null;
+            chatActiveEl.style.display = 'none';
+            chatEmptyEl.style.display = 'flex';
+            const url = new URL(location.href);
+            url.searchParams.delete('user_id');
+            history.replaceState(null, '', url.toString());
+            refreshConversations();
+        });
+
+        // 页面卸载时取消订阅
+        window.addEventListener('beforeunload', () => {
+            if (realtimeChannel) supabaseClient.removeChannel(realtimeChannel);
+        });
+
+        init();
+    </script>
+    <script src="nav.js"></script>
+    <script src="ai-assistant.js"></script>
+</body>
+
+</html>

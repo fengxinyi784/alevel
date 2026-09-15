@@ -6,57 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>个人主页 - A-Level Guide</title>
     <meta name="description" content="A-Level Guide 用户个人主页，查看作品与资料。" />
-    <script src="https://cdn.tailwindcss.com">
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        navy: {
-                            50: '#f0f4f8',
-                            100: '#d9e2ec',
-                            200: '#bcccdc',
-                            300: '#9fb3c8',
-                            400: '#627d98',
-                            500: '#334e68',
-                            600: '#243b53',
-                            700: '#1a2d40',
-                            800: '#10202e',
-                            900: '#0b1620'
+                        duo: {
+                            green: '#58CC02', blue: '#1CB0F6', yellow: '#FFC800',
+                            orange: '#FF9600', red: '#FF4B4B', purple: '#CE82FF',
+                            pink: '#FF86D0', cyan: '#14D4F4',
                         },
-                        oxford: '#000000',
-                        gold: '#c9a84c',
                     },
                     fontFamily: {
-                        serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
                         sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
                     },
                 },
             },
         }
     </script>
+
+    <link rel="stylesheet" href="ai-assistant.css">
+
     <style>
         :root {
-            --oxford: #000000;
-            --gold: #c9a84c;
-            --gold-light: #e8d5a0;
-            --gold-dark: #a8893a;
-            --bg-card: #0d0d0f;
-            --bg-card-hover: #141416;
-            --border-subtle: rgba(255, 255, 255, 0.08);
-            --border-gold: rgba(201, 168, 76, 0.35);
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.72);
-            --text-tertiary: rgba(255, 255, 255, 0.45);
-            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.5);
-            --shadow-card-hover: 0 8px 40px rgba(0, 0, 0, 0.75), 0 2px 6px rgba(0, 0, 0, 0.6);
-            --shadow-gold-glow: 0 0 20px rgba(201, 168, 76, 0.25), 0 0 60px rgba(201, 168, 76, 0.08);
-            --radius-card: 14px;
-            --radius-btn: 8px;
-            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-bounce: 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --duo-green: #58CC02;
+            --duo-green-dark: #58A700;
+            --duo-green-soft: #F0F9E8;
+            --duo-blue: #1CB0F6;
+            --duo-yellow: #FFC800;
+            --duo-red: #FF4B4B;
+            --duo-red-dark: #C73636;
+
+            --text-main: #3C3C3C;
+            --text-sub: #777777;
+            --text-faint: #AFAFAF;
+            --border-soft: #E5E5E5;
+            --bg-page: #F7F7F7;
+            --bg-card: #FFFFFF;
+
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
         }
 
         * {
@@ -65,273 +56,182 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
             font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: #000000;
-            background-image:
-                radial-gradient(ellipse at 20% 10%, rgba(201, 168, 76, 0.04) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 90%, rgba(201, 168, 76, 0.03) 0%, transparent 55%),
-                radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.015) 0%, transparent 70%);
-            background-attachment: fixed;
-            color: var(--text-primary);
+            background: var(--bg-page);
+            color: var(--text-main);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             min-height: 100vh;
             line-height: 1.6;
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #0a0a0a;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #2a2a2a;
-            border-radius: 4px;
-            transition: background var(--transition-fast);
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--gold-dark);
-        }
-
-        .serif-display {
-            font-family: 'Georgia', 'Cambria', 'Times New Roman', serif;
-            letter-spacing: 0.01em;
-        }
-
-        /* ==================== 导航栏 ==================== */
-        header {
-            background: rgba(0, 0, 0, 0.82) !important;
-            backdrop-filter: blur(20px) saturate(1.4);
-            -webkit-backdrop-filter: blur(20px) saturate(1.4);
-            border-bottom: 1px solid rgba(201, 168, 76, 0.18) !important;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.55);
-            transition: all var(--transition-smooth);
-        }
-
-        header .shadow-nav {
-            box-shadow: none;
-        }
-
-        .nav-link {
-            position: relative;
-            font-size: 0.875rem;
             font-weight: 500;
-            letter-spacing: 0.02em;
-            color: var(--text-primary);
-            transition: color var(--transition-fast), transform var(--transition-fast);
-            padding: 0.5rem 0.25rem;
-            text-decoration: none;
-            display: inline-block;
+            display: flex;
+            flex-direction: column;
         }
 
-        .nav-link:hover {
-            color: var(--gold);
-            transform: translateY(-1px);
+        ::selection {
+            background: rgba(88, 204, 2, 0.25);
         }
 
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -2px;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--gold), var(--gold-light));
-            border-radius: 2px;
-            transition: width var(--transition-smooth);
-            box-shadow: 0 0 8px rgba(201, 168, 76, 0.4);
-        }
+        /* ========== Tailwind 深色类名覆写 ========== */
+        .text-white { color: var(--text-main) !important; }
+        .text-white\/60 { color: var(--text-sub) !important; }
+        .text-white\/70 { color: var(--text-sub) !important; }
+        .text-white\/50 { color: var(--text-faint) !important; }
+        .text-gray-400 { color: var(--text-sub) !important; }
+        .text-gray-500 { color: #909090 !important; }
+        .text-red-400 { color: var(--duo-red) !important; }
+        .text-gold { color: var(--duo-green) !important; }
+        .bg-gray-700 { background: #E5E5E5 !important; }
+        .bg-gray-800 { background: #F0F0F0 !important; }
+        .bg-gold { background: var(--duo-green) !important; }
+        .border-gold\/40 { border-color: rgba(88, 204, 2, 0.4) !important; }
+        .border-gold\/30 { border-color: rgba(88, 204, 2, 0.3) !important; }
+        .border-gold\/25 { border-color: rgba(88, 204, 2, 0.25) !important; }
+        .bg-gold .text-white,
+        .btn-duo .text-white { color: #fff !important; }
 
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .nav-link.active {
-            color: var(--gold);
-            font-weight: 600;
-        }
-
-        .nav-link.active::after {
-            width: 100%;
-        }
-
-        #profile-dropdown {
-            background: rgba(10, 10, 12, 0.95) !important;
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(201, 168, 76, 0.25) !important;
-            border-radius: 12px !important;
-            box-shadow: var(--shadow-card-hover);
+        /* ========== 背景光斑 ========== */
+        #glow-background {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
             overflow: hidden;
-            animation: dropdownFade 0.25s ease-out;
+            background: linear-gradient(135deg, #FFFFFF 0%, #FAFFFA 40%, #FFFFFF 70%, #F5FBFF 100%);
+            background-size: 300% 300%;
+            animation: pageGradient 24s ease-in-out infinite;
         }
 
-        @keyframes dropdownFade {
-            from {
-                opacity: 0;
-                transform: translateY(-6px) scale(0.98);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+        @keyframes pageGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
-        #profile-dropdown a,
-        #profile-dropdown button {
-            padding: 0.65rem 1.2rem;
-            transition: all var(--transition-fast);
-            border-left: 2px solid transparent;
-            font-weight: 500;
-            letter-spacing: 0.01em;
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.4;
+            will-change: transform;
         }
 
-        #profile-dropdown a:hover,
-        #profile-dropdown button:hover {
-            background: rgba(201, 168, 76, 0.1) !important;
-            border-left-color: var(--gold);
-            color: var(--gold) !important;
-            padding-left: 1.5rem;
+        .glow-orb--1 {
+            width: 600px; height: 600px; top: -180px; left: -180px;
+            background: radial-gradient(circle, rgba(88, 204, 2, 0.5) 0%, rgba(88, 204, 2, 0.15) 45%, transparent 72%);
+            animation: flow1 28s ease-in-out infinite;
+        }
+        .glow-orb--2 {
+            width: 560px; height: 560px; bottom: -200px; right: -160px;
+            background: radial-gradient(circle, rgba(28, 176, 246, 0.5) 0%, rgba(28, 176, 246, 0.15) 45%, transparent 72%);
+            animation: flow2 32s ease-in-out infinite; animation-delay: -8s;
+        }
+        .glow-orb--3 {
+            width: 480px; height: 480px; top: 40%; right: -100px;
+            background: radial-gradient(circle, rgba(206, 130, 255, 0.45) 0%, rgba(206, 130, 255, 0.12) 45%, transparent 72%);
+            animation: flow3 34s ease-in-out infinite; animation-delay: -14s;
+        }
+        .glow-orb--4 {
+            width: 460px; height: 460px; bottom: 10%; left: -100px;
+            background: radial-gradient(circle, rgba(255, 200, 0, 0.45) 0%, rgba(255, 200, 0, 0.12) 45%, transparent 72%);
+            animation: flow4 30s ease-in-out infinite; animation-delay: -6s;
+        }
+        .glow-orb--5 {
+            width: 400px; height: 400px; top: 20%; left: 45%;
+            background: radial-gradient(circle, rgba(255, 134, 208, 0.4) 0%, rgba(255, 134, 208, 0.1) 45%, transparent 72%);
+            animation: flow1 26s ease-in-out infinite; animation-delay: -3s;
+        }
+        .glow-orb--6 {
+            width: 420px; height: 420px; bottom: 20%; right: 30%;
+            background: radial-gradient(circle, rgba(20, 212, 244, 0.4) 0%, rgba(20, 212, 244, 0.1) 45%, transparent 72%);
+            animation: flow2 30s ease-in-out infinite; animation-delay: -18s;
         }
 
-        /* ==================== Logo 区域 ==================== */
-        .logo-badge {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, var(--gold-dark) 100%);
-            box-shadow: 0 4px 16px rgba(201, 168, 76, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            transition: transform var(--transition-bounce), box-shadow var(--transition-smooth);
+        @keyframes flow1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(20vw, 15vh) scale(1.1); }
+            50% { transform: translate(35vw, 38vh) scale(0.95); }
+            75% { transform: translate(10vw, 50vh) scale(1.05); }
+        }
+        @keyframes flow2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            20% { transform: translate(-22vw, -12vh) scale(1.1); }
+            50% { transform: translate(-42vw, -35vh) scale(0.92); }
+            75% { transform: translate(-15vw, -48vh) scale(1.06); }
+        }
+        @keyframes flow3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-18vw, 22vh) scale(1.12); }
+            66% { transform: translate(-26vw, 48vh) scale(0.94); }
+        }
+        @keyframes flow4 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(18vw, -14vh) scale(1.08); }
+            55% { transform: translate(32vw, 6vh) scale(0.94); }
         }
 
-        .logo-badge:hover {
-            transform: scale(1.05) rotate(-2deg);
-            box-shadow: 0 6px 24px rgba(201, 168, 76, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        #particles-layer { display: none !important; }
+
+        /* ========== 导航栏浅色覆盖 ========== */
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.9) !important;
+            backdrop-filter: blur(14px) !important;
+            -webkit-backdrop-filter: blur(14px) !important;
+            border-bottom: 2px solid var(--border-soft) !important;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
+        }
+        .nav-glass .text-white { color: var(--text-main) !important; text-shadow: none !important; }
+        .nav-glass .nav-link { color: var(--text-sub) !important; font-weight: 700 !important; }
+        .nav-glass .nav-link:hover { color: var(--duo-green) !important; }
+        .nav-glass .nav-link.active { color: var(--duo-green) !important; }
+        .nav-glass #mobile-menu-btn { border-color: var(--border-soft) !important; }
+        .nav-glass #mobile-menu-btn svg { color: var(--text-main) !important; }
+        #mobile-menu { background: #fff !important; border-top: 2px solid var(--border-soft); }
+        #mobile-menu a { color: var(--text-main) !important; font-weight: 700 !important; }
+        #mobile-menu a:hover, #mobile-menu a.nav-active {
+            background: var(--duo-green-soft) !important;
+            color: var(--duo-green) !important;
         }
 
-        /* ==================== 移动端菜单 ==================== */
-        #mobile-menu {
-            background: rgba(0, 0, 0, 0.95) !important;
-            backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(201, 168, 76, 0.2) !important;
-            animation: mobileMenuSlide 0.3s ease-out;
-        }
+        /* ========== 页面主区 ========== */
+        main { position: relative; z-index: 1; flex: 1 0 auto; width: 100%; }
 
-        @keyframes mobileMenuSlide {
-            from {
-                opacity: 0;
-                transform: translateY(-8px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        #mobile-menu a {
-            transition: all var(--transition-fast);
-            border-left: 3px solid transparent;
-            border-radius: 8px;
-        }
-
-        #mobile-menu a:hover {
-            background: rgba(201, 168, 76, 0.08) !important;
-            border-left-color: var(--gold);
-            color: var(--gold) !important;
-            padding-left: 1.2rem;
-        }
-
-        /* ==================== 主容器 ==================== */
-        main {
-            animation: mainFade 0.5s ease-out;
-        }
-
-        @keyframes mainFade {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ==================== 卡片通用样式 ==================== */
+        /* ========== 贴纸卡片 ========== */
         .profile-card {
-            background: linear-gradient(180deg, #0e0e10 0%, #0a0a0c 100%);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-card);
-            box-shadow: var(--shadow-card);
-            transition: all var(--transition-smooth);
+            background: var(--bg-card);
+            border: 2px solid var(--border-soft);
+            border-bottom-width: 5px;
+            border-radius: var(--radius-lg);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
             overflow: hidden;
             position: relative;
         }
-
-        .profile-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent 0%, rgba(201, 168, 76, 0.4) 50%, transparent 100%);
-            opacity: 0;
-            transition: opacity var(--transition-smooth);
-        }
-
         .profile-card:hover {
-            border-color: var(--border-gold);
-            box-shadow: var(--shadow-card-hover), var(--shadow-gold-glow);
-            transform: translateY(-2px);
+            border-color: rgba(88, 204, 2, 0.4);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
         }
 
-        .profile-card:hover::before {
-            opacity: 1;
-        }
-
-        /* ==================== 背景封面 ==================== */
+        /* ========== 背景封面 ========== */
         .profile-cover {
-            height: 260px;
+            height: 240px;
             background-size: cover;
             background-position: center;
             position: relative;
-            transition: transform var(--transition-smooth);
+            transition: transform var(--transition-smooth, 0.35s ease);
             cursor: pointer;
+            background-color: #E5E5E5;
         }
-
         .profile-cover::after {
             content: '';
             position: absolute;
             inset: 0;
             background: linear-gradient(180deg,
-                    rgba(0, 0, 0, 0.15) 0%,
-                    rgba(0, 0, 0, 0.35) 40%,
-                    rgba(10, 10, 12, 0.85) 85%,
-                    #0a0a0c 100%);
-            transition: background var(--transition-smooth);
+                    rgba(0, 0, 0, 0.05) 0%,
+                    rgba(0, 0, 0, 0.1) 40%,
+                    rgba(255, 255, 255, 0.55) 85%,
+                    #FFFFFF 100%);
+            pointer-events: none;
         }
-
-        .profile-cover:hover::after {
-            background: linear-gradient(180deg,
-                    rgba(0, 0, 0, 0.1) 0%,
-                    rgba(0, 0, 0, 0.3) 40%,
-                    rgba(10, 10, 12, 0.8) 85%,
-                    #0a0a0c 100%);
-        }
-
         .profile-cover .cover-overlay {
             position: absolute;
             inset: 0;
@@ -340,51 +240,48 @@
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transition: opacity var(--transition-smooth);
-            background: rgba(0, 0, 0, 0.35);
+            transition: opacity 0.35s ease;
+            background: rgba(0, 0, 0, 0.25);
         }
-
-        .profile-cover:hover .cover-overlay {
-            opacity: 1;
-        }
-
+        .profile-cover:hover .cover-overlay { opacity: 1; }
         .cover-overlay span {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(8px);
-            padding: 0.5rem 1.2rem;
-            border-radius: 20px;
-            border: 1px solid rgba(201, 168, 76, 0.4);
+            padding: 0.55rem 1.3rem;
+            border-radius: 999px;
+            border: 2px solid var(--duo-green);
+            color: var(--duo-green);
             font-size: 0.85rem;
-            font-weight: 500;
+            font-weight: 800;
             letter-spacing: 0.03em;
             transform: translateY(8px);
-            transition: transform var(--transition-bounce);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 3px 0 var(--duo-green-dark);
         }
+        .profile-cover:hover .cover-overlay span { transform: translateY(0); }
 
-        .profile-cover:hover .cover-overlay span {
-            transform: translateY(0);
-        }
-
-        /* ==================== 头像 ==================== */
+        /* ========== 头像 ========== */
         .profile-avatar {
-            width: 84px;
-            height: 84px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
-            border: 4px solid #0a0a0c;
-            box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.5), 0 8px 30px rgba(0, 0, 0, 0.7);
-            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+            border: 5px solid #FFFFFF;
+            box-shadow: 0 0 0 3px var(--duo-green), 0 6px 20px rgba(0, 0, 0, 0.12);
+            background: linear-gradient(135deg, #58CC02 0%, #58A700 100%);
             overflow: hidden;
-            transition: all var(--transition-bounce);
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
             cursor: pointer;
             position: relative;
             z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
         }
-
         .profile-avatar:hover {
             transform: scale(1.08);
-            box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.7), 0 12px 40px rgba(0, 0, 0, 0.8), var(--shadow-gold-glow);
+            box-shadow: 0 0 0 3px var(--duo-green), 0 10px 30px rgba(88, 204, 2, 0.35);
         }
-
         .profile-avatar img {
             width: 100%;
             height: 100%;
@@ -392,602 +289,502 @@
             display: block;
         }
 
-        /* ==================== 用户名和简介 ==================== */
+        /* ========== 用户名和简介 ========== */
         .profile-username {
-            font-size: 1.6rem;
-            font-weight: 700;
+            font-size: 1.5rem;
+            font-weight: 900;
             letter-spacing: -0.01em;
-            transition: color var(--transition-fast), text-shadow var(--transition-fast);
+            color: var(--text-main);
+            transition: color 0.15s ease;
             position: relative;
             display: inline-block;
+            cursor: pointer;
+            word-break: break-word;
         }
-
-        .profile-username:hover {
-            color: var(--gold);
-            text-shadow: 0 0 20px rgba(201, 168, 76, 0.4);
-        }
-
+        .profile-username:hover { color: var(--duo-green); }
         .profile-bio {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            transition: color var(--transition-fast);
+            font-size: 0.92rem;
+            color: var(--text-sub);
+            font-weight: 600;
+            transition: color 0.15s ease;
+            cursor: pointer;
+            word-break: break-word;
         }
+        .profile-bio:hover { color: var(--duo-green); }
 
-        .profile-bio:hover {
-            color: var(--gold-light);
-        }
-
-        /* ==================== 统计数字 ==================== */
+        /* ========== 统计数字 ========== */
         .stat-item {
             cursor: pointer;
-            padding: 0.3rem 0.6rem;
-            border-radius: 8px;
-            transition: all var(--transition-fast);
-            font-size: 0.9rem;
+            padding: 0.4rem 0.85rem;
+            border-radius: 999px;
+            transition: all 0.15s ease;
+            font-size: 0.88rem;
             display: inline-flex;
             align-items: center;
-            gap: 0.35rem;
-            border: 1px solid transparent;
-        }
-
-        .stat-item:hover {
-            background: rgba(201, 168, 76, 0.08);
-            border-color: rgba(201, 168, 76, 0.25);
-            color: var(--gold);
-        }
-
-        .stat-item .stat-number {
+            gap: 0.4rem;
+            border: 2px solid var(--border-soft);
+            background: #FFFFFF;
+            color: var(--text-sub);
             font-weight: 700;
-            font-size: 1.05rem;
-            background: linear-gradient(135deg, var(--gold-light), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            transition: all var(--transition-fast);
+        }
+        .stat-item:hover {
+            background: var(--duo-green-soft);
+            border-color: var(--duo-green);
+            color: var(--duo-green);
+        }
+        .stat-item .stat-number {
+            font-weight: 900;
+            font-size: 1rem;
+            color: var(--duo-green);
         }
 
-        .stat-item:hover .stat-number {
-            -webkit-text-fill-color: var(--gold);
-            transform: scale(1.05);
-        }
-
-        /* ==================== 关注按钮 ==================== */
-        .follow-btn {
-            padding: 0.55rem 1.6rem;
-            border-radius: 24px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            letter-spacing: 0.02em;
-            transition: all var(--transition-bounce);
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .follow-btn.following {
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text-primary);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .follow-btn.following:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
-        }
-
-        .follow-btn.not-following {
-            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, var(--gold-dark) 100%);
-            color: #000000;
-            border-color: transparent;
-            box-shadow: 0 4px 20px rgba(201, 168, 76, 0.4);
-        }
-
-        .follow-btn.not-following:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(201, 168, 76, 0.55), var(--shadow-gold-glow);
-        }
-
-        .follow-btn.not-following:active {
-            transform: scale(0.96);
-        }
-
-        /* ==================== 收藏标签 ==================== */
-        .favorite-tag {
-            padding: 0.45rem 1rem;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            color: var(--text-primary);
+        /* ============================================================
+           关注 / 私信按钮
+             · 形状共用：同样 padding、圆角、字号、3D 阴影高度
+             · 未关注：绿底白字（强调可点击）
+             · 已关注：浅灰底 + 灰字 + 灰边 + 灰影（弱化状态）
+             · 私信：白底绿边绿字（保持原样）
+           ============================================================ */
+        .follow-btn,
+        .dm-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 0.65rem 1.4rem;
+            border-radius: var(--radius-sm);
+            font-weight: 800;
             font-size: 0.85rem;
-            font-weight: 500;
-            transition: all var(--transition-bounce);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.08s ease, box-shadow 0.08s ease,
+                        background 0.15s ease, color 0.15s ease,
+                        border-color 0.15s ease, filter 0.15s ease;
+            white-space: nowrap;
+            font-family: inherit;
+            border: 2px solid transparent;
+        }
+
+        /* ---- 未关注状态（默认）：绿底白字 ---- */
+        .follow-btn {
+            background: var(--duo-green);
+            color: #FFFFFF;
+            border-color: var(--duo-green);
+            box-shadow: 0 4px 0 var(--duo-green-dark);
+        }
+        .follow-btn:hover {
+            filter: brightness(1.06);
+        }
+        .follow-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 var(--duo-green-dark);
+        }
+
+        /* ---- 已关注状态：浅灰底灰边灰字（形状与未关注一致，只换色） ---- */
+        .follow-btn.is-following {
+            background: #F0F0F0;
+            color: var(--text-sub);
+            border-color: var(--border-soft);
+            box-shadow: 0 4px 0 var(--border-soft);
+        }
+        .follow-btn.is-following:hover {
+            background: #E8E8E8;
+            color: var(--text-main);
+            filter: none;
+        }
+        .follow-btn.is-following:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 var(--border-soft);
+        }
+
+        /* ---- 私信按钮：白底绿边绿字（保持不变） ---- */
+        .dm-btn {
+            background: #FFFFFF;
+            color: var(--duo-green);
+            border-color: var(--duo-green);
+            box-shadow: 0 4px 0 var(--duo-green);
+        }
+        .dm-btn:hover {
+            background: var(--duo-green-soft);
+            filter: brightness(1.02);
+        }
+        .dm-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 var(--duo-green);
+        }
+
+        /* 关注 + 私信按钮的组合容器 */
+        .profile-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* ========== 收藏标签 ========== */
+        .favorite-tag {
+            padding: 0.5rem 1.1rem;
+            background: #FFFFFF;
+            border: 2px solid var(--border-soft);
+            border-radius: 999px;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            font-weight: 800;
+            transition: transform 0.12s ease, border-color 0.15s ease, background 0.15s ease;
             text-decoration: none;
             display: inline-block;
             letter-spacing: 0.02em;
         }
-
         .favorite-tag:hover {
-            background: rgba(201, 168, 76, 0.12);
-            border-color: rgba(201, 168, 76, 0.45);
-            color: var(--gold);
+            background: var(--duo-green-soft);
+            border-color: var(--duo-green);
+            color: var(--duo-green);
             transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(201, 168, 76, 0.2);
         }
 
-        /* ==================== 作品卡片 ==================== */
+        /* ========== 作品卡片 ========== */
         .post-item {
-            background: linear-gradient(180deg, #0e0e10 0%, #0a0a0c 100%);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 1.2rem 1.4rem;
-            margin-bottom: 0.8rem;
+            background: #FFFFFF;
+            border: 2px solid var(--border-soft);
+            border-bottom-width: 4px;
+            border-radius: var(--radius-md);
+            padding: 1.1rem 1.3rem;
+            margin-bottom: 0.75rem;
             cursor: pointer;
-            transition: all var(--transition-smooth);
+            transition: transform 0.12s ease, border-color 0.2s ease, box-shadow 0.2s ease;
             position: relative;
-            overflow: hidden;
         }
-
         .post-item::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 3px;
-            height: 100%;
-            background: linear-gradient(180deg, var(--gold), var(--gold-dark));
+            left: -2px;
+            top: 14px;
+            bottom: 14px;
+            width: 4px;
+            background: var(--duo-green);
+            border-radius: 2px;
             opacity: 0;
-            transition: opacity var(--transition-smooth);
-            border-radius: 0 3px 3px 0;
+            transition: opacity 0.2s ease;
         }
-
         .post-item:hover {
-            border-color: var(--border-gold);
-            box-shadow: var(--shadow-card-hover);
-            transform: translateX(4px);
-            background: linear-gradient(180deg, #121215 0%, #0d0d0f 100%);
+            border-color: rgba(88, 204, 2, 0.5);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+            transform: translateY(-2px);
         }
-
-        .post-item:hover::before {
-            opacity: 1;
-        }
-
+        .post-item:hover::before { opacity: 1; }
         .post-item h4 {
-            font-weight: 600;
-            font-size: 1.05rem;
-            transition: color var(--transition-fast);
-            letter-spacing: 0.01em;
+            font-weight: 900;
+            font-size: 1.02rem;
+            color: var(--text-main);
+            transition: color 0.15s ease;
+            letter-spacing: -0.01em;
+            word-break: break-word;
         }
-
-        .post-item:hover h4 {
-            color: var(--gold);
-        }
-
+        .post-item:hover h4 { color: var(--duo-green); }
         .post-item .post-content {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+            color: var(--text-sub);
+            font-size: 0.88rem;
             margin-top: 0.35rem;
-            line-height: 1.7;
-            transition: color var(--transition-fast);
+            line-height: 1.65;
+            font-weight: 500;
+            word-break: break-word;
         }
-
-        .post-item:hover .post-content {
-            color: var(--text-primary);
-        }
-
         .post-item .post-time {
-            color: var(--text-tertiary);
+            color: var(--text-faint);
             font-size: 0.75rem;
             margin-top: 0.6rem;
             letter-spacing: 0.03em;
             display: flex;
             align-items: center;
             gap: 0.35rem;
+            font-weight: 700;
         }
+        .post-item .post-time::before { content: '🕐'; font-size: 0.7rem; }
 
-        .post-item .post-time::before {
-            content: '🕐';
-            font-size: 0.7rem;
-        }
-
+        /* ========== 分区标题 ========== */
         .section-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: var(--text-main);
             margin-bottom: 1rem;
-            letter-spacing: 0.02em;
+            letter-spacing: -0.01em;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.55rem;
         }
-
         .section-title::before {
             content: '';
             display: inline-block;
-            width: 3px;
-            height: 1.1rem;
-            background: linear-gradient(180deg, var(--gold-light), var(--gold-dark));
+            width: 4px;
+            height: 1.05rem;
+            background: var(--duo-green);
             border-radius: 2px;
-            box-shadow: 0 0 8px rgba(201, 168, 76, 0.3);
         }
 
-        /* ==================== 模态框 ==================== */
+        /* ========== 模态框 ========== */
         .modal-backdrop {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             animation: modalBackdropFade 0.25s ease-out;
         }
-
         @keyframes modalBackdropFade {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-
         .modal-box {
-            background: linear-gradient(180deg, #121215 0%, #0a0a0c 100%);
-            border: 1px solid rgba(201, 168, 76, 0.3);
-            border-radius: 16px;
+            background: #FFFFFF;
+            border: 2px solid var(--border-soft);
+            border-radius: var(--radius-lg);
             padding: 1.8rem;
-            max-width: 420px;
+            max-width: 440px;
             width: 92%;
-            box-shadow: var(--shadow-card-hover), var(--shadow-gold-glow);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15);
             animation: modalBoxIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes modalBoxIn {
-            from {
-                opacity: 0;
-                transform: scale(0.92) translateY(12px);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        .modal-box h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            letter-spacing: 0.01em;
-            margin-bottom: 1.2rem;
-            background: linear-gradient(135deg, #ffffff, var(--gold-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .modal-input {
-            width: 100%;
-            padding: 0.65rem 1rem;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            transition: all var(--transition-fast);
+            max-height: 85vh;
+            overflow-y: auto;
             outline: none;
         }
-
-        .modal-input:focus {
-            border-color: rgba(201, 168, 76, 0.5);
-            box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
-            background: rgba(0, 0, 0, 0.7);
+        @keyframes modalBoxIn {
+            from { opacity: 0; transform: scale(0.92) translateY(12px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
-
-        .modal-input::placeholder {
-            color: var(--text-tertiary);
+        .modal-box h3 {
+            font-size: 1.2rem;
+            font-weight: 900;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.2rem;
+            color: var(--text-main);
         }
-
-        .modal-btn {
-            padding: 0.6rem 1.4rem;
-            border-radius: 8px;
+        .modal-input {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            background: #FFFFFF;
+            border: 2px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: var(--text-main);
+            font-size: 0.95rem;
             font-weight: 600;
-            font-size: 0.88rem;
-            letter-spacing: 0.02em;
-            transition: all var(--transition-bounce);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            outline: none;
+            font-family: inherit;
+        }
+        .modal-input:focus {
+            border-color: var(--duo-green);
+            box-shadow: 0 0 0 4px rgba(88, 204, 2, 0.12);
+        }
+        .modal-input::placeholder { color: var(--text-faint); font-weight: 500; }
+
+        /* ========== 模态按钮 ========== */
+        .modal-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.65rem 1.4rem;
+            border-radius: var(--radius-sm);
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease, color 0.15s ease;
             border: none;
             cursor: pointer;
+            font-family: inherit;
         }
-
         .modal-btn.cancel {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--text-primary);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: #FFFFFF;
+            color: var(--text-sub);
+            border: 2px solid var(--border-soft);
+            box-shadow: 0 4px 0 var(--border-soft);
         }
-
-        .modal-btn.cancel:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
+        .modal-btn.cancel:hover { color: var(--text-main); }
+        .modal-btn.cancel:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 var(--border-soft);
         }
-
         .modal-btn.save {
-            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, var(--gold-dark) 100%);
-            color: #000000;
-            box-shadow: 0 4px 16px rgba(201, 168, 76, 0.35);
+            background: var(--duo-green);
+            color: #FFFFFF;
+            box-shadow: 0 4px 0 var(--duo-green-dark);
         }
-
-        .modal-btn.save:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(201, 168, 76, 0.5), var(--shadow-gold-glow);
-        }
-
+        .modal-btn.save:hover { filter: brightness(1.06); }
         .modal-btn.save:active {
-            transform: scale(0.96);
+            transform: translateY(4px);
+            box-shadow: 0 0 0 var(--duo-green-dark);
         }
 
-        /* ==================== Emoji 选择按钮 ==================== */
+        /* ========== Emoji 选择按钮 ========== */
         .avatar-emoji-btn {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             padding: 0.4rem;
             border-radius: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #FAFAFA;
+            border: 2px solid var(--border-soft);
             cursor: pointer;
-            transition: all var(--transition-bounce);
+            transition: all 0.15s ease;
             line-height: 1;
         }
-
         .avatar-emoji-btn:hover {
-            background: rgba(201, 168, 76, 0.15);
-            border-color: rgba(201, 168, 76, 0.4);
-            transform: scale(1.12);
+            background: var(--duo-green-soft);
+            border-color: rgba(88, 204, 2, 0.5);
+            transform: scale(1.1);
         }
-
         .avatar-emoji-btn.emoji-selected {
-            background: linear-gradient(135deg, var(--gold-light), var(--gold));
-            border-color: var(--gold);
-            box-shadow: 0 0 16px rgba(201, 168, 76, 0.4);
+            background: var(--duo-green);
+            border-color: var(--duo-green);
+            box-shadow: 0 3px 0 var(--duo-green-dark);
             transform: scale(1.08);
         }
 
-        /* ==================== 关注列表模态框 ==================== */
+        /* ========== 关注列表模态框 ========== */
         .follow-list-container {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             animation: modalBackdropFade 0.25s ease-out;
         }
-
         .follow-list-box {
-            background: linear-gradient(180deg, #121215 0%, #0a0a0c 100%);
-            border: 1px solid rgba(201, 168, 76, 0.25);
-            border-radius: 16px;
+            background: #FFFFFF;
+            border: 2px solid var(--border-soft);
+            border-radius: var(--radius-lg);
             padding: 1.5rem;
             max-width: 420px;
             width: 92%;
             max-height: 80vh;
             overflow-y: auto;
-            box-shadow: var(--shadow-card-hover);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15);
             animation: modalBoxIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            outline: none;
         }
+        .follow-list-box h3 {
+            font-size: 1.1rem !important;
+            font-weight: 900;
+            color: var(--text-main) !important;
+            -webkit-text-fill-color: var(--text-main) !important;
+            background: none !important;
+        }
+        .follow-list-box #close-follow-modal {
+            color: var(--text-faint) !important;
+        }
+        .follow-list-box #close-follow-modal:hover { color: var(--text-main) !important; }
 
         .follow-user-item {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
+            background: #FAFAFA;
+            border: 2px solid var(--border-soft);
+            border-radius: var(--radius-sm);
             padding: 0.7rem 0.9rem;
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             gap: 0.8rem;
             cursor: pointer;
-            transition: all var(--transition-smooth);
+            transition: all 0.15s ease;
         }
-
         .follow-user-item:hover {
-            background: rgba(201, 168, 76, 0.08);
-            border-color: rgba(201, 168, 76, 0.35);
+            background: var(--duo-green-soft);
+            border-color: rgba(88, 204, 2, 0.5);
             transform: translateX(4px);
         }
-
         .follow-user-avatar {
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            border: 2px solid rgba(201, 168, 76, 0.4);
-            background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+            border: 2px solid #FFFFFF;
+            box-shadow: 0 0 0 2px rgba(88, 204, 2, 0.2);
+            background: linear-gradient(135deg, #58CC02, #58A700);
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
             flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
         }
-
-        .follow-user-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
+        .follow-user-avatar img { width: 100%; height: 100%; object-fit: cover; }
         .follow-user-name {
-            font-weight: 600;
+            font-weight: 800;
             font-size: 0.95rem;
-            color: var(--text-primary);
-            transition: color var(--transition-fast);
+            color: var(--text-main);
+            transition: color 0.15s ease;
+            word-break: break-word;
         }
+        .follow-user-item:hover .follow-user-name { color: var(--duo-green); }
 
-        .follow-user-item:hover .follow-user-name {
-            color: var(--gold);
-        }
-
-        /* ==================== 底部 ==================== */
-        footer {
-            background: rgba(0, 0, 0, 0.85) !important;
-            backdrop-filter: blur(16px);
-            border-top: 1px solid rgba(201, 168, 76, 0.15) !important;
-        }
-
-        footer .footer-link {
-            color: var(--text-tertiary);
-            font-size: 0.78rem;
-            transition: all var(--transition-fast);
-            text-decoration: none;
-            letter-spacing: 0.02em;
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-        }
-
-        footer .footer-link:hover {
-            color: var(--gold);
-            background: rgba(201, 168, 76, 0.08);
-        }
-
-        /* ==================== 登录提示卡片 ==================== */
+        /* ========== 登录提示卡片 ========== */
         .login-prompt-card {
-            background: linear-gradient(180deg, #0e0e10 0%, #0a0a0c 100%);
-            border: 1px solid rgba(201, 168, 76, 0.25);
-            border-radius: 16px;
+            background: #FFFFFF;
+            border: 2px solid var(--border-soft);
+            border-bottom-width: 5px;
+            border-radius: var(--radius-lg);
             padding: 2.5rem 2rem;
             text-align: center;
-            box-shadow: var(--shadow-card), var(--shadow-gold-glow);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
             animation: modalBoxIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
         .login-prompt-card .lock-icon {
             font-size: 3.5rem;
             display: block;
             margin-bottom: 1rem;
             animation: lockPulse 2s ease-in-out infinite;
         }
-
         @keyframes lockPulse {
-
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            50% {
-                transform: scale(1.05);
-                opacity: 0.85;
-            }
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.85; }
         }
-
         .login-btn {
-            display: inline-block;
-            padding: 0.7rem 2rem;
-            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, var(--gold-dark) 100%);
-            color: #000000;
-            font-weight: 700;
-            font-size: 0.95rem;
-            border-radius: 24px;
-            text-decoration: none;
-            letter-spacing: 0.02em;
-            box-shadow: 0 4px 20px rgba(201, 168, 76, 0.4);
-            transition: all var(--transition-bounce);
-        }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(201, 168, 76, 0.55), var(--shadow-gold-glow);
-        }
-
-        /* ==================== 空状态 ==================== */
-        .empty-state {
-            color: var(--text-tertiary);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 2rem;
+            background: var(--duo-green);
+            color: #FFFFFF;
+            font-weight: 800;
             font-size: 0.9rem;
-            font-style: italic;
-            letter-spacing: 0.03em;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            box-shadow: 0 4px 0 var(--duo-green-dark);
+            transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
+        }
+        .login-btn:hover { filter: brightness(1.06); }
+        .login-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 var(--duo-green-dark);
+        }
+
+        /* ========== 空状态 ========== */
+        .empty-state {
+            color: var(--text-faint);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
             padding: 0.5rem 0;
         }
 
-        /* ==================== 响应式优化 ==================== */
-        @media (max-width: 768px) {
-            .profile-cover {
-                height: 200px;
-            }
-
-            .profile-avatar {
-                width: 68px;
-                height: 68px;
-                border-width: 3px;
-            }
-
-            .profile-username {
-                font-size: 1.3rem;
-            }
-
-            .modal-box {
-                padding: 1.2rem;
-            }
-
-            .post-item {
-                padding: 1rem 1.1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            main {
-                padding-left: 1rem !important;
-                padding-right: 1rem !important;
-            }
-
-            .profile-cover {
-                height: 170px;
-            }
-
-            .profile-avatar {
-                width: 56px;
-                height: 56px;
-                border-width: 2px;
-            }
-
-            .profile-username {
-                font-size: 1.1rem;
-            }
-
-            .follow-btn {
-                padding: 0.45rem 1.2rem;
-                font-size: 0.8rem;
-            }
-        }
-
-        /* ==================== 确认对话框 ==================== */
-        #confirm-modal .modal-box {
-            max-width: 380px;
-        }
-
-        #confirm-message {
-            font-size: 1.1rem;
+        /* ========== 页脚 ========== */
+        footer {
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+            padding: 30px 16px;
+            text-align: center;
+            border-top: 2px solid var(--border-soft);
+            background: #fff;
+            color: var(--text-faint);
+            font-size: 13px;
             font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-            letter-spacing: 0.01em;
         }
 
-        /* ==================== 动态加载动画 ==================== */
+        /* ========== 加载动画 ========== */
         @keyframes spin-slow {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-
         @keyframes fade-in-up {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
         .loading-spinner {
             display: flex;
             flex-direction: column;
@@ -996,219 +793,155 @@
             min-height: 60vh;
             gap: 1rem;
         }
-
         .loading-spinner .spinner-ring {
             width: 48px;
             height: 48px;
-            border: 3px solid rgba(201, 168, 76, 0.2);
-            border-top-color: #c9a84c;
+            border: 4px solid rgba(88, 204, 2, 0.2);
+            border-top-color: var(--duo-green);
             border-radius: 50%;
             animation: spin-slow 1s linear infinite;
-            box-shadow: 0 0 20px rgba(201, 168, 76, 0.15);
         }
-
         .loading-spinner .loading-text {
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--text-sub);
             font-size: 0.9rem;
+            font-weight: 700;
             letter-spacing: 0.05em;
             animation: pulse-text 1.5s ease-in-out infinite;
         }
-
         @keyframes pulse-text {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        .fade-in-up { animation: fade-in-up 0.5s ease-out both; }
 
-            0%,
-            100% {
-                opacity: 0.5;
+        /* ========== 响应式 ========== */
+        @media (max-width: 768px) {
+            .profile-cover { height: 200px; }
+            .profile-avatar {
+                width: 74px;
+                height: 74px;
+                border-width: 4px;
+                font-size: 1.8rem;
             }
-
-            50% {
-                opacity: 1;
+            .profile-username { font-size: 1.3rem; }
+            .modal-box { padding: 1.25rem; }
+            .post-item { padding: 1rem 1.1rem; }
+        }
+        @media (max-width: 480px) {
+            main {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
             }
+            .profile-cover { height: 170px; }
+            .profile-avatar {
+                width: 64px;
+                height: 64px;
+                border-width: 3px;
+                font-size: 1.5rem;
+            }
+            .profile-username { font-size: 1.15rem; }
+            .follow-btn,
+            .dm-btn { padding: 0.55rem 1.1rem; font-size: 0.78rem; }
+            .profile-actions { width: 100%; justify-content: flex-start; }
         }
 
-        /* 内容淡入上浮 */
-        .fade-in-up {
-            animation: fade-in-up 0.5s ease-out both;
+        @media (prefers-reduced-motion: reduce) {
+            .glow-orb, #glow-background { animation: none !important; }
+            .login-prompt-card .lock-icon { animation: none !important; }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- ==================== 顶部导航栏 ==================== -->
-    <header class="sticky top-0 z-50 bg-black border-b border-white/30 shadow-nav">
+    <!-- 背景层 -->
+    <div id="glow-background" aria-hidden="true">
+        <div class="glow-orb glow-orb--1"></div>
+        <div class="glow-orb glow-orb--2"></div>
+        <div class="glow-orb glow-orb--3"></div>
+        <div class="glow-orb glow-orb--4"></div>
+        <div class="glow-orb glow-orb--5"></div>
+        <div class="glow-orb glow-orb--6"></div>
+    </div>
+    <div id="particles-layer" aria-hidden="true"></div>
+
+    <!-- 导航栏 -->
+    <header class="sticky top-0 z-50 nav-glass">
         <div class="w-full px-6 sm:px-10 lg:px-16">
-            <div class="flex items-center justify-between h-16 md:h-18">
-                <div class="flex items-center gap-3 flex-shrink-0">
-                    <div class="logo-badge flex items-center justify-center">
-                        <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                            stroke-width="1.8">
+            <div class="flex items-center justify-between h-14 md:h-16">
+                <div class="flex items-center gap-2.5 flex-shrink-0">
+                    <div class="w-8 h-8 rounded-full flex items-center justify-center"
+                        style="background: linear-gradient(135deg, #58CC02, #8EE000); box-shadow: 0 3px 0 #58A700;">
+                        <svg class="text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"
+                            style="width: 18px; height: 18px;">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
                         </svg>
                     </div>
-                    <div class="leading-tight">
-                        <span class="serif-display font-bold text-lg md:text-xl text-white">A-Level Guide</span>
-                        <span
-                            class="block text-[10px] md:text-[11px] font-medium tracking-widest uppercase text-white/80">升学规划
-                            · 选课指导</span>
-                    </div>
+                    <span class="font-bold text-base md:text-lg text-white">A-Level Guide</span>
                 </div>
-                <nav class="hidden md:flex items-center gap-10 lg:gap-14" aria-label="主导航">
+                <nav class="hidden md:flex items-center gap-8" aria-label="主导航">
                     <a href="index.html" class="nav-link">首页</a>
                     <a href="subjects.html" class="nav-link">热门科目</a>
                     <a href="universities.html" class="nav-link">热门院校</a>
-                    <a href="strategy.html" class="nav-link">选课策略</a>
+                    <a href="strategy.html" class="nav-link">交流社区</a>
                     <a href="timeline.html" class="nav-link">升学时间轴</a>
-                    <div class="relative group">
-                        <a href="#" class="nav-link active" id="profile-nav-btn">个人主页</a>
-                        <div id="profile-dropdown"
-                            class="absolute hidden group-hover:block bg-black border border-white/20 rounded-lg shadow-xl min-w-[160px] py-2 z-50 right-0">
-                            <!-- 动态内容由 JS 填充 -->
-                        </div>
-                    </div>
+                    <a href="profile.html" class="nav-link active">个人主页</a>
                 </nav>
-                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition"
-                    aria-label="打开菜单">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        stroke-width="2">
+                <button id="mobile-menu-btn"
+                    class="md:hidden p-2 rounded-lg transition-all duration-200 hover:bg-black/5 active:bg-black/10"
+                    aria-label="打开菜单" style="border: 2px solid #E5E5E5;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"
+                        style="color: #3C3C3C;">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-black border-t border-white/30 px-6 py-3 pb-4 shadow-lg">
+        <div id="mobile-menu" class="hidden md:hidden px-6 py-3 pb-4">
             <nav class="flex flex-col gap-1" aria-label="移动端导航">
-                <a href="index.html"
-                    class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">首页</a>
-                <a href="subjects.html"
-                    class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">热门科目</a>
-                <a href="universities.html"
-                    class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">热门院校</a>
-                <a href="strategy.html"
-                    class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">选课策略</a>
-                <a href="timeline.html"
-                    class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">升学时间轴</a>
-                <a href="profile.html"
-                    class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">个人主页</a>
-                <!-- 移动端登录/头像区域（动态插入） -->
-                <div id="nav-user-area-mobile" class="mt-2"></div>
+                <a href="index.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">首页</a>
+                <a href="subjects.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">热门科目</a>
+                <a href="universities.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">热门院校</a>
+                <a href="strategy.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">交流社区</a>
+                <a href="timeline.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">升学时间轴</a>
+                <a href="profile.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">个人主页</a>
             </nav>
         </div>
     </header>
 
-    <!-- ==================== 页面主体：个人主页容器 ==================== -->
+    <!-- 页面主体 -->
     <main class="w-full px-6 sm:px-10 lg:px-16 py-8 md:py-12">
-        <div id="profile-app" class="w-full">
-            <!-- 由 JavaScript 渲染个人主页或登录表单 -->
-        </div>
+        <div id="profile-app" class="w-full max-w-3xl mx-auto"></div>
     </main>
 
-    <!-- ==================== 底部联系方式 ==================== -->
-    <footer class="text-white" style="background-color: #000000;">
-        <div class="w-full px-6 sm:px-10 lg:px-16 py-10 md:py-12">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
-                <div class="md:col-span-2">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="logo-badge flex items-center justify-center" style="width:40px;height:40px;">
-                            <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                stroke-width="1.8">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-                            </svg>
-                        </div>
-                        <div>
-                            <span class="serif-display font-bold text-lg">A-Level Guide</span>
-                            <span class="block text-[10px] font-medium tracking-widest uppercase text-white/70">升学规划 ·
-                                选课指导</span>
-                        </div>
-                    </div>
-                    <p class="text-sm text-white/70 leading-relaxed">为A-Level学生和家长提供专业、可靠的科目指南与升学规划服务。助力每一位学子实现英国名校梦想。
-                    </p>
-                </div>
-                <div class="md:justify-self-end">
-                    <h4 class="text-sm font-semibold tracking-widest uppercase text-[#c9a84c] mb-4">联系我们</h4>
-                    <ul class="space-y-3.5 text-sm text-white/80">
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-[#c9a84c] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24" stroke-width="1.6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                            </svg>
-                            <span>上海市静安区南京西路<br />1266号恒隆广场</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-[#c9a84c] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24" stroke-width="1.6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
-                            </svg>
-                            <span>+86 (021) 6123-4567<br />+44 (0) 20 7946 0958</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-[#c9a84c] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24" stroke-width="1.6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-                            </svg>
-                            <span>info@alevelguide.co.uk<br />admissions@alevelguide.cn</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div
-                class="mt-10 pt-6 border-t border-white/15 flex flex-col md:flex-row items-center justify-between gap-4">
-                <p class="text-xs text-white/60">© 2026 A-Level Guide. All rights reserved. 专注A-Level升学规划与选课指导。</p>
-                <div class="flex gap-6 text-xs text-white/60">
-                    <a href="#" class="footer-link">隐私政策</a>
-                    <a href="#" class="footer-link">使用条款</a>
-                    <a href="#" class="footer-link">Cookie 设置</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <!-- 页脚 -->
+    <footer>© 2026 A-Level Guide · 专注 A-Level 升学规划与选课指导</footer>
 
-    <!-- ==================== 脚本库 ==================== -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
     <script>
-        // ==================== Supabase 初始化 ====================
-        const SUPABASE_URL = 'https://ugtdibfbpanltfvkpxro.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_8eDda8zkFy9RvDbFQDQf6A_4zn9vsJe';
-        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        /* ============ Supabase（复用全局客户端） ============ */
+        const supabaseClient = window.supabaseClient;
+
         const subjectNameMap = {
-            'Mathematics': '数学',
-            'Further Mathematics': '进阶数学',
-            'Physics': '物理',
-            'Chemistry': '化学',
-            'Biology': '生物',
-            'Economics': '经济学',
-            'Accounting': '会计学',
-            'Business': '商务',
-            'Psychology': '心理学',
+            'Mathematics': '数学', 'Further Mathematics': '进阶数学', 'Physics': '物理',
+            'Chemistry': '化学', 'Biology': '生物', 'Economics': '经济学',
+            'Accounting': '会计学', 'Business': '商务', 'Psychology': '心理学',
             'Computer Science': '计算机科学'
         };
         const universityNameMap = {
-            'Oxford': '牛津大学',
-            'Cambridge': '剑桥大学',
-            'Imperial': '帝国理工学院',
-            'LSE': '伦敦政治经济学院',
-            'UCL': '伦敦大学学院',
-            'Edinburgh': '爱丁堡大学',
-            'Manchester': '曼彻斯特大学',
-            'KCL': '伦敦国王学院',
-            'Warwick': '华威大学',
-            'Bristol': '布里斯托大学',
-            'Durham': '杜伦大学',
-            'Birmingham': '伯明翰大学',
-            'Nottingham': '诺丁汉大学',
-            'Sheffield': '谢菲尔德大学',
-            'StAndrews': '圣安德鲁斯大学',
-            'Glasgow': '格拉斯哥大学'
+            'Oxford': '牛津大学', 'Cambridge': '剑桥大学', 'Imperial': '帝国理工学院',
+            'LSE': '伦敦政治经济学院', 'UCL': '伦敦大学学院', 'Edinburgh': '爱丁堡大学',
+            'Manchester': '曼彻斯特大学', 'KCL': '伦敦国王学院', 'Warwick': '华威大学',
+            'Bristol': '布里斯托大学', 'Durham': '杜伦大学', 'Birmingham': '伯明翰大学',
+            'Nottingham': '诺丁汉大学', 'Sheffield': '谢菲尔德大学',
+            'StAndrews': '圣安德鲁斯大学', 'Glasgow': '格拉斯哥大学'
         };
-        // ==================== 全局状态 ====================
+
+        const DEFAULT_COVER = 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=2070&q=80';
+        const POSTS_PAGE_SIZE = 20;
+
         const profileApp = document.getElementById('profile-app');
         let currentUser = null;
         let currentProfile = null;
@@ -1216,76 +949,63 @@
         let targetProfile = null;
         let uploadedAvatarFile = null;
         let uploadedBgFile = null;
+        let selectedEmoji = null;
 
-        // ==================== 工具函数 ====================
         function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
+            return new URLSearchParams(window.location.search).get(param);
         }
 
-        // ==================== 自定义确认对话框 ====================
-        const confirmModal = document.createElement('div');
-        confirmModal.innerHTML = `
-    <div id="confirm-modal" class="fixed inset-0 z-[60] hidden items-center justify-center modal-backdrop">
-        <div class="modal-box">
-            <h3 id="confirm-message">确认操作</h3>
-            <div class="flex justify-end gap-2 mt-4">
-                <button id="confirm-cancel-btn" class="modal-btn cancel">取消</button>
-                <button id="confirm-ok-btn" class="modal-btn save">确认</button>
-            </div>
-        </div>
-    </div>
-`;
-        document.body.appendChild(confirmModal);
-
-        function showConfirmDialog(message, onConfirm) {
-            const modal = document.getElementById('confirm-modal');
-            const messageEl = document.getElementById('confirm-message');
-            const okBtn = document.getElementById('confirm-ok-btn');
-            const cancelBtn = document.getElementById('confirm-cancel-btn');
-            if (!modal) return;
-
-            messageEl.textContent = message;
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-
-            const cleanup = () => {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-                okBtn.removeEventListener('click', handleOk);
-                cancelBtn.removeEventListener('click', handleCancel);
-            };
-
-            const handleOk = () => {
-                cleanup();
-                onConfirm();
-            };
-
-            const handleCancel = () => {
-                cleanup();
-            };
-
-            okBtn.addEventListener('click', handleOk);
-            cancelBtn.addEventListener('click', handleCancel);
+        function escapeHtml(str) {
+            if (str == null) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
         }
 
-        // ==================== 文件处理 ====================
+        function safeUrl(url, fallback = '') {
+            if (!url) return fallback;
+            const s = String(url).trim();
+            if (/^https?:\/\//i.test(s)) return escapeHtml(s);
+            if (/^(\/|\.\/|\.\.\/)/.test(s)) return escapeHtml(s);
+            return fallback;
+        }
+
+        async function requireLogin(type) {
+            if (typeof window.duoRequireLogin === 'function') {
+                try { return await window.duoRequireLogin(type); }
+                catch (_) { return true; }
+            }
+            return true;
+        }
+
+        function showAlert(message, opts = {}) {
+            if (typeof window.duoAlert === 'function') {
+                try { window.duoAlert(message, opts); return; } catch (_) { }
+            }
+            alert(message);
+        }
+
+        /* ============ 文件处理 ============ */
         function handleAvatarFileSelect(event) {
             const file = event.target.files[0];
             if (!file) return;
             if (!file.type.startsWith('image/')) {
-                alert('请选择图片文件');
+                showAlert('请选择图片文件', { type: 'warn', title: '格式不对' });
                 return;
             }
             if (file.size > 5 * 1024 * 1024) {
-                alert('图片不能超过5MB');
+                showAlert('图片不能超过 5MB', { type: 'warn', title: '图片太大了' });
                 return;
             }
             uploadedAvatarFile = file;
             const reader = new FileReader();
             reader.onload = (e) => {
-                document.getElementById('avatar-preview').innerHTML =
-                    `<img src="${e.target.result}" class="w-full h-full object-cover" />`;
+                const preview = document.getElementById('avatar-preview');
+                if (preview) preview.innerHTML =
+                    `<img src="${e.target.result}" class="w-full h-full object-cover" alt="" />`;
             };
             reader.readAsDataURL(file);
         }
@@ -1294,58 +1014,54 @@
             const file = event.target.files[0];
             if (!file) return;
             if (!file.type.startsWith('image/')) {
-                alert('请选择图片文件');
+                showAlert('请选择图片文件', { type: 'warn', title: '格式不对' });
                 return;
             }
             if (file.size > 5 * 1024 * 1024) {
-                alert('图片不能超过5MB');
+                showAlert('图片不能超过 5MB', { type: 'warn', title: '图片太大了' });
                 return;
             }
             uploadedBgFile = file;
         }
 
-        // ==================== 初始化：检查用户并渲染 ====================
+        /* ============ 初始化 ============ */
         async function initProfilePage() {
             profileApp.innerHTML = `
-        <div class="loading-spinner">
-            <div class="spinner-ring"></div>
-            <span class="loading-text">正在加载</span>
-        </div>
-    `;
+                <div class="loading-spinner">
+                    <div class="spinner-ring"></div>
+                    <span class="loading-text">正在加载</span>
+                </div>`;
 
-            const { data: { user } } = await supabaseClient.auth.getUser();
-            currentUser = user;
-
-            if (!user) {
-                renderLoginView();
+            if (!supabaseClient) {
+                profileApp.innerHTML = `<p class="text-center text-red-400 py-12">服务暂不可用，请刷新重试</p>`;
                 return;
             }
 
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            currentUser = user;
+            if (!user) { renderLoginView(); return; }
+
             const { data: profile, error } = await supabaseClient
-                .from('profiles')
-                .select('*')
-                .eq('id', user.id)
-                .single();
+                .from('profiles').select('*').eq('id', user.id).single();
 
             if (profile) {
                 currentProfile = profile;
             } else {
+                if (error && error.code !== 'PGRST116') {
+                    console.error('加载当前用户资料失败:', error);
+                }
                 const { data: newProfile, error: insertError } = await supabaseClient
                     .from('profiles')
                     .upsert([{ id: user.id, username: user.email.split('@')[0], avatar_emoji: '🙂' }])
-                    .select()
-                    .single();
+                    .select().single();
                 if (insertError) {
                     console.error('创建用户资料失败:', insertError);
                     currentProfile = { id: user.id, username: user.email.split('@')[0], avatar_emoji: '🙂' };
-                } else {
-                    currentProfile = newProfile;
-                }
+                } else { currentProfile = newProfile; }
             }
 
             const userIdParam = getQueryParam('user_id');
             targetProfileUserId = userIdParam || user.id;
-
             await loadTargetProfile();
             renderProfilePage();
         }
@@ -1353,31 +1069,26 @@
         async function loadTargetProfile() {
             if (!targetProfileUserId) return;
             const { data: profile, error } = await supabaseClient
-                .from('profiles')
-                .select('*')
-                .eq('id', targetProfileUserId)
-                .single();
+                .from('profiles').select('*').eq('id', targetProfileUserId).single();
             if (error) {
                 console.error('加载目标用户资料失败:', error);
                 targetProfile = null;
-            } else {
-                targetProfile = profile;
-            }
+            } else { targetProfile = profile; }
         }
 
-        // ==================== 未登录视图 ====================
         function renderLoginView() {
             profileApp.innerHTML = `
-    <div class="login-prompt-card max-w-md mx-auto">
-        <span class="lock-icon">🔐</span>
-        <h2 class="text-xl font-semibold text-white mb-2">请先登录</h2>
-        <p class="text-sm text-white/60 mb-6">登录后即可查看和编辑个人主页</p>
-        <a href="login.html" class="login-btn">前往登录</a>
-    </div>
-`;
+                <div class="login-prompt-card max-w-md mx-auto">
+                    <span class="lock-icon">🔐</span>
+                    <h2 class="text-xl font-bold text-white mb-2" style="color:#3C3C3C;">请先登录</h2>
+                    <p class="text-sm text-white/60 mb-6">登录后即可查看和编辑个人主页</p>
+                    <a href="login.html" class="login-btn">前往登录</a>
+                </div>`;
         }
 
-        // ==================== 个人主页渲染 ====================
+        /* ============================================================
+           个人主页渲染
+           ============================================================ */
         async function renderProfilePage() {
             if (!targetProfile) {
                 profileApp.innerHTML = `<p class="text-center text-red-400 py-12">用户不存在或加载失败</p>`;
@@ -1397,220 +1108,234 @@
             let isFollowing = false;
             if (currentUser && currentUser.id !== userId) {
                 const { data: follow } = await supabaseClient
-                    .from('follows')
-                    .select('*')
-                    .eq('follower_id', currentUser.id)
-                    .eq('following_id', userId)
-                    .maybeSingle();
+                    .from('follows').select('*')
+                    .eq('follower_id', currentUser.id).eq('following_id', userId).maybeSingle();
                 isFollowing = !!follow;
             }
 
             const { data: posts, error: postsError } = await supabaseClient
-                .from('posts')
-                .select('*')
-                .eq('user_id', userId)
-                .order('created_at', { ascending: false });
-
-            if (postsError) {
-                console.error('加载作品失败:', postsError);
-            }
-
+                .from('posts').select('*').eq('user_id', userId)
+                .order('created_at', { ascending: false })
+                .limit(POSTS_PAGE_SIZE);
+            if (postsError) console.error('加载作品失败:', postsError);
             const safePosts = posts || [];
 
+            const coverUrl = safeUrl(targetProfile.bg_image_url, DEFAULT_COVER) || DEFAULT_COVER;
+            const avatarUrl = safeUrl(targetProfile.avatar_url);
+            const displayName = escapeHtml(targetProfile.username || '未设置');
+            const displayBio = escapeHtml(targetProfile.bio || '这个人很懒，什么都没写~');
+            const avatarAlt = escapeHtml(targetProfile.username || '用户') + ' 的头像';
+
             profileApp.innerHTML = `
-        <div class="profile-card mb-6">
-            <div class="profile-cover" id="profile-background"
-                 style="background-image: url('${targetProfile.bg_image_url || 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'}');">
-                ${isSelf ? `
-                <div class="cover-overlay">
-                    <span>📷 点击更换背景</span>
-                </div>` : ''}
-            </div>
-            <div class="px-6 pb-6 -mt-10 relative z-10">
-                <div class="flex items-end justify-between flex-wrap gap-4">
-                    <div class="flex items-end gap-4">
-                        <div class="profile-avatar" id="profile-avatar">
-                            ${targetProfile.avatar_url ? `<img src="${targetProfile.avatar_url}" alt="avatar" />` : (targetProfile.avatar_emoji || '🙂')}
-                        </div>
-                        <div class="pb-1">
-                            <h2 class="profile-username" id="profile-username">
-                                ${targetProfile.username || '未设置'}
-                            </h2>
-                            <p class="profile-bio mt-1" id="profile-bio">
-                                ${targetProfile.bio || '这个人很懒，什么都没写~'}
-                            </p>
-                        </div>
-                    </div>
-                    ${currentUser && currentUser.id !== userId ? `
-                        <button id="follow-btn" class="follow-btn ${isFollowing ? 'following' : 'not-following'}">
-                            ${isFollowing ? '✓ 已关注' : '+ 关注'}
-                        </button>
-                    ` : ''}
+            <div class="profile-card mb-6">
+                <div class="profile-cover" id="profile-background"
+                     style="background-image: url('${coverUrl}');">
+                    ${isSelf ? `
+                    <div class="cover-overlay">
+                        <span>📷 点击更换背景</span>
+                    </div>` : ''}
                 </div>
-
-                <div class="flex gap-6 mt-5 text-sm">
-                    <span class="stat-item" id="following-count">关注 <span class="stat-number">${followingCount}</span></span>
-                    <span class="stat-item" id="follower-count">粉丝 <span class="stat-number">${followerCount}</span></span>
-                </div>
-            </div>
-        </div>
-
-        ${isSelf ? `
-        <div class="profile-card p-5 mb-6">
-            <h3 class="section-title">收藏的科目</h3>
-            <div id="favorite-subjects-list" class="flex flex-wrap gap-2">
-                <p class="empty-state">加载中...</p>
-            </div>
-        </div>
-        <div class="profile-card p-5 mb-6">
-            <h3 class="section-title">收藏的院校</h3>
-            <div id="favorite-universities-list" class="flex flex-wrap gap-2">
-                <p class="empty-state">加载中...</p>
-            </div>
-        </div>
-        ` : ''}
-
-        <h3 class="section-title">TA 的作品</h3>
-        <div id="profile-posts">
-            ${safePosts.length > 0 ? safePosts.map(post => `
-                <div class="post-item" data-post-id="${post.id}">
-                    <h4>${post.title}</h4>
-                    <p class="post-content line-clamp-2">${post.content}</p>
-                    <p class="post-time">${new Date(post.created_at).toLocaleString()}</p>
-                </div>
-            `).join('') : '<p class="empty-state">暂无作品</p>'}
-        </div>
-
-        ${isSelf ? `
-        <!-- 编辑资料模态框 -->
-        <div id="profile-editor-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-backdrop">
-            <div class="modal-box">
-                <h3>编辑资料</h3>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm text-white/70 mb-2">头像</label>
-                        <div class="flex items-center gap-3 mb-3">
-                            <div id="avatar-preview" class="w-16 h-16 rounded-full flex items-center justify-center overflow-hidden border-2 border-gold/40">
-                                ${targetProfile.avatar_url ? `<img src="${targetProfile.avatar_url}" class="w-full h-full object-cover" />` : (targetProfile.avatar_emoji || '🙂')}
+                <div class="px-6 pb-6 -mt-12 relative z-10">
+                    <div class="flex items-end justify-between flex-wrap gap-4">
+                        <div class="flex items-end gap-4">
+                            <div class="profile-avatar" id="profile-avatar">
+                                ${avatarUrl
+                    ? `<img src="${avatarUrl}" alt="${avatarAlt}" onerror="this.style.display='none'; this.parentElement.textContent='🙂';" />`
+                    : escapeHtml(targetProfile.avatar_emoji || '🙂')}
                             </div>
-                            <button type="button" class="modal-btn cancel" onclick="document.getElementById('avatar-file-input').click()">上传图片</button>
-                            <input type="file" id="avatar-file-input" accept="image/*" class="hidden" onchange="handleAvatarFileSelect(event)">
+                            <div class="pb-1">
+                                <h2 class="profile-username" id="profile-username">${displayName}</h2>
+                                <p class="profile-bio mt-1" id="profile-bio">${displayBio}</p>
+                            </div>
                         </div>
-                        <div class="flex gap-2 flex-wrap">
-                            ${['🙂', '😎', '🤓', '👩‍🎓', '👨‍🎓', '🐱', '🐶', '🦊', '🌟', '🎓'].map(emoji => `
-                                <button type="button" class="avatar-emoji-btn" data-emoji="${emoji}" onclick="selectEmoji(this)">${emoji}</button>
-                            `).join('')}
-                        </div>
+                        ${currentUser && currentUser.id !== userId ? `
+                            <div class="profile-actions">
+                                <button id="follow-btn" class="follow-btn${isFollowing ? ' is-following' : ''}">
+                                    ${isFollowing ? '✓ 已关注' : '+ 关注'}
+                                </button>
+                                <button id="dm-btn" class="dm-btn" title="给 TA 发私信" type="button">
+                                    💬 私信
+                                </button>
+                            </div>
+                        ` : ''}
                     </div>
-                    <div>
-                        <label class="block text-sm text-white/70 mb-1.5">用户名</label>
-                        <input type="text" id="edit-username" class="modal-input" value="${targetProfile.username || ''}">
-                    </div>
-                    <div>
-                        <label class="block text-sm text-white/70 mb-1.5">个人简介</label>
-                        <textarea id="edit-bio" rows="3" class="modal-input" style="resize:vertical;">${targetProfile.bio || ''}</textarea>
-                    </div>
-                    <div class="flex justify-end gap-2 pt-2">
-                        <button onclick="closeProfileEditor()" class="modal-btn cancel">取消</button>
-                        <button onclick="saveProfileEdit()" class="modal-btn save">保存</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- 更换背景模态框 -->
-        <div id="background-editor-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-backdrop">
-            <div class="modal-box">
-                <h3>更换背景</h3>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm text-white/70 mb-2">背景图片</label>
-                        <div class="flex items-center gap-3">
-                            <button type="button" class="modal-btn cancel" onclick="document.getElementById('bg-file-input').click()">上传图片</button>
-                            <input type="file" id="bg-file-input" accept="image/*" class="hidden" onchange="handleBgFileSelect(event)">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm text-white/70 mb-1.5">或输入图片 URL</label>
-                        <input type="text" id="edit-bg-url" class="modal-input" placeholder="输入图片链接..." value="${targetProfile.bg_image_url || ''}">
-                    </div>
-                    <div class="flex justify-end gap-2 pt-2">
-                        <button onclick="closeBackgroundEditor()" class="modal-btn cancel">取消</button>
-                        <button onclick="saveBackgroundEdit()" class="modal-btn save">保存</button>
+                    <div class="flex gap-3 mt-5 text-sm">
+                        <span class="stat-item" id="following-count">关注 <span class="stat-number">${followingCount}</span></span>
+                        <span class="stat-item" id="follower-count">粉丝 <span class="stat-number">${followerCount}</span></span>
                     </div>
                 </div>
             </div>
-        </div>
-        ` : ''}
-    `;
+
+            ${isSelf ? `
+            <div class="profile-card p-6 mb-6">
+                <h3 class="section-title">收藏的科目</h3>
+                <div id="favorite-subjects-list" class="flex flex-wrap gap-2">
+                    <p class="empty-state">加载中...</p>
+                </div>
+            </div>
+            <div class="profile-card p-6 mb-6">
+                <h3 class="section-title">收藏的院校</h3>
+                <div id="favorite-universities-list" class="flex flex-wrap gap-2">
+                    <p class="empty-state">加载中...</p>
+                </div>
+            </div>
+            ` : ''}
+
+            <h3 class="section-title">${isSelf ? '我的作品' : 'TA 的作品'}</h3>
+            <div id="profile-posts">
+                ${safePosts.length > 0 ? safePosts.map(post => `
+                    <div class="post-item" data-post-id="${post.id}">
+                        <h4>${escapeHtml(post.title)}</h4>
+                        <p class="post-content line-clamp-2" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${escapeHtml(post.content)}</p>
+                        <p class="post-time">${new Date(post.created_at).toLocaleString('zh-CN')}</p>
+                    </div>
+                `).join('') : '<p class="empty-state">暂无作品</p>'}
+            </div>
+
+            ${isSelf ? `
+            <!-- 编辑资料模态框 -->
+            <div id="profile-editor-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-backdrop"
+                 role="dialog" aria-modal="true" aria-labelledby="profile-editor-title">
+                <div class="modal-box" tabindex="-1">
+                    <h3 id="profile-editor-title">编辑资料</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm mb-2" style="color:#777;font-weight:700;">头像</label>
+                            <div class="flex items-center gap-3 mb-3">
+                                <div id="avatar-preview" class="w-16 h-16 rounded-full flex items-center justify-center overflow-hidden"
+                                     style="border:2px solid #E5E5E5;background:linear-gradient(135deg,#58CC02,#58A700);font-size:1.8rem;">
+                                    ${avatarUrl
+                        ? `<img src="${avatarUrl}" class="w-full h-full object-cover" alt="" />`
+                        : escapeHtml(targetProfile.avatar_emoji || '🙂')}
+                                </div>
+                                <button type="button" class="modal-btn cancel" id="avatar-upload-btn">上传图片</button>
+                                <input type="file" id="avatar-file-input" accept="image/*" class="hidden">
+                            </div>
+                            <div class="flex gap-2 flex-wrap">
+                                ${['🙂', '😎', '🤓', '👩‍🎓', '👨‍🎓', '🐱', '🐶', '🦊', '🌟', '🎓'].map(emoji => `
+                                    <button type="button" class="avatar-emoji-btn" data-emoji="${emoji}">${emoji}</button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm mb-1.5" style="color:#777;font-weight:700;">用户名</label>
+                            <input type="text" id="edit-username" class="modal-input" maxlength="30" value="${displayName}">
+                        </div>
+                        <div>
+                            <label class="block text-sm mb-1.5" style="color:#777;font-weight:700;">个人简介</label>
+                            <textarea id="edit-bio" rows="3" class="modal-input" maxlength="200" style="resize:vertical;">${displayBio}</textarea>
+                        </div>
+                        <div class="flex justify-end gap-2 pt-2">
+                            <button type="button" id="editor-cancel-btn" class="modal-btn cancel">取消</button>
+                            <button type="button" id="editor-save-btn" class="modal-btn save">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 更换背景模态框 -->
+            <div id="background-editor-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-backdrop"
+                 role="dialog" aria-modal="true" aria-labelledby="bg-editor-title">
+                <div class="modal-box" tabindex="-1">
+                    <h3 id="bg-editor-title">更换背景</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm mb-2" style="color:#777;font-weight:700;">背景图片</label>
+                            <div class="flex items-center gap-3">
+                                <button type="button" class="modal-btn cancel" id="bg-upload-btn">上传图片</button>
+                                <input type="file" id="bg-file-input" accept="image/*" class="hidden">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm mb-1.5" style="color:#777;font-weight:700;">或输入图片 URL</label>
+                            <input type="text" id="edit-bg-url" class="modal-input"
+                                   placeholder="输入图片链接..." value="${escapeHtml(targetProfile.bg_image_url || '')}">
+                        </div>
+                        <div class="flex justify-end gap-2 pt-2">
+                            <button type="button" id="bg-cancel-btn" class="modal-btn cancel">取消</button>
+                            <button type="button" id="bg-save-btn" class="modal-btn save">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ` : ''}
+            `;
 
             if (isSelf) {
                 loadFavoriteSubjects(userId);
                 loadFavoriteUniversities(userId);
             }
 
-            async function loadFavoriteSubjects(userId) {
-                const container = document.getElementById('favorite-subjects-list');
-                if (!container) return;
+            bindProfileActions(isSelf, userId, isFollowing);
+        }
 
-                const { data, error } = await supabaseClient
-                    .from('subject_favorites')
-                    .select('subject_key')
-                    .eq('user_id', userId);
-
-                if (error) {
-                    container.innerHTML = '<p class="text-red-400">加载失败</p>';
-                    return;
-                }
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<p class="empty-state">暂无收藏科目</p>';
-                    return;
-                }
-
-                container.innerHTML = data.map(item => {
-                    const chineseName = subjectNameMap[item.subject_key] || item.subject_key;
-                    return `<a href="subjects.html" class="favorite-tag">${chineseName}</a>`;
-                }).join('');
+        async function loadFavoriteSubjects(uid) {
+            const container = document.getElementById('favorite-subjects-list');
+            if (!container) return;
+            const { data, error } = await supabaseClient
+                .from('subject_favorites').select('subject_key').eq('user_id', uid);
+            if (error) { container.innerHTML = '<p class="text-red-400">加载失败</p>'; return; }
+            if (!data || data.length === 0) {
+                container.innerHTML = '<p class="empty-state">暂无收藏科目</p>';
+                return;
             }
+            container.innerHTML = data.map(item => {
+                const chineseName = subjectNameMap[item.subject_key] || item.subject_key;
+                return `<a href="subjects.html" class="favorite-tag">${escapeHtml(chineseName)}</a>`;
+            }).join('');
+        }
 
-            async function loadFavoriteUniversities(userId) {
-                const container = document.getElementById('favorite-universities-list');
-                if (!container) return;
-                const { data, error } = await supabaseClient
-                    .from('university_favorites')
-                    .select('university_key')
-                    .eq('user_id', userId);
-                if (error) {
-                    container.innerHTML = '<p class="text-red-400">加载失败</p>';
-                    return;
-                }
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<p class="empty-state">暂无收藏院校</p>';
-                    return;
-                }
-                container.innerHTML = data.map(item => {
-                    const chineseName = universityNameMap[item.university_key] || item.university_key;
-                    return `<a href="universities.html" class="favorite-tag">${chineseName}</a>`;
-                }).join('');
+        async function loadFavoriteUniversities(uid) {
+            const container = document.getElementById('favorite-universities-list');
+            if (!container) return;
+            const { data, error } = await supabaseClient
+                .from('university_favorites').select('university_key').eq('user_id', uid);
+            if (error) { container.innerHTML = '<p class="text-red-400">加载失败</p>'; return; }
+            if (!data || data.length === 0) {
+                container.innerHTML = '<p class="empty-state">暂无收藏院校</p>';
+                return;
             }
+            container.innerHTML = data.map(item => {
+                const chineseName = universityNameMap[item.university_key] || item.university_key;
+                return `<a href="universities.html" class="favorite-tag">${escapeHtml(chineseName)}</a>`;
+            }).join('');
+        }
 
-            // ==================== 事件绑定 ====================
+        function bindProfileActions(isSelf, userId, isFollowing) {
             if (isSelf) {
-                const avatarEl = document.getElementById('profile-avatar');
-                const usernameEl = document.getElementById('profile-username');
-                const bioEl = document.getElementById('profile-bio');
-                const bgEl = document.getElementById('profile-background');
-                if (avatarEl) avatarEl.addEventListener('click', () => openProfileEditor('avatar'));
-                if (usernameEl) usernameEl.addEventListener('click', () => openProfileEditor('username'));
-                if (bioEl) bioEl.addEventListener('click', () => openProfileEditor('bio'));
-                if (bgEl) bgEl.addEventListener('click', () => openBackgroundEditor());
+                document.getElementById('profile-avatar')?.addEventListener('click', () => openProfileEditor('avatar'));
+                document.getElementById('profile-username')?.addEventListener('click', () => openProfileEditor('username'));
+                document.getElementById('profile-bio')?.addEventListener('click', () => openProfileEditor('bio'));
+                document.getElementById('profile-background')?.addEventListener('click', openBackgroundEditor);
+
+                document.getElementById('avatar-upload-btn')?.addEventListener('click', () => {
+                    document.getElementById('avatar-file-input').click();
+                });
+                document.getElementById('avatar-file-input')?.addEventListener('change', handleAvatarFileSelect);
+                document.querySelectorAll('#profile-editor-modal .avatar-emoji-btn').forEach(btn => {
+                    btn.addEventListener('click', () => selectEmoji(btn));
+                });
+                document.getElementById('editor-cancel-btn')?.addEventListener('click', closeProfileEditor);
+                document.getElementById('editor-save-btn')?.addEventListener('click', saveProfileEdit);
+
+                document.getElementById('bg-upload-btn')?.addEventListener('click', () => {
+                    document.getElementById('bg-file-input').click();
+                });
+                document.getElementById('bg-file-input')?.addEventListener('change', handleBgFileSelect);
+                document.getElementById('bg-cancel-btn')?.addEventListener('click', closeBackgroundEditor);
+                document.getElementById('bg-save-btn')?.addEventListener('click', saveBackgroundEdit);
             } else {
-                const followBtn = document.getElementById('follow-btn');
-                if (followBtn) followBtn.addEventListener('click', () => toggleFollow(userId));
+                document.getElementById('follow-btn')?.addEventListener('click', () => toggleFollow(userId));
+                document.getElementById('dm-btn')?.addEventListener('click', () => {
+                    if (!currentUser) { window.location.href = 'login.html'; return; }
+                    if (currentUser.id === userId) return;
+                    window.location.href = `messages.html?user_id=${userId}`;
+                });
             }
 
-            document.getElementById('following-count').addEventListener('click', () => renderFollowList(userId, 'following'));
-            document.getElementById('follower-count').addEventListener('click', () => renderFollowList(userId, 'followers'));
+            document.getElementById('following-count')?.addEventListener('click', () => renderFollowList(userId, 'following'));
+            document.getElementById('follower-count')?.addEventListener('click', () => renderFollowList(userId, 'followers'));
 
             document.querySelectorAll('[data-post-id]').forEach(item => {
                 item.addEventListener('click', () => {
@@ -1619,65 +1344,92 @@
                 });
             });
 
-            // 添加淡入动画
             profileApp.classList.remove('fade-in-up');
-            // 强制回流以重新触发动画
             void profileApp.offsetWidth;
             profileApp.classList.add('fade-in-up');
         }
 
-        // ==================== 编辑资料相关函数 ====================
+        /* ============ 编辑资料 ============ */
         function selectEmoji(btn) {
-            document.querySelectorAll('#profile-editor-modal .avatar-emoji-btn').forEach(b => b.classList.remove(
-                'emoji-selected'));
+            document.querySelectorAll('#profile-editor-modal .avatar-emoji-btn')
+                .forEach(b => b.classList.remove('emoji-selected'));
             btn.classList.add('emoji-selected');
+            selectedEmoji = btn.getAttribute('data-emoji');
         }
+
+        let lastFocusedBeforeEditor = null;
+        let bodyOverflowBeforeEditor = '';
 
         function openProfileEditor(field) {
             const modal = document.getElementById('profile-editor-modal');
             if (!modal) return;
-            const currentEmoji = targetProfile.avatar_emoji || '🙂';
+
+            selectedEmoji = targetProfile.avatar_emoji || '🙂';
+            const curEmoji = selectedEmoji;
             modal.querySelectorAll('.avatar-emoji-btn').forEach(btn => {
-                btn.classList.toggle('emoji-selected', btn.getAttribute('data-emoji') === currentEmoji);
+                btn.classList.toggle('emoji-selected', btn.getAttribute('data-emoji') === curEmoji);
             });
+
             document.getElementById('edit-username').value = targetProfile.username || '';
             document.getElementById('edit-bio').value = targetProfile.bio || '';
+
+            lastFocusedBeforeEditor = document.activeElement;
+            bodyOverflowBeforeEditor = document.body.style.overflow;
+
             modal.classList.remove('hidden');
             modal.classList.add('flex');
-            if (field === 'username') document.getElementById('edit-username').focus();
-            else if (field === 'bio') document.getElementById('edit-bio').focus();
+            document.body.style.overflow = 'hidden';
+
+            requestAnimationFrame(() => {
+                if (field === 'username') document.getElementById('edit-username').focus();
+                else if (field === 'bio') document.getElementById('edit-bio').focus();
+                else modal.querySelector('.modal-box')?.focus();
+            });
         }
 
         function closeProfileEditor() {
             const modal = document.getElementById('profile-editor-modal');
-            if (modal) {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
+            if (!modal) return;
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = bodyOverflowBeforeEditor;
+
+            uploadedAvatarFile = null;
+            const input = document.getElementById('avatar-file-input');
+            if (input) input.value = '';
+
+            if (lastFocusedBeforeEditor && lastFocusedBeforeEditor.focus) {
+                lastFocusedBeforeEditor.focus();
             }
+            lastFocusedBeforeEditor = null;
         }
 
         async function saveProfileEdit() {
             const modal = document.getElementById('profile-editor-modal');
-            const selectedEmojiBtn = modal.querySelector('.avatar-emoji-btn.emoji-selected');
-            const newEmoji = selectedEmojiBtn ? selectedEmojiBtn.getAttribute('data-emoji') : targetProfile.avatar_emoji;
+            if (!modal) return;
+
+            const newEmoji = selectedEmoji || targetProfile.avatar_emoji || '🙂';
             const newUsername = document.getElementById('edit-username').value.trim();
             const newBio = document.getElementById('edit-bio').value.trim();
 
             if (!newUsername) {
-                alert('用户名不能为空');
+                showAlert('用户名不能为空', { type: 'warn', title: '还差一点' });
+                return;
+            }
+            if (newUsername.length > 30) {
+                showAlert('用户名不能超过 30 个字符', { type: 'warn', title: '太长了' });
                 return;
             }
 
             let avatarUrl = targetProfile.avatar_url || null;
 
             if (uploadedAvatarFile) {
-                const fileExt = uploadedAvatarFile.name.split('.').pop();
+                const fileExt = (uploadedAvatarFile.name.split('.').pop() || 'jpg').toLowerCase();
                 const fileName = `${currentUser.id}/${Date.now()}.${fileExt}`;
                 const { error: uploadError } = await supabaseClient.storage
-                    .from('avatars')
-                    .upload(fileName, uploadedAvatarFile, { upsert: true });
+                    .from('avatars').upload(fileName, uploadedAvatarFile, { upsert: true });
                 if (uploadError) {
-                    alert('头像上传失败：' + uploadError.message);
+                    showAlert('头像上传失败：' + uploadError.message, { type: 'error', title: '上传失败' });
                     return;
                 }
                 const { data: publicURL } = supabaseClient.storage.from('avatars').getPublicUrl(fileName);
@@ -1690,7 +1442,7 @@
                 .eq('id', currentUser.id);
 
             if (error) {
-                alert('保存失败：' + error.message);
+                showAlert('保存失败：' + error.message, { type: 'error', title: '保存失败' });
             } else {
                 targetProfile.avatar_emoji = newEmoji;
                 targetProfile.username = newUsername;
@@ -1700,26 +1452,48 @@
                 currentProfile.username = newUsername;
                 currentProfile.bio = newBio;
                 currentProfile.avatar_url = avatarUrl;
-                uploadedAvatarFile = null;
+
                 closeProfileEditor();
                 renderProfilePage();
             }
         }
 
+        /* ============ 背景编辑 ============ */
+        let lastFocusedBeforeBg = null;
+        let bodyOverflowBeforeBg = '';
+
         function openBackgroundEditor() {
             const modal = document.getElementById('background-editor-modal');
             if (!modal) return;
             document.getElementById('edit-bg-url').value = targetProfile.bg_image_url || '';
+
+            lastFocusedBeforeBg = document.activeElement;
+            bodyOverflowBeforeBg = document.body.style.overflow;
+
             modal.classList.remove('hidden');
             modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+
+            requestAnimationFrame(() => {
+                modal.querySelector('.modal-box')?.focus();
+            });
         }
 
         function closeBackgroundEditor() {
             const modal = document.getElementById('background-editor-modal');
-            if (modal) {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
+            if (!modal) return;
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = bodyOverflowBeforeBg;
+
+            uploadedBgFile = null;
+            const input = document.getElementById('bg-file-input');
+            if (input) input.value = '';
+
+            if (lastFocusedBeforeBg && lastFocusedBeforeBg.focus) {
+                lastFocusedBeforeBg.focus();
             }
+            lastFocusedBeforeBg = null;
         }
 
         async function saveBackgroundEdit() {
@@ -1727,13 +1501,12 @@
             let bgUrl = bgUrlInput.value.trim();
 
             if (uploadedBgFile) {
-                const fileExt = uploadedBgFile.name.split('.').pop();
+                const fileExt = (uploadedBgFile.name.split('.').pop() || 'jpg').toLowerCase();
                 const fileName = `${currentUser.id}/${Date.now()}.${fileExt}`;
                 const { error: uploadError } = await supabaseClient.storage
-                    .from('covers')
-                    .upload(fileName, uploadedBgFile, { upsert: true });
+                    .from('covers').upload(fileName, uploadedBgFile, { upsert: true });
                 if (uploadError) {
-                    alert('背景上传失败：' + uploadError.message);
+                    showAlert('背景上传失败：' + uploadError.message, { type: 'error', title: '上传失败' });
                     return;
                 }
                 const { data: publicURL } = supabaseClient.storage.from('covers').getPublicUrl(fileName);
@@ -1741,166 +1514,179 @@
             }
 
             const { error } = await supabaseClient
-                .from('profiles')
-                .update({ bg_image_url: bgUrl })
-                .eq('id', currentUser.id);
+                .from('profiles').update({ bg_image_url: bgUrl }).eq('id', currentUser.id);
 
             if (error) {
-                alert('保存失败：' + error.message);
+                showAlert('保存失败：' + error.message, { type: 'error', title: '保存失败' });
             } else {
                 targetProfile.bg_image_url = bgUrl;
                 currentProfile.bg_image_url = bgUrl;
-                uploadedBgFile = null;
                 closeBackgroundEditor();
                 renderProfilePage();
             }
         }
 
-        // ==================== 关注 / 取关 ====================
+        /* ============================================================
+           ⭐ 关注 / 取关：切换 is-following 类，颜色灰/绿切换
+           ============================================================ */
         async function toggleFollow(userId) {
-            if (!currentUser) return alert('请先登录');
-            if (currentUser.id === userId) return;
-
-            const { data: existing } = await supabaseClient
-                .from('follows')
-                .select('*')
-                .eq('follower_id', currentUser.id)
-                .eq('following_id', userId)
-                .maybeSingle();
-
-            if (existing) {
-                await supabaseClient.from('follows').delete().eq('follower_id', currentUser.id).eq('following_id', userId);
-            } else {
-                await supabaseClient.from('follows').insert([{ follower_id: currentUser.id, following_id: userId }]);
-                await supabaseClient.from('notifications').insert([{
-                    user_id: userId,
-                    type: 'follow',
-                    actor_id: currentUser.id
-                }]);
-            }
-            renderProfilePage();
-        }
-
-        // ==================== 关注/粉丝列表 ====================
-        async function renderFollowList(userId, type) {
-            const listContainer = document.createElement('div');
-            listContainer.className = 'fixed inset-0 z-50 flex items-center justify-center follow-list-container';
-            listContainer.innerHTML = `
-        <div class="follow-list-box">
-            <div class="flex justify-between items-center mb-4">
-                <h3 style="font-size:1.15rem;font-weight:700;background:linear-gradient(135deg,#fff,#c9a84c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">${type === 'following' ? '关注的人' : '粉丝'}</h3>
-                <button id="close-follow-modal" class="text-white/50 hover:text-white text-2xl leading-none transition">&times;</button>
-            </div>
-            <div id="follow-list-content"></div>
-        </div>
-    `;
-            document.body.appendChild(listContainer);
-
-            const modalContent = document.getElementById('follow-list-content');
-            document.getElementById('close-follow-modal').addEventListener('click', () => {
-                listContainer.remove();
-            });
-
-            const column = type === 'following' ? 'follower_id' : 'following_id';
-            const { data, error } = await supabaseClient
-                .from('follows')
-                .select(`
-            ${type === 'following' ? 'following_id' : 'follower_id'},
-            profiles!${type === 'following' ? 'following_id' : 'follower_id'} (id, username, avatar_emoji, avatar_url)
-        `)
-                .eq(column, userId);
-
-            if (error) {
-                modalContent.innerHTML = `<p class="text-red-400">加载失败：${error.message}</p>`;
+            if (!currentUser) {
+                const go = await requireLogin('follow');
+                if (go) window.location.href = 'login.html';
                 return;
             }
-            if (!data || data.length === 0) {
+            if (currentUser.id === userId) return;
+
+            const btn = document.getElementById('follow-btn');
+            if (!btn || btn.dataset.pending === '1') return;
+            btn.dataset.pending = '1';
+
+            try {
+                const { data: existing } = await supabaseClient
+                    .from('follows').select('*')
+                    .eq('follower_id', currentUser.id).eq('following_id', userId).maybeSingle();
+
+                const followerCountEl = document.querySelector('#follower-count .stat-number');
+
+                if (existing) {
+                    /* 取消关注 → 移除 is-following（回到绿底白字） */
+                    const { error } = await supabaseClient.from('follows').delete()
+                        .eq('follower_id', currentUser.id).eq('following_id', userId);
+                    if (error) throw error;
+                    btn.textContent = '+ 关注';
+                    btn.classList.remove('is-following');
+                    if (followerCountEl) {
+                        followerCountEl.textContent = String(Math.max(0, Number(followerCountEl.textContent) - 1));
+                    }
+                } else {
+                    /* 关注 → 加上 is-following（切到灰底灰边灰字） */
+                    const { error: insErr } = await supabaseClient.from('follows')
+                        .insert([{ follower_id: currentUser.id, following_id: userId }]);
+                    if (insErr) throw insErr;
+                    supabaseClient.from('notifications')
+                        .insert([{ user_id: userId, type: 'follow', actor_id: currentUser.id }])
+                        .then(() => { }, () => { });
+                    btn.textContent = '✓ 已关注';
+                    btn.classList.add('is-following');
+                    if (followerCountEl) {
+                        followerCountEl.textContent = String(Number(followerCountEl.textContent) + 1);
+                    }
+                }
+            } catch (err) {
+                console.error('关注操作失败:', err);
+                showAlert('操作失败：' + err.message, { type: 'error', title: '出错了' });
+            } finally {
+                btn.dataset.pending = '0';
+            }
+        }
+
+        /* ============ 关注 / 粉丝列表 ============ */
+        let lastFocusedBeforeList = null;
+        let bodyOverflowBeforeList = '';
+
+        async function renderFollowList(userId, type) {
+            if (document.querySelector('.follow-list-container')) return;
+
+            const listContainer = document.createElement('div');
+            listContainer.className = 'fixed inset-0 z-50 flex items-center justify-center follow-list-container';
+            listContainer.setAttribute('role', 'dialog');
+            listContainer.setAttribute('aria-modal', 'true');
+            listContainer.innerHTML = `
+                <div class="follow-list-box" tabindex="-1">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3>${type === 'following' ? '关注的人' : '粉丝'}</h3>
+                        <button id="close-follow-modal" class="text-white/50 hover:text-white text-2xl leading-none transition"
+                                aria-label="关闭" style="color:#AFAFAF; background:transparent; border:none; cursor:pointer;">&times;</button>
+                    </div>
+                    <div id="follow-list-content">
+                        <p class="empty-state">加载中...</p>
+                    </div>
+                </div>`;
+
+            lastFocusedBeforeList = document.activeElement;
+            bodyOverflowBeforeList = document.body.style.overflow;
+
+            document.body.appendChild(listContainer);
+            document.body.style.overflow = 'hidden';
+
+            const modalContent = listContainer.querySelector('#follow-list-content');
+            const closeBtn = listContainer.querySelector('#close-follow-modal');
+
+            const closeFn = () => {
+                listContainer.remove();
+                document.body.style.overflow = bodyOverflowBeforeList;
+                if (lastFocusedBeforeList && lastFocusedBeforeList.focus) lastFocusedBeforeList.focus();
+                lastFocusedBeforeList = null;
+                document.removeEventListener('keydown', escHandler);
+            };
+            const escHandler = (e) => { if (e.key === 'Escape') closeFn(); };
+
+            closeBtn.addEventListener('click', closeFn);
+            listContainer.addEventListener('click', (e) => {
+                if (e.target === listContainer) closeFn();
+            });
+            document.addEventListener('keydown', escHandler);
+            requestAnimationFrame(() => listContainer.querySelector('.follow-list-box')?.focus());
+
+            let userIds = [];
+            if (type === 'following') {
+                const { data, error } = await supabaseClient.from('follows')
+                    .select('following_id').eq('follower_id', userId);
+                if (error) { modalContent.innerHTML = `<p class="text-red-400">加载失败：${escapeHtml(error.message)}</p>`; return; }
+                userIds = data.map(item => item.following_id);
+            } else {
+                const { data, error } = await supabaseClient.from('follows')
+                    .select('follower_id').eq('following_id', userId);
+                if (error) { modalContent.innerHTML = `<p class="text-red-400">加载失败：${escapeHtml(error.message)}</p>`; return; }
+                userIds = data.map(item => item.follower_id);
+            }
+
+            if (!userIds || userIds.length === 0) {
                 modalContent.innerHTML = `<p class="empty-state">暂无${type === 'following' ? '关注' : '粉丝'}</p>`;
                 return;
             }
 
-            modalContent.innerHTML = data.map(item => {
-                const user = item.profiles;
+            const { data: profiles, error: profilesError } = await supabaseClient
+                .from('profiles').select('id, username, avatar_emoji, avatar_url').in('id', userIds);
+            if (profilesError) {
+                modalContent.innerHTML = `<p class="text-red-400">加载失败：${escapeHtml(profilesError.message)}</p>`;
+                return;
+            }
+
+            modalContent.innerHTML = profiles.map(user => {
+                const name = escapeHtml(user.username || '未设置');
+                const avatarUrl = safeUrl(user.avatar_url);
                 return `
-            <div class="follow-user-item" data-user-id="${user.id}">
-                <div class="follow-user-avatar">
-                    ${user.avatar_url ? `<img src="${user.avatar_url}" />` : (user.avatar_emoji || '🙂')}
-                </div>
-                <span class="follow-user-name">${user.username || '未设置'}</span>
-            </div>
-        `;
+                <div class="follow-user-item" data-user-id="${user.id}">
+                    <div class="follow-user-avatar">
+                        ${avatarUrl
+                        ? `<img src="${avatarUrl}" alt="${name} 的头像" onerror="this.style.display='none'; this.parentElement.textContent='🙂';" />`
+                        : escapeHtml(user.avatar_emoji || '🙂')}
+                    </div>
+                    <span class="follow-user-name">${name}</span>
+                </div>`;
             }).join('');
 
             modalContent.querySelectorAll('[data-user-id]').forEach(el => {
                 el.addEventListener('click', () => {
                     const targetId = el.getAttribute('data-user-id');
-                    listContainer.remove();
+                    closeFn();
                     window.location.href = `profile.html?user_id=${targetId}`;
                 });
             });
         }
 
-        // ==================== 移动端菜单 ====================
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (mobileMenuBtn && mobileMenu) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-            mobileMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                });
-            });
-        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape') return;
+            closeProfileEditor();
+            closeBackgroundEditor();
+        });
 
-        // ==================== 启动 ====================
         initProfilePage();
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-    </script>
-    <script>
-        (function () {
-            const SUPABASE_URL = 'https://ugtdibfbpanltfvkpxro.supabase.co';
-            const SUPABASE_ANON_KEY = 'sb_publishable_8eDda8zkFy9RvDbFQDQf6A_4zn9vsJe';
 
-            if (!window.supabase) {
-                const script = document.createElement('script');
-                script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
-                script.onload = init;
-                document.head.appendChild(script);
-            } else {
-                init();
-            }
-
-            function init() {
-                const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                const dropdown = document.getElementById('profile-dropdown');
-                if (!dropdown) return;
-
-                async function updateDropdown() {
-                    const { data: { user } } = await supabase.auth.getUser();
-                    if (user) {
-                        dropdown.innerHTML = `
-                    <a href="profile.html" style="display:block;padding:0.65rem 1.2rem;font-size:0.875rem;color:#fff;transition:all 0.2s;">个人主页</a>
-                    <button id="logout-menu-btn" style="width:100%;text-align:left;padding:0.65rem 1.2rem;font-size:0.875rem;color:#fff;background:none;border:none;cursor:pointer;transition:all 0.2s;">登出</button>
-                `;
-                        document.getElementById('logout-menu-btn')?.addEventListener('click', async () => {
-                            await supabase.auth.signOut();
-                            window.location.reload();
-                        });
-                    } else {
-                        dropdown.innerHTML = `
-                    <a href="login.html" style="display:block;padding:0.65rem 1.2rem;font-size:0.875rem;color:#fff;transition:all 0.2s;">登录</a>
-                `;
-                    }
-                }
-
-                updateDropdown();
-                window.addEventListener('auth-state-change', updateDropdown);
-            }
-        })();
-    </script>
+    <script src="nav.js"></script>
+    <script src="ai-assistant.js"></script>
 </body>
 
 </html>

@@ -1,383 +1,574 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>首页 - A-Level Guide</title>
-    <meta name="description" content="为A-Level学生和家长提供专业的科目指南、选课策略与升学时间轴规划，助力英国名校申请。" />
-    <script src="https://cdn.tailwindcss.com">
-    </script>
+    <meta name="description" content="为A-Level学生和家长提供专业的科目指南、交流社区与升学时间轴规划，助力英国名校申请。" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        navy: {
-                            50: '#f0f4f8',
-                            100: '#d9e2ec',
-                            200: '#bcccdc',
-                            300: '#9fb3c8',
-                            400: '#627d98',
-                            500: '#334e68',
-                            600: '#243b53',
-                            700: '#1a2d40',
-                            800: '#10202e',
-                            900: '#0b1620',
+                        duo: {
+                            green: '#58CC02', blue: '#1CB0F6', yellow: '#FFC800',
+                            orange: '#FF9600', red: '#FF4B4B', purple: '#CE82FF',
+                            pink: '#FF86D0', cyan: '#14D4F4',
                         },
-                        oxford: '#002147',
-                        cambridge: '#1a3a5c',
-                        cream: '#faf8f5',
-                        gold: '#c9a84c',
                     },
                     fontFamily: {
-                        serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
                         sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-                    },
-                    boxShadow: {
-                        'card': '0 2px 12px rgba(0, 0, 0, 0.06)',
-                        'card-hover': '0 8px 30px rgba(0, 0, 0, 0.1)',
-                        'nav': '0 1px 0 rgba(0, 0, 0, 0.06)',
                     },
                 },
             },
         }
     </script>
+
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="ai-assistant.css">
+
     <style>
         :root {
-            --oxford: #000000;
-            --navy-600: #000000;
-            --gold: #c9a84c;
-            --cream: #ffffff;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: #000000;
-            color: #ffffff;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        .serif-display {
-            font-family: 'Georgia', 'Cambria', 'Times New Roman', serif;
-        }
-        .nav-link {
-            position: relative;
-            font-size: 0.875rem;
-            font-weight: 500;
-            letter-spacing: 0.02em;
-            color: #ffffff;
-            transition: color 0.2s ease;
-            padding: 0.5rem 0.25rem;
-        }
-        .nav-link:hover {
-            color: #c9a84c;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--gold);
-            transition: width 0.25s ease;
-        }
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        .nav-link.active {
-            color: #c9a84c;
-            font-weight: 600;
-        }
-        .nav-link.active::after {
-            width: 100%;
-        }
-        .btn-primary {
-            background-color: var(--oxford);
-            color: #ffffff;
-            padding: 0.75rem 1.75rem;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 0.875rem;
-            letter-spacing: 0.03em;
-            transition: all 0.2s ease;
-            display: inline-block;
-            border: 1px solid var(--oxford);
-        }
-        .btn-primary:hover {
-            background-color: #1a3a5c;
-            border-color: #1a3a5c;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 14px rgba(0, 33, 71, 0.2);
-        }
-        .btn-outline {
-            background-color: transparent;
-            color: var(--oxford);
-            padding: 0.7rem 1.6rem;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 0.875rem;
-            letter-spacing: 0.03em;
-            transition: all 0.2s ease;
-            display: inline-block;
-            border: 1.5px solid var(--oxford);
-        }
-        .btn-outline:hover {
-            background-color: var(--oxford);
-            color: #ffffff;
-        }
-        .divider-gold {
-            width: 48px;
-            height: 3px;
-            background-color: var(--gold);
-            border-radius: 2px;
-        }
-        .section-badge {
-            display: inline-block;
-            padding: 0.35rem 1rem;
-            border-radius: 100px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--oxford);
-            background-color: rgba(201, 168, 76, 0.12);
-            border: 1px solid rgba(201, 168, 76, 0.3);
+            --duo-green: #58CC02;
+            --duo-green-dark: #58A700;
+            --duo-blue: #1CB0F6;
+            --duo-yellow: #FFC800;
+            --duo-orange: #FF9600;
+            --duo-purple: #CE82FF;
+
+            --text-main: #3C3C3C;
+            --text-sub: #777777;
+            --text-faint: #AFAFAF;
+            --border-soft: #E5E5E5;
+            --bg-page: #F7F7F7;
+
+            --nav-h: 64px;
         }
 
-        /* ========== 轮播图自定义样式 ========== */
-        .carousel-container {
-            position: relative;
-            overflow: hidden;
-            background-color: #000000;
-            width: 100%;
-            /* 高度改为视口高度的85%，可根据喜好调整 */
-            height: 85vh;
-            min-height: 500px;
-        }
-        .carousel-slide {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none;
+        /* ========== 全局 ========== */
+        body {
+            background-color: var(--bg-page) !important;
+            color: var(--text-main) !important;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+            font-weight: 500;
+            overflow-x: hidden;
             display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        ::selection { background: rgba(88, 204, 2, 0.25); }
+
+        /* ========== 流动光晕背景 ========== */
+        #glow-background {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            background: linear-gradient(135deg, #FFFFFF 0%, #FAFFFA 40%, #FFFFFF 70%, #F5FBFF 100%);
+            background-size: 300% 300%;
+            animation: pageGradient 24s ease-in-out infinite;
+        }
+
+        @keyframes pageGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50%      { background-position: 100% 50%; }
+        }
+
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(72px);
+            opacity: 0.9;
+            mix-blend-mode: normal;
+            will-change: transform, opacity;
+        }
+
+        .glow-orb--1 {
+            width: 700px; height: 700px;
+            background: radial-gradient(circle at 40% 40%,
+                rgba(88, 204, 2, 0.95) 0%, rgba(88, 204, 2, 0.75) 38%,
+                rgba(88, 204, 2, 0.35) 65%, rgba(88, 204, 2, 0.12) 80%, transparent 92%);
+            top: -200px; left: -200px;
+            animation: flow1 26s ease-in-out infinite;
+        }
+        @keyframes flow1 {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.9; }
+            25%      { transform: translate(10vw, 6vh) scale(1.08); opacity: 1; }
+            55%      { transform: translate(4vw, 15vh) scale(0.94); opacity: 0.85; }
+            80%      { transform: translate(14vw, 4vh) scale(1.05); opacity: 0.95; }
+        }
+
+        .glow-orb--2 {
+            width: 660px; height: 660px;
+            background: radial-gradient(circle at 60% 60%,
+                rgba(28, 176, 246, 0.95) 0%, rgba(28, 176, 246, 0.75) 38%,
+                rgba(28, 176, 246, 0.35) 65%, rgba(28, 176, 246, 0.12) 80%, transparent 92%);
+            bottom: -220px; right: -180px;
+            animation: flow2 30s ease-in-out infinite;
+            animation-delay: -6s;
+        }
+        @keyframes flow2 {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.9; }
+            20%      { transform: translate(-12vw, -8vh) scale(1.1); opacity: 1; }
+            50%      { transform: translate(-5vw, -16vh) scale(0.94); opacity: 0.85; }
+            75%      { transform: translate(-15vw, -4vh) scale(1.06); opacity: 1; }
+        }
+
+        .glow-orb--3 {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle at 40% 60%,
+                rgba(206, 130, 255, 0.95) 0%, rgba(206, 130, 255, 0.72) 38%,
+                rgba(206, 130, 255, 0.34) 65%, rgba(206, 130, 255, 0.12) 80%, transparent 92%);
+            top: -140px; right: -140px;
+            animation: flow3 34s ease-in-out infinite;
+            animation-delay: -12s;
+        }
+        @keyframes flow3 {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.9; }
+            30%      { transform: translate(-9vw, 12vh) scale(1.1); opacity: 1; }
+            60%      { transform: translate(-16vw, 5vh) scale(0.95); opacity: 0.85; }
+            85%      { transform: translate(-4vw, 16vh) scale(1.05); opacity: 0.95; }
+        }
+
+        .glow-orb--4 {
+            width: 560px; height: 560px;
+            background: radial-gradient(circle at 50% 50%,
+                rgba(255, 200, 0, 0.95) 0%, rgba(255, 200, 0, 0.72) 38%,
+                rgba(255, 200, 0, 0.34) 65%, rgba(255, 200, 0, 0.12) 80%, transparent 92%);
+            top: 35%; left: -120px;
+            animation: flow4 28s ease-in-out infinite;
+            animation-delay: -4s;
+        }
+        @keyframes flow4 {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.9; }
+            25%      { transform: translate(9vw, -14vh) scale(1.12); opacity: 1; }
+            55%      { transform: translate(15vw, -3vh) scale(0.94); opacity: 0.85; }
+            80%      { transform: translate(4vw, 11vh) scale(1.06); opacity: 0.95; }
+        }
+
+        .glow-orb--5 {
+            width: 520px; height: 520px;
+            background: radial-gradient(circle at center,
+                rgba(255, 134, 208, 0.95) 0%, rgba(255, 134, 208, 0.70) 38%,
+                rgba(255, 134, 208, 0.32) 65%, rgba(255, 134, 208, 0.12) 80%, transparent 92%);
+            top: 55%; left: 45%;
+            animation: flow5 32s ease-in-out infinite;
+            animation-delay: -16s;
+        }
+        @keyframes flow5 {
+            0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 0.85; }
+            33%      { transform: translate(-44%, -58%) scale(1.1) rotate(120deg); opacity: 1; }
+            66%      { transform: translate(-56%, -42%) scale(0.92) rotate(240deg); opacity: 0.9; }
+        }
+
+        .glow-orb--6 {
+            width: 560px; height: 560px;
+            background: radial-gradient(circle at center,
+                rgba(20, 212, 244, 0.95) 0%, rgba(20, 212, 244, 0.70) 38%,
+                rgba(20, 212, 244, 0.32) 65%, rgba(20, 212, 244, 0.12) 80%, transparent 92%);
+            bottom: 5%; right: 10%;
+            animation: flow6 30s ease-in-out infinite;
+            animation-delay: -20s;
+        }
+        @keyframes flow6 {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.85; }
+            35%      { transform: translate(-9vw, -8vh) scale(1.08); opacity: 1; }
+            70%      { transform: translate(6vw, -14vh) scale(0.94); opacity: 0.9; }
+        }
+
+        #glow-background::before { display: none !important; }
+        #particles-layer { display: none !important; }
+
+        /* ========== 导航栏 ========== */
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(16px) saturate(1.6) !important;
+            -webkit-backdrop-filter: blur(16px) saturate(1.6) !important;
+            border-bottom: 2px solid var(--border-soft) !important;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
+            flex-shrink: 0;
+        }
+        .nav-glass .text-white { color: var(--text-main) !important; text-shadow: none !important; }
+        .nav-glass .nav-link { color: var(--text-sub) !important; font-weight: 700 !important; }
+        .nav-glass .nav-link:hover { color: var(--duo-green) !important; }
+        .nav-glass .nav-link.active { color: var(--duo-green) !important; }
+        .nav-glass #mobile-menu-btn { border-color: var(--border-soft) !important; }
+        .nav-glass #mobile-menu-btn svg { color: var(--text-main) !important; }
+        #mobile-menu { background: #fff !important; border-top: 2px solid var(--border-soft); }
+        #mobile-menu a { color: var(--text-main) !important; font-weight: 700 !important; }
+        #mobile-menu a:hover, #mobile-menu a.nav-active {
+            background: #F0F9E8 !important; color: var(--duo-green) !important;
+        }
+
+        /* ========== Hero ========== */
+        main.hero {
+            position: relative;
+            z-index: 3;
+            flex: 1 0 auto;
+            min-height: calc(100vh - var(--nav-h));
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
             text-align: center;
+            padding: 2rem 1.5rem;
         }
-        .carousel-slide.active {
-            opacity: 1;
-            pointer-events: auto;
-            z-index: 2;
+
+        main.hero .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 820px;
+            width: 100%;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            padding: 0;
         }
-        .slide-content {
-            color: white;
-            max-width: 90%;
-        }
-        .slide-icon {
-            font-size: 4rem;
+
+        main.hero .hero-title {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+            font-size: clamp(2.2rem, 5.4vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.028em;
+            color: var(--text-main);
             margin-bottom: 1.5rem;
-            color: #c9a84c;
+            text-shadow: none !important;
         }
-        .slide-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            font-family: 'Georgia', serif;
-            color: #ffffff;
-            margin-bottom: 1rem;
+
+        main.hero .hero-title .accent {
+            background: none !important;
+            -webkit-text-fill-color: var(--text-main) !important;
+            color: var(--text-main) !important;
+            filter: none !important;
+            -webkit-background-clip: initial !important;
+            background-clip: initial !important;
         }
-        .slide-text {
-            font-size: 1.2rem;
-            color: #ffffff;
-            line-height: 1.6;
+
+        /* ========== 绿色标题遮罩层 ========== */
+        main.hero .hero-title.hero-title-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            margin-bottom: 0;
+            pointer-events: none;
+            user-select: none;
+            opacity: 0;
+            transition: opacity 100ms linear;
+
+            --mask-x: 50%;
+            --mask-y: 50%;
+            --mask-r: 0px;
+
+            -webkit-mask-image: radial-gradient(circle var(--mask-r) at var(--mask-x) var(--mask-y),
+                #000 0%, #000 92%, transparent 100%);
+            mask-image: radial-gradient(circle var(--mask-r) at var(--mask-x) var(--mask-y),
+                #000 0%, #000 92%, transparent 100%);
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+
+            will-change: mask-image, -webkit-mask-image, opacity;
         }
-        .slide-stats {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
+
+        main.hero .hero-title.hero-title-mask.is-active {
+            opacity: 1;
         }
-        .slide-stat-item {
+
+        /* 遮罩层内所有文字 → 页面主色绿色（含 accent） */
+        main.hero .hero-title.hero-title-mask,
+        main.hero .hero-title.hero-title-mask .accent,
+        main.hero .hero-title.hero-title-mask .accent * {
+            color: var(--duo-green) !important;
+            -webkit-text-fill-color: var(--duo-green) !important;
+            background: none !important;
+            -webkit-background-clip: initial !important;
+            background-clip: initial !important;
+        }
+
+        /* ========== 悬停圆形（纯白，位于文字下方） ========== */
+        .hover-circle {
+            position: fixed;
+            width: 90px;
+            height: 90px;
+            margin-left: -45px;
+            margin-top: -45px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.15);
+            /* 淡阴影让白色圆在浅色底上仍然可见 */
+            box-shadow:
+                0 6px 24px rgba(0, 0, 0, 0.12),
+                0 0 0 1px rgba(0, 0, 0, 0.04);
+            transform: scale(0.15);
+            transform-origin: center center;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 2;               /* 在文字层之下 */
+            will-change: transform, background-color, opacity;
+        }
+
+        .hover-circle.anim-in {
+            animation: circleIn 550ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes circleIn {
+            0%   { transform: scale(0.15); background-color: rgba(255, 255, 255, 0.10); opacity: 0; }
+            35%  { opacity: 1; }
+            100% { transform: scale(1);    background-color: #FFFFFF;                    opacity: 1; }
+        }
+
+        .hover-circle.stable {
+            transform: scale(1);
+            background-color: #FFFFFF;
+            opacity: 1;
+        }
+
+        .hover-circle.anim-out {
+            animation: circleOut 550ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes circleOut {
+            0%   { transform: scale(1);    background-color: #FFFFFF;                    opacity: 1; }
+            100% { transform: scale(0.15); background-color: rgba(255, 255, 255, 0.10); opacity: 0; }
+        }
+
+        main.hero .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-sub);
+            font-weight: 600;
+            line-height: 1.8;
+            margin: 0 auto;
+            max-width: 620px;
+            text-shadow: none !important;
+        }
+
+        /* ========== 页脚 ========== */
+        .footer {
+            position: relative;
+            z-index: 3;
+            flex-shrink: 0;
+            padding: 34px 16px;
             text-align: center;
+            border-top: 2px solid var(--border-soft);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: var(--text-faint);
+            font-size: 13px;
+            font-weight: 600;
         }
-        .slide-stat-number {
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: #c9a84c;
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 767px) { :root { --nav-h: 56px; } }
+        @media (max-width: 480px) {
+            main.hero .hero-title { font-size: 1.9rem; }
+            main.hero .hero-subtitle { font-size: 0.95rem; }
+            .glow-orb { filter: blur(60px); }
         }
-        .slide-stat-label {
-            font-size: 1rem;
-            color: #ffffff;
+        @media (prefers-reduced-motion: reduce) {
+            .glow-orb, #glow-background { animation: none !important; }
         }
     </style>
-    <link rel="stylesheet" href="ai-assistant.css">
 </head>
+
 <body>
 
-    <!-- ==================== 顶部导航栏 ==================== -->
-    <header class="sticky top-0 z-50 bg-black border-b border-white/30 shadow-nav">
+    <div id="glow-background" aria-hidden="true">
+        <div class="glow-orb glow-orb--1"></div>
+        <div class="glow-orb glow-orb--2"></div>
+        <div class="glow-orb glow-orb--3"></div>
+        <div class="glow-orb glow-orb--4"></div>
+        <div class="glow-orb glow-orb--5"></div>
+        <div class="glow-orb glow-orb--6"></div>
+    </div>
+
+    <div id="particles-layer" aria-hidden="true"></div>
+
+    <header class="sticky top-0 z-50 nav-glass">
         <div class="w-full px-6 sm:px-10 lg:px-16">
-            <div class="flex items-center justify-between h-16 md:h-18">
-                <!-- Logo -->
-                <div class="flex items-center gap-3 flex-shrink-0">
-                    <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background-color: #c9a84c;">
-                        <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+            <div class="flex items-center justify-between h-14 md:h-16">
+                <div class="flex items-center gap-2.5 flex-shrink-0">
+                    <div class="w-8 h-8 rounded-full flex items-center justify-center"
+                        style="background: linear-gradient(135deg, #58CC02, #8EE000); box-shadow: 0 3px 0 #58A700;">
+                        <svg class="text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"
+                            style="width: 18px; height: 18px;">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
                         </svg>
                     </div>
-                    <div class="leading-tight">
-                        <span class="serif-display font-bold text-lg md:text-xl text-white">A-Level Guide</span>
-                        <span class="block text-[10px] md:text-[11px] font-medium tracking-widest uppercase text-white">升学规划 · 选课指导</span>
-                    </div>
+                    <span class="font-bold text-base md:text-lg text-white">A-Level Guide</span>
                 </div>
 
-                <!-- 桌面导航 -->
-                <nav class="hidden md:flex items-center gap-10 lg:gap-14" aria-label="主导航">
+                <nav class="hidden md:flex items-center gap-8" aria-label="主导航">
                     <a href="index.html" class="nav-link active">首页</a>
                     <a href="subjects.html" class="nav-link">热门科目</a>
                     <a href="universities.html" class="nav-link">热门院校</a>
-                    <a href="strategy.html" class="nav-link">选课策略</a>
+                    <a href="strategy.html" class="nav-link">交流社区</a>
                     <a href="timeline.html" class="nav-link">升学时间轴</a>
                     <a href="profile.html" class="nav-link">个人主页</a>
                 </nav>
 
-                <!-- 移动端菜单按钮 -->
-                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition" aria-label="打开菜单">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <button id="mobile-menu-btn"
+                    class="md:hidden p-2 rounded-lg transition-all duration-200 hover:bg-black/5 active:bg-black/10"
+                    aria-label="打开菜单" style="border: 2px solid #E5E5E5;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"
+                        style="color: #3C3C3C;">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
             </div>
         </div>
 
-        <!-- 移动端下拉菜单 -->
-       <div id="mobile-menu" class="hidden md:hidden bg-black border-t border-white/30 px-6 py-3 pb-4 shadow-lg">
+        <div id="mobile-menu" class="hidden md:hidden px-6 py-3 pb-4">
             <nav class="flex flex-col gap-1" aria-label="移动端导航">
-                <a href="index.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-[#c9a84c] bg-white/10">首页</a>
-                <a href="subjects.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">热门科目</a>
-                <a href="universities.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">热门院校</a>
-                <a href="strategy.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">选课策略</a>
-                <a href="timeline.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">升学时间轴</a>
-                <a href="about.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-white hover:bg-white/10">关于我们</a>
+                <a href="index.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">首页</a>
+                <a href="subjects.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">热门科目</a>
+                <a href="universities.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">热门院校</a>
+                <a href="strategy.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">交流社区</a>
+                <a href="timeline.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">升学时间轴</a>
+                <a href="profile.html" class="block px-4 py-2.5 rounded-lg text-sm font-bold">个人主页</a>
             </nav>
         </div>
     </header>
 
-    <!-- ==================== 全屏轮播图区域 ==================== -->
-<div class="carousel-container" id="heroCarousel">
-    <!-- 幻灯片 1 -->
-    <div class="carousel-slide active" style="background-image: url('images/slide1.png'); background-size: cover; background-position: center;"></div>
-    <!-- 幻灯片 2 -->
-    <div class="carousel-slide" style="background-image: url('images/slide2.png'); background-size: cover; background-position: center;"></div>
-</div>
-
-    <!-- ==================== 底部联系方式 ==================== -->
-    <footer class="text-white" style="background-color: #000000;">
-        <div class="w-full px-6 sm:px-10 lg:px-16 py-10 md:py-12">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
-                <div class="md:col-span-2">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background-color: #c9a84c;">
-                            <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-                            </svg>
-                        </div>
-                        <div>
-                            <span class="serif-display font-bold text-lg">A-Level Guide</span>
-                            <span class="block text-[10px] font-medium tracking-widest uppercase text-white">升学规划 · 选课指导</span>
-                        </div>
-                    </div>
-                    <p class="text-sm text-white leading-relaxed">
-                        为A-Level学生和家长提供专业、可靠的科目指南与升学规划服务。助力每一位学子实现英国名校梦想。
-                    </p>
-                </div>
-                <div class="md:justify-self-end">
-                    <h4 class="text-sm font-semibold tracking-widest uppercase text-[#c9a84c] mb-4">联系我们</h4>
-                    <ul class="space-y-3.5 text-sm text-white">
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-[#c9a84c] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                            </svg>
-                            <span>上海市静安区南京西路<br />1266号恒隆广场</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-[#c9a84c] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
-                            </svg>
-                            <span>+86 (021) 6123-4567<br />+44 (0) 20 7946 0958</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-[#c9a84c] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-                            </svg>
-                            <span>info@alevelguide.co.uk<br />admissions@alevelguide.cn</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="mt-10 pt-6 border-t border-white/30 flex flex-col md:flex-row items-center justify-between gap-4">
-                <p class="text-xs text-white">
-                    © 2026 A-Level Guide. All rights reserved. 专注A-Level升学规划与选课指导。
-                </p>
-                <div class="flex gap-6 text-xs text-white">
-                    <a href="#" class="hover:text-[#c9a84c] transition">隐私政策</a>
-                    <a href="#" class="hover:text-[#c9a84c] transition">使用条款</a>
-                    <a href="#" class="hover:text-[#c9a84c] transition">Cookie 设置</a>
-                </div>
-            </div>
+    <main class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">选对 A-Level，<span class="accent">走稳名校路</span></h1>
+            <p class="hero-subtitle">
+                为 A-Level 学生与家长提供科目指南、交流社区与升学时间轴规划<br class="hidden sm:block" />
+                助力英国 G5 名校申请每一步
+            </p>
         </div>
+    </main>
+
+    <footer class="footer">
+        © 2026 A-Level Guide · 专注 A-Level 升学规划与选课指导
     </footer>
 
-    <!-- ==================== JavaScript ==================== -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="nav.js"></script>
+    <script src="ai-assistant.js"></script>
+
     <script>
-        // 移动端菜单切换
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+        (function () {
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var heroTitle = document.querySelector('.hero-title');
+                if (!heroTitle) return;
+
+                /* 1. 克隆标题，生成绿色遮罩层 */
+                var maskTitle = heroTitle.cloneNode(true);
+                maskTitle.classList.add('hero-title-mask');
+                heroTitle.parentNode.insertBefore(maskTitle, heroTitle.nextSibling);
+
+                /* 2. 状态 */
+                var trackedCircle = null;
+                var isLeaving = false;
+                var rafId = null;
+
+                /* 3. 更新遮罩圆形的位置/半径 */
+                function updateMask(circle) {
+                    if (!circle) return;
+                    var cRect = circle.getBoundingClientRect();
+                    var size = cRect.width;
+                    var cx = cRect.left + cRect.width / 2;
+                    var cy = cRect.top + cRect.height / 2;
+
+                    var mRect = maskTitle.getBoundingClientRect();
+                    var mx = cx - mRect.left;
+                    var my = cy - mRect.top;
+
+                    maskTitle.style.setProperty('--mask-x', mx + 'px');
+                    maskTitle.style.setProperty('--mask-y', my + 'px');
+                    maskTitle.style.setProperty('--mask-r', (size / 2) + 'px');
+                }
+
+                function loop() {
+                    rafId = requestAnimationFrame(loop);
+                    if (trackedCircle) updateMask(trackedCircle);
+                }
+
+                function startLoop() {
+                    if (rafId) return;
+                    loop();
+                }
+
+                function stopLoop() {
+                    if (rafId) {
+                        cancelAnimationFrame(rafId);
+                        rafId = null;
+                    }
+                    maskTitle.classList.remove('is-active');
+                    maskTitle.style.setProperty('--mask-r', '0px');
+                }
+
+                /* 4. 进入 */
+                function handleEnter(e) {
+                    if (trackedCircle && isLeaving) {
+                        if (trackedCircle.parentNode) trackedCircle.parentNode.removeChild(trackedCircle);
+                        trackedCircle = null;
+                        isLeaving = false;
+                    }
+                    if (trackedCircle) return;
+
+                    var circle = document.createElement('div');
+                    circle.className = 'hover-circle anim-in';
+                    circle.style.left = e.clientX + 'px';
+                    circle.style.top  = e.clientY + 'px';
+                    document.body.appendChild(circle);
+                    trackedCircle = circle;
+
+                    maskTitle.classList.add('is-active');
+                    updateMask(circle);
+                    startLoop();
+
+                    circle.addEventListener('animationend', function (ev) {
+                        if (ev.animationName !== 'circleIn') return;
+                        circle.classList.remove('anim-in');
+                        circle.classList.add('stable');
+                    });
+                }
+
+                /* 5. 移动 */
+                function handleMove(e) {
+                    if (!trackedCircle) return;
+                    trackedCircle.style.left = e.clientX + 'px';
+                    trackedCircle.style.top  = e.clientY + 'px';
+                }
+
+                /* 6. 离开 */
+                function handleLeave() {
+                    if (!trackedCircle || isLeaving) return;
+                    isLeaving = true;
+                    var circle = trackedCircle;
+
+                    circle.classList.remove('anim-in', 'stable');
+                    circle.classList.add('anim-out');
+
+                    circle.addEventListener('animationend', function (ev) {
+                        if (ev.animationName !== 'circleOut') return;
+                        if (circle.parentNode) circle.parentNode.removeChild(circle);
+                        if (trackedCircle === circle) {
+                            trackedCircle = null;
+                            isLeaving = false;
+                            stopLoop();
+                        }
+                    });
+                }
+
+                heroTitle.addEventListener('mouseenter', handleEnter);
+                heroTitle.addEventListener('mousemove', handleMove);
+                heroTitle.addEventListener('mouseleave', handleLeave);
+
+                maskTitle.classList.remove('is-active');
             });
-        });
-
-        // 导航栏滚动阴影增强
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 10) {
-                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.08)';
-            } else {
-                header.style.boxShadow = '0 1px 0 rgba(0, 0, 0, 0.06)';
-            }
-        });
-
-        // ========== 自动轮播 ==========
-        const slides = document.querySelectorAll('.carousel-slide');
-        let currentSlide = 0;
-        const autoPlayDelay = 5000; // 5秒
-
-        function goToSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            slides[index].classList.add('active');
-            currentSlide = index;
-        }
-
-        function nextSlide() {
-            goToSlide((currentSlide + 1) % slides.length);
-        }
-
-        // 启动自动播放
-        setInterval(nextSlide, autoPlayDelay);
+        })();
     </script>
-<script src="ai-assistant.js"></script>
 </body>
+
 </html>
