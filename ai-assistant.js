@@ -1,5 +1,16 @@
-// ========== AI 对话小助手（猫咪形象 · 可拖拽 · 点击换色） ==========
+// ========== AI 对话小助手（猫咪形象 · 可拖拽 · 单击开聊天 · 双击换皮肤） ==========
 (function () {
+
+    /* ============================================================
+       强制浅色模式：防止手机系统深色模式强制反色
+       ============================================================ */
+    try {
+        document.documentElement.style.colorScheme = 'light';
+        document.body.style.colorScheme = 'light';
+        // 移除可能存在的深色类（防止其它脚本误加）
+        document.documentElement.classList.remove('dark', 'dark-mode', 'theme-dark');
+        document.body.classList.remove('dark', 'dark-mode', 'theme-dark');
+    } catch (_) { /* 忽略 */ }
 
     /* ============================================================
        猫咪 SVG（使用 CSS 变量，支持四种配色）
@@ -171,7 +182,7 @@
             </div>
             <div class="ai-chat-body">
                 <div class="ai-chat-messages" id="aiChatMessages">
-                    <div class="ai-message-bubble bot">喵～我是猫咪升学助手，可以咨询 A-Level 选课、院校、申请等问题。点击我可以切换毛色哦！</div>
+                    <div class="ai-message-bubble bot">喵～我是猫咪升学助手，可以咨询 A-Level 选课、院校、申请等问题。单击我开/关聊天，双击我换皮肤哦！</div>
                 </div>
                 <div class="ai-chat-input-area">
                     <input type="text" id="aiChatInput" placeholder="输入你的问题..." />
@@ -251,14 +262,19 @@
 
     /* ============================================================
        拖拽
+       ⭐ 关键修复：
+         · 不再无条件 preventDefault()
+         · 只有真正移动超过阈值时才 preventDefault，避免吞掉 click
+         · 移动端点击（tap）不会触发 preventDefault，浏览器会正常派发 click
        ============================================================ */
     let isDragging = false;
     let startX, startY, initialLeft, initialTop;
     let movedDistance = 0;
     let suppressClick = false;
 
+    const DRAG_THRESHOLD = 6; // 超过 6px 才算拖拽
+
     function onDragStart(e) {
-        e.preventDefault();
         isDragging = true;
         movedDistance = 0;
         suppressClick = false;
@@ -277,11 +293,16 @@
         document.body.style.userSelect = 'none';
 
         dragBtn.classList.add('dragging');
+
+        // ⭐ 只有鼠标事件才 preventDefault（鼠标默认行为是选中文本，需要阻止）
+        //   触摸事件不 preventDefault，让浏览器正常派发后续 click
+        if (e.type === 'mousedown') {
+            e.preventDefault();
+        }
     }
 
     function onDragMove(e) {
         if (!isDragging) return;
-        e.preventDefault();
 
         const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
         const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
@@ -289,6 +310,11 @@
         const deltaX = clientX - startX;
         const deltaY = clientY - startY;
         movedDistance = Math.max(movedDistance, Math.abs(deltaX) + Math.abs(deltaY));
+
+        // ⭐ 只有真正移动超过阈值，才阻止默认行为（防止页面滚动）
+        if (movedDistance > DRAG_THRESHOLD) {
+            e.preventDefault();
+        }
 
         let newLeft = initialLeft + deltaX;
         let newTop = initialTop + deltaY;
@@ -312,7 +338,7 @@
         document.body.style.userSelect = '';
         dragBtn.classList.remove('dragging');
 
-        if (movedDistance < 5) {
+        if (movedDistance < DRAG_THRESHOLD) {
             suppressClick = false;
         } else {
             suppressClick = true;
@@ -323,18 +349,14 @@
     dragBtn.addEventListener('mousedown', onDragStart);
     document.addEventListener('mousemove', onDragMove);
     document.addEventListener('mouseup', onDragEnd);
-    dragBtn.addEventListener('touchstart', onDragStart, { passive: false });
+    dragBtn.addEventListener('touchstart', onDragStart, { passive: true }); // ⭐ passive: true 允许浏览器派发 click
     document.addEventListener('touchmove', onDragMove, { passive: false });
     document.addEventListener('touchend', onDragEnd);
+    document.addEventListener('touchcancel', onDragEnd);
 
     /* ============================================================
-       点击：蹭蹭 + 切换配色 + 开关对话窗口
+       蹭蹭动作
        ============================================================ */
-    const PALETTES = ['palette-orange', 'palette-tri', 'palette-white', 'palette-tabby'];
-    let paletteIdx = 0;
-    // 默认添加橘猫类名
-    dragBtn.classList.add(PALETTES[paletteIdx]);
-
     let nuzzling = false;
 
     function triggerNuzzle() {
@@ -347,16 +369,20 @@
         }, 1300);
     }
 
+    /* ============================================================
+       ⭐ 点击逻辑：
+         · 单击：蹭蹭 + 开/关聊天框
+         · 双击：蹭蹭 + 切换皮肤（不打开聊天框）
+       ============================================================ */
+    const PALETTES = ['palette-orange', 'palette-tri', 'palette-white', 'palette-tabby'];
+    let paletteIdx = 0;
+    dragBtn.classList.add(PALETTES[paletteIdx]);
+
     function cyclePalette() {
         dragBtn.classList.remove(PALETTES[paletteIdx]);
         paletteIdx = (paletteIdx + 1) % PALETTES.length;
         dragBtn.classList.add(PALETTES[paletteIdx]);
     }
-
-    /* ============================================================
-       点击：单击开关聊天，双击切换配色
-       ============================================================ */
-    let clickTimer = null;
 
     function openOrCloseChat() {
         chatWindow.classList.toggle('open');
@@ -365,26 +391,30 @@
         }
     }
 
+    let clickTimer = null;
+
     dragBtn.addEventListener('click', function (e) {
         e.stopPropagation();
+
+        // 刚刚拖拽过，忽略这次 click
         if (suppressClick) {
             suppressClick = false;
             return;
         }
 
         if (clickTimer) {
-            /* 第二次点击：取消单击任务，执行换色 */
+            /* ---- 第二次点击：双击，取消单击任务，执行换色 ---- */
             clearTimeout(clickTimer);
             clickTimer = null;
             triggerNuzzle();
             cyclePalette();
         } else {
-            /* 第一次点击：延迟等待，看是否会有第二次 */
+            /* ---- 第一次点击：延迟等待，看是否会有第二次 ---- */
             clickTimer = setTimeout(function () {
                 clickTimer = null;
                 triggerNuzzle();
                 openOrCloseChat();
-            }, 260);
+            }, 260); // 260ms 内出现第二次点击就算双击
         }
     });
 
@@ -453,7 +483,9 @@
     }
 
     /* ============================================================
-       视线跟随 + 耳朵 / 胡须 / 尾巴响应（仅桌面端）
+       视线跟随 + 耳朵 / 胡须 / 尾巴响应
+       ⭐ 严格限制：只在桌面端（hover: hover + 有精细指针）启用
+          避免手机端触摸产生的"伪 mousemove"把瞳孔推出眼白
        ============================================================ */
     const pupils = dragBtn.querySelectorAll('.cat-pupil');
     const earL = dragBtn.querySelector('.cat-ear-respond-left');
@@ -492,9 +524,20 @@
         if (whiskR) whiskR.style.transform = '';
     }
 
-    if (window.matchMedia('(hover: hover)').matches) {
+    /* ⭐ 严格判断：桌面端才启用鼠标跟随
+          hover: hover → 设备支持悬停（非触摸屏）
+          pointer: fine → 有精细指针（鼠标）
+    */
+    const isDesktopDevice =
+        window.matchMedia('(hover: hover)').matches &&
+        window.matchMedia('(pointer: fine)').matches;
+
+    if (isDesktopDevice) {
         document.addEventListener('mousemove', onCatMouseMove);
         document.addEventListener('mouseleave', resetCatResponses);
+    } else {
+        /* 触摸设备：确保瞳孔复位（防止某些浏览器残留 transform） */
+        resetCatResponses();
     }
 
     /* ============================================================
@@ -519,7 +562,7 @@
         },
         {
             keywords: ['策略', '怎么选', '建议', '组合'],
-            reply: '选课要专业匹配优先、能力与兴趣平衡、留有余地不贪多。您可以参考我们的 <a href="strategy.html">选课策略</a> 页面。'
+            reply: '选课要专业匹配优先、能力与兴趣平衡、留有余地不贪多。您可以参考我们的 <a href="strategy.html">交流社区</a> 页面。'
         },
         {
             keywords: ['联系', '地址', '电话', '邮箱', '咨询'],

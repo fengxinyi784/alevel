@@ -1,3 +1,25 @@
+/* ============================================================
+   ⭐ 强制浅色模式：防止手机系统深色模式强制反色
+   （Chrome Android "Force dark" / iOS 智能反转等）
+   ============================================================ */
+:root {
+    color-scheme: light only;
+}
+
+html,
+body {
+    color-scheme: light only;
+}
+
+/* 如果系统是深色模式，也强制页面保持浅色 */
+@media (prefers-color-scheme: dark) {
+    html,
+    body {
+        background-color: #F7F7F7 !important;
+        color: #3C3C3C !important;
+    }
+}
+
 /* ========== AI 助手容器 ========== */
 .ai-assistant {
     position: fixed;
@@ -15,11 +37,10 @@
     user-select: none;
     -webkit-user-select: none;
     position: relative;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-                filter 0.4s ease;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     animation: catBreathe 3.6s ease-in-out infinite;
     transform-origin: center bottom;
-    filter: drop-shadow(0 12px 20px var(--shadow-color));
+    filter: drop-shadow(0 12px 20px var(--shadow-color, rgba(208, 123, 63, 0.28)));
     touch-action: none;
 
     /* ---- 默认（橘猫）配色变量 ---- */
@@ -46,7 +67,7 @@
     50%      { transform: translateY(-5px) scale(1.015); }
 }
 
-/* 拖拽状态：暂停呼吸 */
+/* 拖拽状态：暂停呼吸，避免跟定位冲突 */
 .ai-assistant-btn.dragging {
     animation: none;
     cursor: grabbing;
@@ -243,7 +264,11 @@
     50%      { transform: rotate(8deg); }
 }
 
-/* ========== 鼠标响应层 ========== */
+/* ============================================================
+   ⭐ 鼠标响应层（强化移动端兼容）
+   · 强制 transform-box: fill-box，防止某些手机浏览器用 view-box
+     导致 transform-origin 计算错误，把瞳孔推出眼白
+   ============================================================ */
 .ai-assistant-btn .cat-pupil,
 .ai-assistant-btn .cat-ear-respond-left,
 .ai-assistant-btn .cat-ear-respond-right,
@@ -252,6 +277,7 @@
 .ai-assistant-btn .cat-whisker-respond-right {
     transform-box: fill-box;
     transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
 }
 
 .ai-assistant-btn .cat-pupil                { transform-origin: center; }
@@ -276,6 +302,7 @@
     overflow: hidden;
     display: none;
     font-family: 'Inter', system-ui, sans-serif;
+    color-scheme: light only;
 }
 
 .ai-chat-window.open {
