@@ -77,7 +77,7 @@
                 transition: background 0.15s ease, color 0.15s ease;
                 font-family: inherit; letter-spacing: 0.01em; white-space: nowrap;
             }
-            /* ⭐ 悬停时变成主题绿色（原来是橙色） */
+            /* ⭐ 悬停时变成主题绿色 */
             .nav-dropdown-item:hover { background: #F0F9E8; color: #58CC02; }
             .nav-dropdown-item.logout:hover { background: #FFF0F0; color: #E03B3B; }
         `;
@@ -192,6 +192,9 @@
         success: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>`
     };
 
+    /* ============================================================
+       注入样式
+       ============================================================ */
     if (!document.getElementById('duo-confirm-styles')) {
         const style = document.createElement('style');
         style.id = 'duo-confirm-styles';
@@ -220,6 +223,7 @@
                 transform: translateY(24px) scale(0.92);
                 transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
                 position: relative;
+                outline: none;
             }
             .duo-confirm-overlay.open .duo-confirm-card {
                 transform: translateY(0) scale(1);
@@ -333,8 +337,16 @@
                 transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease, color 0.15s ease;
                 font-family: inherit;
                 max-width: 160px;
+                /* ⭐ 移除脚本 focus() 时浏览器默认的黑色轮廓 */
+                outline: none;
             }
             .duo-confirm-btn:only-child { max-width: 220px; }
+
+            /* ⭐ 键盘用户按 Tab 过来时，仍然显示绿色焦点框（保留无障碍） */
+            .duo-confirm-btn:focus-visible {
+                outline: 3px solid rgba(88, 204, 2, 0.5);
+                outline-offset: 3px;
+            }
 
             .duo-confirm-btn.confirm {
                 background: #58CC02; color: #FFFFFF;
@@ -401,7 +413,7 @@
         overlayEl = document.createElement('div');
         overlayEl.className = 'duo-confirm-overlay';
         overlayEl.innerHTML = `
-            <div class="duo-confirm-card" role="dialog" aria-modal="true">
+            <div class="duo-confirm-card" role="dialog" aria-modal="true" tabindex="-1">
                 <div class="duo-confirm-icon">
                     ${CAT_AVATAR_SVG}
                     <div class="duo-confirm-badge info">${BADGE_ICONS.info}</div>
@@ -527,7 +539,11 @@
         };
         document.addEventListener('keydown', keyHandler);
 
-        setTimeout(() => confirmBtn.focus(), 150);
+        /* ⭐ 关键修复：焦点移到弹窗卡片上，不再聚焦按钮，避免出现黑色默认轮廓 */
+        setTimeout(() => {
+            const card = overlayEl.querySelector('.duo-confirm-card');
+            if (card) card.focus({ preventScroll: true });
+        }, 150);
 
         return new Promise((resolve) => { resolveFn = resolve; });
     }
