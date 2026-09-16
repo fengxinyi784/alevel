@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- ⭐ 强制浅色模式：防止 QQ 浏览器 / Chrome 等强制深色反色 -->
+    <!-- 保留：防止 QQ 浏览器强制深色反色（但不影响其他浏览器配色） -->
     <meta name="color-scheme" content="light">
     <meta name="theme-color" content="#F7F7F7">
 
@@ -51,14 +51,6 @@
             --bg-page: #F7F7F7;
 
             --nav-h: 64px;
-
-            /* 强制浅色模式 */
-            color-scheme: light only;
-        }
-
-        /* 强制浅色模式：即使系统是深色，页面也保持浅色 */
-        html, body {
-            color-scheme: light only;
         }
 
         /* ========== 全局 ========== */
@@ -75,7 +67,7 @@
 
         ::selection { background: rgba(88, 204, 2, 0.25); }
 
-        /* ========== 流动光晕背景 ========== */
+        /* ========== 流动光晕背景（恢复固定尺寸） ========== */
         #glow-background {
             position: fixed;
             inset: 0;
@@ -101,11 +93,8 @@
             will-change: transform, opacity;
         }
 
-        /* ⭐ 光团尺寸改成 clamp(vmin)：跟随视口缩放，不再固定 px */
-
         .glow-orb--1 {
-            width: clamp(420px, 62vmin, 900px);
-            height: clamp(420px, 62vmin, 900px);
+            width: 700px; height: 700px;
             background: radial-gradient(circle at 40% 40%,
                 rgba(88, 204, 2, 0.95) 0%, rgba(88, 204, 2, 0.75) 38%,
                 rgba(88, 204, 2, 0.35) 65%, rgba(88, 204, 2, 0.12) 80%, transparent 92%);
@@ -120,8 +109,7 @@
         }
 
         .glow-orb--2 {
-            width: clamp(400px, 58vmin, 850px);
-            height: clamp(400px, 58vmin, 850px);
+            width: 660px; height: 660px;
             background: radial-gradient(circle at 60% 60%,
                 rgba(28, 176, 246, 0.95) 0%, rgba(28, 176, 246, 0.75) 38%,
                 rgba(28, 176, 246, 0.35) 65%, rgba(28, 176, 246, 0.12) 80%, transparent 92%);
@@ -137,8 +125,7 @@
         }
 
         .glow-orb--3 {
-            width: clamp(360px, 53vmin, 770px);
-            height: clamp(360px, 53vmin, 770px);
+            width: 600px; height: 600px;
             background: radial-gradient(circle at 40% 60%,
                 rgba(206, 130, 255, 0.95) 0%, rgba(206, 130, 255, 0.72) 38%,
                 rgba(206, 130, 255, 0.34) 65%, rgba(206, 130, 255, 0.12) 80%, transparent 92%);
@@ -154,8 +141,7 @@
         }
 
         .glow-orb--4 {
-            width: clamp(340px, 49vmin, 720px);
-            height: clamp(340px, 49vmin, 720px);
+            width: 560px; height: 560px;
             background: radial-gradient(circle at 50% 50%,
                 rgba(255, 200, 0, 0.95) 0%, rgba(255, 200, 0, 0.72) 38%,
                 rgba(255, 200, 0, 0.34) 65%, rgba(255, 200, 0, 0.12) 80%, transparent 92%);
@@ -171,8 +157,7 @@
         }
 
         .glow-orb--5 {
-            width: clamp(310px, 46vmin, 670px);
-            height: clamp(310px, 46vmin, 670px);
+            width: 520px; height: 520px;
             background: radial-gradient(circle at center,
                 rgba(255, 134, 208, 0.95) 0%, rgba(255, 134, 208, 0.70) 38%,
                 rgba(255, 134, 208, 0.32) 65%, rgba(255, 134, 208, 0.12) 80%, transparent 92%);
@@ -187,8 +172,7 @@
         }
 
         .glow-orb--6 {
-            width: clamp(340px, 49vmin, 720px);
-            height: clamp(340px, 49vmin, 720px);
+            width: 560px; height: 560px;
             background: radial-gradient(circle at center,
                 rgba(20, 212, 244, 0.95) 0%, rgba(20, 212, 244, 0.70) 38%,
                 rgba(20, 212, 244, 0.32) 65%, rgba(20, 212, 244, 0.12) 80%, transparent 92%);
@@ -240,11 +224,10 @@
             padding: 2rem 1.5rem;
         }
 
-        /* ⭐ 内容区宽度跟随视口缩放 */
         main.hero .hero-content {
             position: relative;
             z-index: 1;
-            max-width: clamp(600px, 55vw, 1100px);
+            max-width: 820px;
             width: 100%;
             background: transparent;
             border: none;
@@ -252,10 +235,9 @@
             padding: 0;
         }
 
-        /* ⭐ 标题字号上限提高，跟随视口缩放更明显 */
         main.hero .hero-title {
             font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
-            font-size: clamp(2.2rem, 6vw, 5.5rem);
+            font-size: clamp(2.2rem, 5.4vw, 4rem);
             font-weight: 900;
             line-height: 1.1;
             letter-spacing: -0.028em;
@@ -303,7 +285,6 @@
             opacity: 1;
         }
 
-        /* 遮罩层内所有文字 → 页面主色绿色（含 accent） */
         main.hero .hero-title.hero-title-mask,
         main.hero .hero-title.hero-title-mask .accent,
         main.hero .hero-title.hero-title-mask .accent * {
@@ -323,7 +304,6 @@
             margin-top: -45px;
             border-radius: 50%;
             background-color: rgba(255, 255, 255, 0.15);
-            /* 淡阴影让白色圆在浅色底上仍然可见 */
             box-shadow:
                 0 6px 24px rgba(0, 0, 0, 0.12),
                 0 0 0 1px rgba(0, 0, 0, 0.04);
@@ -331,7 +311,7 @@
             transform-origin: center center;
             opacity: 0;
             pointer-events: none;
-            z-index: 2;               /* 在文字层之下 */
+            z-index: 2;
             will-change: transform, background-color, opacity;
         }
 
@@ -358,14 +338,13 @@
             100% { transform: scale(0.15); background-color: rgba(255, 255, 255, 0.10); opacity: 0; }
         }
 
-        /* ⭐ 副标题字号和宽度跟随视口缩放 */
         main.hero .hero-subtitle {
-            font-size: clamp(1rem, 1.4vw, 1.4rem);
+            font-size: 1.1rem;
             color: var(--text-sub);
             font-weight: 600;
             line-height: 1.8;
             margin: 0 auto;
-            max-width: clamp(500px, 42vw, 780px);
+            max-width: 620px;
             text-shadow: none !important;
         }
 
@@ -394,14 +373,6 @@
         }
         @media (prefers-reduced-motion: reduce) {
             .glow-orb, #glow-background { animation: none !important; }
-        }
-
-        /* ========== 深色模式防护 ========== */
-        @media (prefers-color-scheme: dark) {
-            html, body {
-                background-color: #F7F7F7 !important;
-                color: #3C3C3C !important;
-            }
         }
     </style>
 </head>
@@ -493,17 +464,14 @@
                 var heroTitle = document.querySelector('.hero-title');
                 if (!heroTitle) return;
 
-                /* 1. 克隆标题，生成绿色遮罩层 */
                 var maskTitle = heroTitle.cloneNode(true);
                 maskTitle.classList.add('hero-title-mask');
                 heroTitle.parentNode.insertBefore(maskTitle, heroTitle.nextSibling);
 
-                /* 2. 状态 */
                 var trackedCircle = null;
                 var isLeaving = false;
                 var rafId = null;
 
-                /* 3. 更新遮罩圆形的位置/半径 */
                 function updateMask(circle) {
                     if (!circle) return;
                     var cRect = circle.getBoundingClientRect();
@@ -539,7 +507,6 @@
                     maskTitle.style.setProperty('--mask-r', '0px');
                 }
 
-                /* 4. 进入 */
                 function handleEnter(e) {
                     if (trackedCircle && isLeaving) {
                         if (trackedCircle.parentNode) trackedCircle.parentNode.removeChild(trackedCircle);
@@ -566,14 +533,12 @@
                     });
                 }
 
-                /* 5. 移动 */
                 function handleMove(e) {
                     if (!trackedCircle) return;
                     trackedCircle.style.left = e.clientX + 'px';
                     trackedCircle.style.top  = e.clientY + 'px';
                 }
 
-                /* 6. 离开 */
                 function handleLeave() {
                     if (!trackedCircle || isLeaving) return;
                     isLeaving = true;

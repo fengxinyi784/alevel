@@ -1,24 +1,3 @@
-/* ============================================================
-   ⭐ 强制浅色模式：防止 QQ 浏览器 / Chrome 等强制深色反色
-   ============================================================ */
-:root {
-    color-scheme: light only;
-}
-
-html,
-body {
-    color-scheme: light only;
-}
-
-/* 系统深色模式下，也强制页面保持浅色 */
-@media (prefers-color-scheme: dark) {
-    html,
-    body {
-        background-color: #F7F7F7 !important;
-        color: #3C3C3C !important;
-    }
-}
-
 /* ========== AI 助手容器 ========== */
 .ai-assistant {
     position: fixed;
@@ -26,16 +5,12 @@ body {
     top: auto;
     z-index: 9999;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    color-scheme: light only;
 }
 
-/* ============================================================
-   悬浮按钮（猫咪）
-   ⭐ 尺寸改成 clamp(vmin)：跟随视口缩放，不再固定 px
-   ============================================================ */
+/* ========== 悬浮按钮（猫咪）—— 恢复固定尺寸 ========== */
 .ai-assistant-btn {
-    width: clamp(96px, 9vmin, 140px);
-    height: clamp(104px, 10vmin, 152px);
+    width: 120px;
+    height: 130px;
     cursor: grab;
     user-select: none;
     -webkit-user-select: none;
@@ -70,7 +45,7 @@ body {
     50%      { transform: translateY(-5px) scale(1.015); }
 }
 
-/* 拖拽状态：暂停呼吸，避免跟定位冲突 */
+/* 拖拽状态：暂停呼吸 */
 .ai-assistant-btn.dragging {
     animation: none;
     cursor: grabbing;
@@ -267,11 +242,7 @@ body {
     50%      { transform: rotate(8deg); }
 }
 
-/* ============================================================
-   鼠标响应层（强化移动端兼容）
-   · 强制 transform-box: fill-box，防止某些手机浏览器用 view-box
-     导致 transform-origin 计算错误，把瞳孔推出眼白
-   ============================================================ */
+/* ========== 鼠标响应层 ========== */
 .ai-assistant-btn .cat-pupil,
 .ai-assistant-btn .cat-ear-respond-left,
 .ai-assistant-btn .cat-ear-respond-right,
@@ -291,10 +262,7 @@ body {
 .ai-assistant-btn .cat-whisker-respond-right{ transform-origin: 0% 50%; }
 
 /* ============================================================
-   ⭐ 强制锁定眼睛配色
-   QQ 浏览器 / 部分安卓浏览器的"智能深色"会把浅色页面反色，
-   导致深色瞳孔被反色成浅色（看起来像只有眼白）。
-   这里用 !important 强制锁定，优先级最高。
+   锁住眼睛配色（对 QQ 浏览器 / 智能深色防反色有效）
    ============================================================ */
 .ai-assistant-btn .cat-pupil {
     fill: #2A1F1A !important;
@@ -305,15 +273,12 @@ body {
     fill: #FFFFFF !important;
 }
 
-/* ============================================================
-   对话窗口
-   ⭐ 尺寸改成 clamp(vmin)：跟随视口缩放
-   ============================================================ */
+/* ========== 对话窗口（恢复固定尺寸） ========== */
 .ai-chat-window {
     position: absolute;
-    bottom: clamp(108px, 11vmin, 152px);
+    bottom: 132px;
     right: 0;
-    width: clamp(280px, 26vmin, 400px);
+    width: 340px;
     max-width: calc(100vw - 32px);
     background: #FFFFFF;
     border: 2px solid #E5E5E5;
@@ -323,7 +288,6 @@ body {
     overflow: hidden;
     display: none;
     font-family: 'Inter', system-ui, sans-serif;
-    color-scheme: light only;
 }
 
 .ai-chat-window.open {
@@ -484,12 +448,12 @@ body {
 /* ========== 移动端适配 ========== */
 @media (max-width: 640px) {
     .ai-assistant-btn {
-        width: clamp(84px, 24vmin, 100px);
-        height: clamp(90px, 26vmin, 108px);
+        width: 96px;
+        height: 104px;
     }
     .ai-chat-window {
-        width: min(300px, calc(100vw - 32px));
-        bottom: 108px;
+        width: 300px;
+        bottom: 112px;
     }
 }
 
