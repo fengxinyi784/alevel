@@ -273,13 +273,16 @@
     fill: #FFFFFF !important;
 }
 
-/* ========== 对话窗口（恢复固定尺寸） ========== */
+/* ========== 对话窗口（相对视口定位，上下左右都不会超出屏幕） ========== */
 .ai-chat-window {
-    position: absolute;
-    bottom: 132px;
-    right: 0;
+    position: fixed;
+    top: 0;
+    left: 24px;
+    bottom: auto;
+    right: auto;
     width: 340px;
     max-width: calc(100vw - 32px);
+    max-height: calc(100vh - 32px);   /* ⭐ 防止聊天框比屏幕还高 */
     background: #FFFFFF;
     border: 2px solid #E5E5E5;
     border-bottom: 4px solid #E5E5E5;
@@ -288,6 +291,13 @@
     overflow: hidden;
     display: none;
     font-family: 'Inter', system-ui, sans-serif;
+    z-index: 10000;
+}
+
+/* 内层内容区允许纵向滚动，避免撑破聊天框 */
+.ai-chat-window .ai-chat-body {
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
 }
 
 .ai-chat-window.open {
@@ -465,4 +475,10 @@
     .ai-assistant-btn .cat-tail {
         animation: none !important;
     }
+}
+
+.ai-chat-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }

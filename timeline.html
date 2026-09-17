@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#F7F7F7">
     <title>升学时间轴 - A-Level Guide</title>
     <meta name="description" content="A-Level升学时间轴：纵向时间轴展示，关键节点一目了然，助你规划每一步。" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -1341,11 +1343,11 @@
                     </div>
                     <div class="progress-groups">
                         ${GROUPS.map(g => {
-                            const gTotal = groupNodes(g.id).length;
-                            const gDone = countGroupDone(g.id);
-                            const complete = gDone === gTotal && gTotal > 0;
-                            const isActive = activeFilter === g.id;
-                            return `
+                const gTotal = groupNodes(g.id).length;
+                const gDone = countGroupDone(g.id);
+                const complete = gDone === gTotal && gTotal > 0;
+                const isActive = activeFilter === g.id;
+                return `
                                 <div class="progress-group-item ${complete ? 'done' : ''} ${isActive ? 'active' : ''}"
                                      data-group-id="${g.id}"
                                      role="button"
@@ -1356,7 +1358,7 @@
                                     <span class="pg-label">${g.badge}</span>
                                     <div class="pg-value" data-group-value="${g.id}">${gDone} / ${gTotal}</div>
                                 </div>`;
-                        }).join('')}
+            }).join('')}
                     </div>
                     <div class="progress-stage">
                         当前阶段：<span class="stage-text" id="progress-stage-text">${stageText}</span>
@@ -1442,8 +1444,8 @@
                     </header>
                     <div class="tl-group-body">
                         ${nodes.map((node, ni) =>
-                            renderNode(node, currentId, animate ? ni : -1)
-                        ).join('')}
+                    renderNode(node, currentId, animate ? ni : -1)
+                ).join('')}
                     </div>
                 </section>`;
             });

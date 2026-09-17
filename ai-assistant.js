@@ -1,4 +1,4 @@
-// ========== AI 对话小助手（猫咪形象 · 可拖拽 · 单击开聊天 · 双击换皮肤） ==========
+// ========== AI 对话小助手（猫咪形象 · 可拖拽 · 单击开聊天 · 双击换皮肤 · 接入智谱GLM） ==========
 (function () {
 
     /* ============================================================
@@ -7,7 +7,6 @@
     try {
         document.documentElement.style.colorScheme = 'light';
         document.body.style.colorScheme = 'light';
-        // 移除可能存在的深色类（防止其它脚本误加）
         document.documentElement.classList.remove('dark', 'dark-mode', 'theme-dark');
         document.body.classList.remove('dark', 'dark-mode', 'theme-dark');
     } catch (_) { /* 忽略 */ }
@@ -120,7 +119,7 @@
         <!-- 右眼 -->
         <g class="cat-eye-wrap" data-eye="right">
             <g class="cat-eye cat-eye-right">
-                <ellipse cx="74" cy="90" rx="8" ry="10" fill="#FFFFFF" style="stroke: var(--fur-stroke);" stroke-width="1.2"/>
+                <ellipse cx="74" cy="90" rx="8" ry="10" fill="#FFFFFF" style="fill: none; stroke: var(--fur-stroke);" stroke-width="1.2"/>
                 <circle class="cat-pupil" cx="74" cy="92" r="5" style="fill: var(--pupil);"/>
                 <circle cx="76" cy="89" r="1.8" fill="#FFFFFF"/>
             </g>
@@ -175,10 +174,13 @@
         <div class="ai-assistant-btn" id="aiAssistantBtn">
             ${CAT_SVG}
         </div>
-        <div class="ai-chat-window" id="aiChatWindow">
+               <div class="ai-chat-window" id="aiChatWindow">
             <div class="ai-chat-header">
                 <span>猫咪升学助手</span>
-                <button id="aiChatCloseBtn" aria-label="关闭">&times;</button>
+                <div class="ai-chat-header-actions">
+                    <button id="aiChatClearBtn" aria-label="清空对话" title="清空对话">🗑</button>
+                    <button id="aiChatCloseBtn" aria-label="关闭">&times;</button>
+                </div>
             </div>
             <div class="ai-chat-body">
                 <div class="ai-chat-messages" id="aiChatMessages">
@@ -258,21 +260,19 @@
         const curTop = parseFloat(assistantContainer.style.top) || 0;
         if (curLeft > maxLeft) assistantContainer.style.left = Math.max(0, maxLeft) + 'px';
         if (curTop > maxTop) assistantContainer.style.top = Math.max(0, maxTop) + 'px';
+        // ⭐ 窗口尺寸变化后，重新定位聊天框
+        positionChatWindow();
     });
 
     /* ============================================================
        拖拽
-       ⭐ 关键修复：
-         · 不再无条件 preventDefault()
-         · 只有真正移动超过阈值时才 preventDefault，避免吞掉 click
-         · 移动端点击（tap）不会触发 preventDefault，浏览器会正常派发 click
        ============================================================ */
     let isDragging = false;
     let startX, startY, initialLeft, initialTop;
     let movedDistance = 0;
     let suppressClick = false;
 
-    const DRAG_THRESHOLD = 6; // 超过 6px 才算拖拽
+    const DRAG_THRESHOLD = 6;
 
     function onDragStart(e) {
         isDragging = true;
@@ -294,8 +294,6 @@
 
         dragBtn.classList.add('dragging');
 
-        // ⭐ 只有鼠标事件才 preventDefault（鼠标默认行为是选中文本，需要阻止）
-        //   触摸事件不 preventDefault，让浏览器正常派发后续 click
         if (e.type === 'mousedown') {
             e.preventDefault();
         }
@@ -311,7 +309,6 @@
         const deltaY = clientY - startY;
         movedDistance = Math.max(movedDistance, Math.abs(deltaX) + Math.abs(deltaY));
 
-        // ⭐ 只有真正移动超过阈值，才阻止默认行为（防止页面滚动）
         if (movedDistance > DRAG_THRESHOLD) {
             e.preventDefault();
         }
@@ -343,13 +340,15 @@
         } else {
             suppressClick = true;
             savePosition();
+            // ⭐ 拖完以后，如果聊天框开着，重新调整方向
+            positionChatWindow();
         }
     }
 
     dragBtn.addEventListener('mousedown', onDragStart);
     document.addEventListener('mousemove', onDragMove);
     document.addEventListener('mouseup', onDragEnd);
-    dragBtn.addEventListener('touchstart', onDragStart, { passive: true }); // ⭐ passive: true 允许浏览器派发 click
+    dragBtn.addEventListener('touchstart', onDragStart, { passive: true });
     document.addEventListener('touchmove', onDragMove, { passive: false });
     document.addEventListener('touchend', onDragEnd);
     document.addEventListener('touchcancel', onDragEnd);
@@ -370,9 +369,7 @@
     }
 
     /* ============================================================
-       ⭐ 点击逻辑：
-         · 单击：蹭蹭 + 开/关聊天框
-         · 双击：蹭蹭 + 切换皮肤（不打开聊天框）
+       点击逻辑：单击开/关聊天 · 双击换皮肤
        ============================================================ */
     const PALETTES = ['palette-orange', 'palette-tri', 'palette-white', 'palette-tabby'];
     let paletteIdx = 0;
@@ -384,9 +381,48 @@
         dragBtn.classList.add(PALETTES[paletteIdx]);
     }
 
+    /* ⭐ 动态计算聊天框位置：永远保证在屏幕内 */
+    function positionChatWindow() {
+        if (!chatWindow.classList.contains('open')) return;
+
+        const rect = assistantContainer.getBoundingClientRect();
+        const chatW = chatWindow.offsetWidth || 340;
+        const chatH = chatWindow.offsetHeight || 400;
+        const margin = 16;   // 距离屏幕边缘的最小间距
+        const gap = 12;      // 聊天框和猫咪之间的间距
+
+        // ---------- 水平位置 ----------
+        let left = rect.left;
+        // 右边界保护
+        if (left + chatW > window.innerWidth - margin) {
+            left = window.innerWidth - chatW - margin;
+        }
+        // 左边界保护
+        if (left < margin) left = margin;
+
+        // ---------- 垂直位置 ----------
+        // 理想位置：聊天框底部在猫咪顶部上方 gap 处
+        let top = rect.top - chatH - gap;
+
+        // 顶部保护：不能超出屏幕上方
+        if (top < margin) top = margin;
+
+        // 底部保护：不能超出屏幕下方
+        if (top + chatH > window.innerHeight - margin) {
+            top = window.innerHeight - chatH - margin;
+        }
+
+        chatWindow.style.left = left + 'px';
+        chatWindow.style.top = top + 'px';
+        chatWindow.style.bottom = 'auto';
+        chatWindow.style.right = 'auto';
+    }
+
     function openOrCloseChat() {
         chatWindow.classList.toggle('open');
         if (chatWindow.classList.contains('open')) {
+            // ⭐ 打开后立刻定位一次
+            positionChatWindow();
             setTimeout(() => input.focus(), 100);
         }
     }
@@ -396,31 +432,59 @@
     dragBtn.addEventListener('click', function (e) {
         e.stopPropagation();
 
-        // 刚刚拖拽过，忽略这次 click
         if (suppressClick) {
             suppressClick = false;
             return;
         }
 
         if (clickTimer) {
-            /* ---- 第二次点击：双击，取消单击任务，执行换色 ---- */
             clearTimeout(clickTimer);
             clickTimer = null;
             triggerNuzzle();
             cyclePalette();
         } else {
-            /* ---- 第一次点击：延迟等待，看是否会有第二次 ---- */
             clickTimer = setTimeout(function () {
                 clickTimer = null;
                 triggerNuzzle();
                 openOrCloseChat();
-            }, 260); // 260ms 内出现第二次点击就算双击
+            }, 260);
         }
     });
 
     closeBtn.addEventListener('click', function (e) {
         e.stopPropagation();
         chatWindow.classList.remove('open');
+    });
+
+    const clearBtn = document.getElementById('aiChatClearBtn');
+    clearBtn?.addEventListener('click', async function (e) {
+        e.stopPropagation();
+
+        // ⭐ 使用站点统一的猫咪风格确认框
+        let confirmed = false;
+        if (typeof window.duoConfirm === 'function') {
+            try {
+                confirmed = await window.duoConfirm({
+                    title: '清空对话记录',
+                    desc: '确定要清空所有对话记录吗？此操作不可撤销。',
+                    confirmText: '清空',
+                    cancelText: '取消',
+                    danger: true,
+                    type: 'warn'
+                });
+            } catch (_) {
+                confirmed = false;
+            }
+        } else {
+            // 兜底：没有 duoConfirm 时使用原生 confirm
+            confirmed = confirm('确定清空所有对话记录吗？');
+        }
+
+        if (!confirmed) return;
+
+        chatHistory.length = 0;
+        saveChatHistory(chatHistory);
+        messagesContainer.innerHTML = `<div class="ai-message-bubble bot">喵～对话已清空，有什么可以帮你的吗？</div>`;
     });
 
     document.addEventListener('click', function (e) {
@@ -483,9 +547,7 @@
     }
 
     /* ============================================================
-       视线跟随 + 耳朵 / 胡须 / 尾巴响应
-       ⭐ 严格限制：只在桌面端（hover: hover + 有精细指针）启用
-          避免手机端触摸产生的"伪 mousemove"把瞳孔推出眼白
+       视线跟随 + 耳朵 / 胡须 / 尾巴响应（仅桌面端）
        ============================================================ */
     const pupils = dragBtn.querySelectorAll('.cat-pupil');
     const earL = dragBtn.querySelector('.cat-ear-respond-left');
@@ -524,10 +586,6 @@
         if (whiskR) whiskR.style.transform = '';
     }
 
-    /* ⭐ 严格判断：桌面端才启用鼠标跟随
-          hover: hover → 设备支持悬停（非触摸屏）
-          pointer: fine → 有精细指针（鼠标）
-    */
     const isDesktopDevice =
         window.matchMedia('(hover: hover)').matches &&
         window.matchMedia('(pointer: fine)').matches;
@@ -536,12 +594,74 @@
         document.addEventListener('mousemove', onCatMouseMove);
         document.addEventListener('mouseleave', resetCatResponses);
     } else {
-        /* 触摸设备：确保瞳孔复位（防止某些浏览器残留 transform） */
         resetCatResponses();
     }
 
     /* ============================================================
-       简单问答库
+       ⭐ 接入 Supabase Edge Function（调用智谱 GLM）
+       ============================================================ */
+    const EDGE_FUNCTION_NAME = 'bright-function';
+
+    /* ============================================================
+       ⭐ 对话历史（持久化到 sessionStorage，跨页面保留）
+       ============================================================ */
+    const CHAT_HISTORY_KEY = 'ai-cat-chat-history';
+
+    function loadChatHistory() {
+        try {
+            const raw = sessionStorage.getItem(CHAT_HISTORY_KEY);
+            if (!raw) return [];
+            const arr = JSON.parse(raw);
+            return Array.isArray(arr) ? arr : [];
+        } catch (_) {
+            return [];
+        }
+    }
+
+    function saveChatHistory(history) {
+        try {
+            sessionStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(history));
+        } catch (_) { /* 忽略 */ }
+    }
+
+    const chatHistory = loadChatHistory();
+
+    async function getAIReply(userMessage, history) {
+        const client = window.supabaseClient;
+        if (!client || !client.functions) {
+            console.warn('[AI] Supabase 客户端未初始化，降级到本地知识库');
+            return null;
+        }
+
+        try {
+            const { data, error } = await client.functions.invoke(EDGE_FUNCTION_NAME, {
+                body: {
+                    message: userMessage,
+                    history: history
+                }
+            });
+
+        if (error) {
+            console.warn('[AI] Edge Function 调用失败:', error);
+            return null;
+        }
+
+        // ⭐ 打印实际使用的模型
+        if (data?.model) {
+            console.log(`[AI] 本次使用模型：${data.model}`);
+        }
+
+        // ⭐ 把模型名一起返回（可选）
+        return data?.reply || null;
+
+        } catch (err) {
+            console.warn('[AI] 请求出错，降级到本地知识库:', err);
+            return null;
+        }
+    }
+
+    /* ============================================================
+       简单问答库（AI 失败时的降级方案）
        ============================================================ */
     const knowledgeBase = [
         {
@@ -586,23 +706,114 @@
         return defaultReply;
     }
 
-    function addMessage(content, sender) {
+    function normalizeLinks(text) {
+        if (!text) return '';
+        return String(text).replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, label, url) => {
+            // 只允许相对路径 / 站内 html / http(s)
+            if (/^(https?:\/\/|\.\/|\.\.\/|\/|[a-zA-Z0-9_\-]+\.html)/i.test(url)) {
+                return `<a href="${url}">${label}</a>`;
+            }
+            return match; // 未知格式原样返回
+        });
+    }
+
+    function addMessage(content, sender, opts = {}) {
         const messageDiv = document.createElement('div');
         messageDiv.className = `ai-message-bubble ${sender}`;
-        messageDiv.innerHTML = content;
+
+        // ⭐ bot 消息：先把 Markdown 链接转换成 HTML，再渲染
+        const finalContent = (sender === 'bot') ? normalizeLinks(content) : content;
+        messageDiv.innerHTML = finalContent;
+
         messagesContainer.appendChild(messageDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        /* ⭐ 存储策略：
+           · bot 消息：保留 <a> 标签，其它标签清掉
+           · user 消息：全部当纯文本，安全 */
+        let storedContent;
+        if (sender === 'bot') {
+            storedContent = String(finalContent)
+                .replace(/<(?!\/?a\b)[^>]*>/gi, '')
+                .replace(/\son\w+\s*=\s*["'][^"']*["']/gi, '')
+                .replace(/href\s*=\s*["']javascript:[^"']*["']/gi, 'href="#"');
+        } else {
+            storedContent = String(finalContent).replace(/<[^>]+>/g, '');
+        }
+
+        if (sender === 'user') {
+            chatHistory.push({ role: 'user', content: storedContent });
+        } else if (sender === 'bot') {
+            chatHistory.push({ role: 'assistant', content: storedContent });
+        }
+
+        if (chatHistory.length > 10) {
+            chatHistory.splice(0, chatHistory.length - 10);
+        }
+
+        if (!opts.skipPersist) {
+            saveChatHistory(chatHistory);
+        }
+    }
+
+    function restoreChatUI() {
+        if (chatHistory.length === 0) return;
+
+        messagesContainer.innerHTML = '';
+
+        chatHistory.forEach(item => {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `ai-message-bubble ${item.role === 'user' ? 'user' : 'bot'}`;
+
+            if (item.role === 'user') {
+                messageDiv.textContent = item.content;
+            } else {
+                messageDiv.innerHTML = normalizeLinks(item.content);
+            }
+
+            messagesContainer.appendChild(messageDiv);
+        });
+
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
-    function handleUserMessage() {
+    let isWaiting = false;
+
+    async function handleUserMessage() {
+        if (isWaiting) return;
+
         const userText = input.value.trim();
         if (!userText) return;
+
+        isWaiting = true;
+
         addMessage(userText, 'user');
         input.value = '';
-        setTimeout(() => {
-            const botReply = getBotReply(userText);
-            addMessage(botReply, 'bot');
-        }, 400);
+
+        // 显示"正在思考"临时气泡
+        const loadingDiv = document.createElement('div');
+        loadingDiv.className = 'ai-message-bubble bot';
+        loadingDiv.textContent = '喵～正在思考...';
+        messagesContainer.appendChild(loadingDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        let reply = await getAIReply(userText, chatHistory.slice(0, -1));
+
+        if (reply === null) {
+            reply = getBotReply(userText);
+        }
+
+        loadingDiv.remove();
+
+        addMessage(reply, 'bot');
+        isWaiting = false;
+    }
+
+    if (window.ResizeObserver) {
+        const ro = new ResizeObserver(() => {
+            positionChatWindow();
+        });
+        ro.observe(chatWindow);
     }
 
     sendBtn.addEventListener('click', handleUserMessage);
@@ -611,5 +822,8 @@
             handleUserMessage();
         }
     });
+
+    /* ⭐ 页面加载时，从 sessionStorage 恢复之前的对话气泡 */
+    restoreChatUI();
 
 })();
